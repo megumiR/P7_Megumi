@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "express": "^4.17.3",
+    "node": "^17.4.0",
+    "nodemon": "^2.0.15",
+    "server": "^1.0.37"
+  }
+}
