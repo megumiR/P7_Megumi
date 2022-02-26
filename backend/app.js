@@ -3,6 +3,9 @@
 const mongoose = require('mongoose');
 const express = require('express');
 
+
+
+
 /************ FIN : importer framework , modules ************/
 
 
@@ -21,4 +24,29 @@ const app = express();
 //acceder aux requetes json.body
 app.use(express.json());
 
+/******* Controle d'acces pour les API  ***************************/
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    next();
+  });
+/********************* FIN: controle d'acces routes generales*****************/
+  
+//image ,path, express static
 
+
+
+/********* ajouter des routes **********************/
+const utilisateurRoutes = require('./routes/utilisateur');
+
+
+
+//ajouter auth apres
+app.use('/api', utilisateurRoutes);
+
+
+
+/*********** Exporter l'application (const app) pour etre accedé par autres fichiers et server************/
+module.exports = app; 
+/*********** FIN: Exporter l'application (const app) ***************/
