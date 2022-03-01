@@ -4,12 +4,23 @@ const mongoose = require('mongoose');
 //Rechercher unique email validateur pour mySQL
 
 //changer le schema car cest mongoose schema 
-/* connection.query('CREATE TABLE NOT EXISTS Utilisateurs ( id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, name VARCHAR(30), email VARCHAR(255), password VARCHAR(100)??? );', function(err) {
-    if (err) {
-        throw err;
+/* 
+connection.query(
+    'CREATE TABLE NOT EXISTS Utilisateurs (
+        id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+    //    name VARCHAR(30), 
+        email VARCHAR(255), 
+        password VARCHAR(100)??? 
+    );',
+    function(err) {
+        if (err) {
+            throw err;
+        }
+        console.log('Utilisateur TABLE crée !');
     }
-    console.log('Utilisateur TABLE crée !');
-});
+);
+
+How do we export?
 */
 const utilisateurSchema = mongoose.Schema({
     email: { type: String, required: true},

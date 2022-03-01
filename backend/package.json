@@ -4,6 +4,7 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.3",
+    "mysql": "^2.18.1",
     "node": "^17.4.0",
     "server": "^1.0.37"
   },
