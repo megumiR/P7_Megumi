@@ -17,20 +17,21 @@
 
 -->
 
-    <HelloWorld msg="Bienvenu :)" recommend=""/>
+
+    <WelcomeMsg msg="Bienvenu :)" recommend=""/>
 
     <PostCard />
   </div>
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld.vue'
+import WelcomeMsg from '../components/WelcomeMsg.vue'
 import PostCard from '../components/PostCard.vue'
 
 export default {
   name: 'AccueilView',
   components: {
-    HelloWorld,
+    WelcomeMsg,
     PostCard
   }
 }

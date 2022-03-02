@@ -2,42 +2,45 @@
   <div id="app">
 
     <HeaderLogo title="Groupomania chat" />
-<!-- ne marche pas
-    <nav>
-      <NavLink url="/" text="Accueil" />
-      <NavLink url="/add" text="Ajouter un post" />
-      <NavLink url="/signin" text="Logout" />
-    </nav>
--->
-  <div id="nav">
-    <router-link to="/" > Accueil </router-link> |
-    <router-link to="/add" > Ajouter un post </router-link> |
-    <router-link to="/signin" > Login/Logout </router-link> |
-  </div>
-  <router-view />
+
+    <div id="nav">
+      <router-link to="/" > Accueil </router-link> |
+      <router-link to="/add" > Ajouter un post </router-link> |
+      <router-link to="/signin"><span v-if="!login">Login </span><span v-if="login">Logout </span></router-link> |
+    </div>
+    <router-view />
 
 
-  <div id="footer">
-    <p>copyright</p>
-  </div>
+
+    <div id="footer">
+      <p>copyright</p>
+    </div>
 
   </div>
 </template>
 
 <script>
-
 import HeaderLogo from './components/HeaderLogo'
-//import NavLink from './components/NavLink'
 
 export default {
   name: 'App',
-  components: {
-    
-    HeaderLogo,
-  //  NavLink
+  components: {    
+    HeaderLogo
   }
 }
-
+/* How can i put the state Login
+import Vue from 'vue'
+new Vue ({
+  el: '#app',
+  data: {
+    login: false
+  },
+  methods: {
+    functionName: function() {
+      this.login = true;
+    }
+  }
+});*/
 </script>
 
 <style lang="scss">

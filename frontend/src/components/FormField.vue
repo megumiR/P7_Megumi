@@ -20,6 +20,7 @@
                 <label for="addImage">{{ imageLabel }}: </label>
                 <br />
                 <input type="file" name="addImage" id="addImage" accept="image/png, image/jpeg" required>
+                <p class="filename">un image ajouté</p>
                 <p id="imageErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
                 
@@ -42,7 +43,19 @@ export default {
   ]
   // on click?
 }
+/*
+const file = document.querySelector('#addImage');
+file.addEventListener('change', (event) => {
+    const [file] = event.target.files;
+    const { name: fileName } = file;
+   // const fileSize = (size / 1000).toFixed(2);
 
+ //   const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+    document.querySelector('.filename').textContent = `${fileName}`;
+});
+
+
+*/
 
 
 </script>
@@ -66,6 +79,7 @@ input{
     background-color: #fff;
     border-radius: 4px;
     cursor: pointer;
+    
 }
 textarea{
     border-color: #9e9e9e;
@@ -77,9 +91,13 @@ textarea{
 
         &--button{
             border-bottom: 0.2em solid #fa3200;
-            
         }
     }
 }
-
+#addImage{
+    opacity: 0;
+    width: 0.1px;
+    height: 0.1px;
+    position: absolute;
+}
 </style>

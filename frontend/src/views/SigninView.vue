@@ -1,11 +1,9 @@
 <template>
   <div class="signin">
-    <HelloWorld msg="Bienvenu au Groupomania chat :)" recommend="Si vous voulez créer un post, inscrivez-vous !"/>
+    <WelcomeMsg msg="Bienvenu au Groupomania chat :)" recommend="Si vous voulez créer un post, inscrivez-vous !"/>
     
-    <div class="formField">
+    <div class="formField">{{ msg }}
 <!--      <form id="signinForm" @submit="checkForm" action="" method="post" novalidate="true">
-
-        
         <div v-if="errors.length">
           Vous avez des erreurs suivantes.
           <ul>
@@ -13,6 +11,13 @@
           </ul>
         </div>
 -->   <form id="signinForm" action="">
+        <div class="form__commentpost">
+          <label for="username">Utilisateur : </label>
+            <br />
+          <input type="text" name="username" id="username" required /> 
+        </div>
+
+
         <div class="form__commentpost">
           <label for="email">Email : </label>
             <br />
@@ -47,20 +52,24 @@
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld.vue'
+import WelcomeMsg from '../components/WelcomeMsg.vue'
 
 export default {
   name: 'SigninView',
   components: {
-    HelloWorld
+    WelcomeMsg
 
   },
 
 }
-
-/*
 import Vue from 'vue'
-
+new Vue ({
+  el: '#formField',
+  data: {
+    msg: 'helloooooooooooooooooooooooooooooooo'
+  }
+})
+/*
 const formField = new Vue ({
   el: '#formField',
   data: {
@@ -96,8 +105,8 @@ const formField = new Vue ({
     }
   }
 })
-
 */
+
 
 
 
@@ -105,4 +114,8 @@ const formField = new Vue ({
 </script>
 
 <style lang="scss">
+input{
+  cursor: pointer;
+    
+}
 </style>
