@@ -1,10 +1,20 @@
 /********* importer des fichier , modules *************/
 const bcrypt = require('bcrypt');
-const utilisateur = require('../models/utilisateur');
-const Utilisateur = require('../models/utilisateur');
+const connection = require('./db__connection');  //importer l'info de mysql 
 //how does mysql export the model? 
 
 //const jwt = require('jsonwebtoken');
+
+/********copy   
+app.get('/', (req, res) => {
+    //res.json({ message: 'ok' });
+    connection.query(
+        'SELECT * FROM utilisateur',
+        (error, results) => {
+          console.log(results);
+       //   res.render('../frontend/src/views/AccueilView.vue');
+    }); 
+});*/
 
 
 /****** la logique pour signin -- hash avec la fonction bcrypt pour le mot de passe ************/

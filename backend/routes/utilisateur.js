@@ -14,12 +14,13 @@ const Utilisateur = connection.query(
       console.log(results);
    //   res.render('../frontend/src/views/AccueilView.vue');
 });
-console.log("Utilisateur--->"); 
-console.log(Utilisateur);
+
 
 //la requete post pour signin    async function(req, res, next)??
 router.post('/signin', (req, res, next) => {
-    bcrypt.hash(req.body.password, 10)
+console.log('post request');
+
+    /*   bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const utilisateur = new Utilisateur({
                 name: req.body.name,
@@ -37,7 +38,54 @@ router.post('/signin', (req, res, next) => {
         .catch(error =>
             res.status(500).json({ error })
         );
+        */
+});
+// http://localhost:3000/
+router.get('/', (req, res,next) => {
+    console.log('get request for localhost3000');
+	// Render login template
+	res.sendFile(path.join(__dirname + '../index.js')); //which file???
+});
+// http://localhost:3000/utilisateur/login
+router.post('/login', (req, res, next) => {
+	// Capture the input fields
+	let username = req.body.username;
+	let password = req.body.password;
+	// Ensure the input fields exists and are not empty
+	if (username && password) {
+		// Execute SQL query that'll select the account from the database based on the specified username and password
+		connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
+			// If there is an issue with the query, output the error
+			if (error) throw error;
+			// If the account exists
+			if (results.length > 0) {
+				// Authenticate the user
+				req.session.loggedin = true;
+				req.session.username = username;
+				// Redirect to home page
+				res.redirect('/home');
+			} else {
+				res.send('Incorrect Username and/or Password!');
+			}			
+			res.end();
+		});
+	} else {
+		res.send('Please enter Username and Password!');
+		res.end();
+	}
 });
 
+// http://localhost:3000/posts
+router.get('/posts', (req, res) => {
+	// If the user is loggedin
+	if (req.session.loggedin) {
+		// Output username
+		res.send('Welcome back, ' + req.session.username + '!');
+	} else {
+		// Not logged in
+		res.send('Please login to view this page!');
+	}
+	res.end();
+});
 
 module.exports = router;

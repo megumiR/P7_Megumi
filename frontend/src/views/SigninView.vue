@@ -107,10 +107,6 @@ const formField = new Vue ({
 })
 */
 
-
-
-
-
 </script>
 
 <style lang="scss">
