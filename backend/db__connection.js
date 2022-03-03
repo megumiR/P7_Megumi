@@ -1,22 +1,29 @@
+/************* importer le mysql ************/
 const mysql = require('mysql');
+/************* FIN: importer le my sql********/
 
-const con = mysql.createConnection({
+
+/****** l'info de connection mysql *********/
+const connection = mysql.createConnection({
   host: "localhost",
   user: "root",         //user name is root for database(admin)
   password: "password",
   database: "test"
 });
-/*
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
-*/
-con.connect(function(err) {
-    if (err) throw err;
+/****** FIN: l'info de connection mysql *********/
+
+
+/********* affichier une erreur en cas d'erreur connection et con.query pour affichier l'info db************/
+connection.connect((err) => {
+    if (err) {
+      console.log('error connecting: ');
+      throw err;
+    }
     console.log("Connected!");
-    con.query("SELECT * FROM utilisateur", function (err, result) {
+  /*  connection.query("SELECT * FROM utilisateur", function (err, result) {
       if (err) throw err;
       console.log("Result: " + result);
-    });
+    });  */
   });
+
+module.exports = connection; 
