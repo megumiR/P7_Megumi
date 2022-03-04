@@ -40,12 +40,8 @@ console.log('post request');
         );
         */
 });
-// http://localhost:3000/
-router.get('/', (req, res,next) => {
-    console.log('get request for localhost3000');
-	// Render login template
-	res.sendFile(path.join(__dirname + '../index.js')); //which file???
-});
+
+
 // http://localhost:3000/utilisateur/login
 router.post('/login', (req, res, next) => {
 	// Capture the input fields
