@@ -97,8 +97,8 @@ app.post('/api/login', async(req, res, next) => {
 //post  ???????????????????????????????????????????? S'il n'y a pas de "file"
 app.post('/api/posts', multer, async(req, res, next) => {
   console.log('post one article');
-  let sql = `INSERT INTO post (postname, comment) VALUES 
-    ('${ req.body.postname }', '${ req.body.comment }')`;
+  let sql = `INSERT INTO post (postname, comment, utilisateur_id) VALUES 
+    ('${ req.body.postname }', '${ req.body.comment }', '${ req.body.utilisateur_id }')`; //sessionid?
   await connection.query( sql, (err, result) => {
     if (err) {
       throw err;
@@ -107,6 +107,8 @@ app.post('/api/posts', multer, async(req, res, next) => {
     console.log(result);
 
     res.json({ message: 'Votre post est bien crée!'});
+    // Redirect to home page
+		res.redirect('/posts');
   });
 });
   /*
@@ -128,6 +130,8 @@ app.post('/api/posts', multer, async(req, res, next) => {
     console.log(result);
 
     res.json({ message: 'Votre post est bien crée!'});
+    // Redirect to home page
+		res.redirect('/posts');
   });
 });                */
 
@@ -148,6 +152,24 @@ app.get('/api/posts', async(req, res, next) => {
   });
 });
 
+//Liker 
+/*app.post('/api/posts', async(req, res, next) => {
+  console.log('Liker un post');
+});*/
+
+//modifier  post? put?
+app.put('/api/posts/:id', async(req, res) => {
+  console.log('update specific post');
+  const postId = req.params.id;
+  let postname = req.body.postname;
+  let comment = req.body.comment;
+  /*if (req.params.id ===  ) {
+
+  }*/
+  let sql = `UPDATE post SET postname = ${ req.body.postname } WHERE id = ${ req.params.id } `;
+  res.json({ message: 'modifié' });
+});
+//supprimer
 
 app.get('/', (req, res) => {
   //  res.json({ message: 'ok' });  //http://localhost:3000 -->{ message: 'ok' } OK
