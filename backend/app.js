@@ -36,12 +36,12 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 /********* ajouter des routes **********************/
 const utilisateurRoutes = require('./routes/utilisateur');
-
+const postRoutes = require('./routes/post');
 
 
 //ajouter auth apres
 app.use('/api', utilisateurRoutes);
-
+app.use('/api/posts', postRoutes);
 
 /********* FIN: ajouter des routes****************/
 
