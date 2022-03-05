@@ -2,7 +2,8 @@
   <div class="signin">
     <WelcomeMsg msg="Bienvenu au Groupomania chat :)" recommend="Si vous voulez créer un post, inscrivez-vous !"/>
     
-    <div class="formField">{{ msg }}
+    <div class="formField">
+      <p class="formField__msg">{{ msg }}</p>
 <!--      <form id="signinForm" @submit="checkForm" action="" method="post" novalidate="true">
         <div v-if="errors.length">
           Vous avez des erreurs suivantes.
@@ -14,7 +15,7 @@
         <div class="form__commentpost">
           <label for="username">Utilisateur : </label>
             <br />
-          <input type="text" name="username" id="username" required /> 
+          <input type="text" name="username" id="username" @blur="validUsername" required /> 
         </div>
 
 
@@ -52,13 +53,14 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+//import { mapActions } from 'vuex';
 
 export default {
   name: 'loginSignin',
   components: {},
   data() {
     return {
+      msg: 'Veuillez remplir tous les champs.',
       form: {
         utilisateur: '',
         email: '',
@@ -68,20 +70,27 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['login']),
+    validUsername(username) {
+      const validUsername = /^[a-zA-Zéèàîûôïü -]{2,}$/g;
+      return validUsername.test(username);
+      
+    }/*,
+    validEmail(email) {
+      const validationEmail = /^[\w. -]+@[\w. -]+\.[\w]{2,3}$/g;
+      return validationEmail.match(email);
+    },
+    validPassword(password) {
+      const validationPassword = /^[éèàîûôïü\w. -/*._@]+$/g;
+      return validationPassword.match(password);
+    } */
+/*    ...mapActions(['loginSignin']),
     async submit() {
 
-    }
+    }*/
   }
 
 }
-import Vue from 'vue'
-new Vue ({
-  el: '#formField',
-  data: {
-    msg: 'helloooooooooooooooooooooooooooooooo'
-  }
-})
+
 /*
 const formField = new Vue ({
   el: '#formField',
@@ -123,6 +132,11 @@ const formField = new Vue ({
 </script>
 
 <style lang="scss">
+.formField{
+  &__msg{
+    font-style: bold;
+  }
+}
 input{
   cursor: pointer;
     

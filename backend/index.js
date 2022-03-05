@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const multer = require('./middleware/multer-config');
 const fs = require('fs');
 /************ Importer le fichier et mettre le port pour que app.js peut trouner ***********************/
+const app = require('./app');
 //const port = 3000;
 //La fonction normalizePort pour retouner le port validé(pas de port String)
 const normalizePort = val => {
@@ -22,14 +23,15 @@ const normalizePort = val => {
 };
 const port = normalizePort(process.env.PORT || '3000');
 
-//app.set('port', port); on n'a pas besoin
+//app.set('port', port); //on n'a pas besoin?
 /************ FIN: Importer le fichier et mettre le port ***********************/
 
 
 
 //const utilisateur = require('./routes/utilisateur');
-const app = express(); // const app = require('./app');
+/*const app = express(); // const app = require('./app');
 app.use(express.json());
+*/
 /*
 const session = require('express-session');
 app.use(session({
@@ -38,39 +40,35 @@ app.use(session({
     saveUninitialized: true
 }));
 */
-app.use(
+/*app.use(
     express.urlencoded({
         extended: true,
     })
-);
+); */
 /******* Controle d'acces pour les API  ***************************/
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
-  });
+  });*/
 /********************* FIN: controle d'acces routes generales*****************/
 
-app.use(express.static(path.join(__dirname, 'static')));
-
-//signin
-app.post('/api/signin', async( req, res, next) => {
-  console.log('signin post request');
+//app.use(express.static(path.join(__dirname, 'static')));
+/*
+//signup
+app.post('/api/signup', async( req, res, next) => {
+  console.log('signup post request');
   //const hashedPassword = await bcrypt.hash(req.body.password,10);
   //let sql = `INSERT INTO utilisateur (name, email, password) VALUES ('${ req.body.name }', '${ req.body.email }', hashedPassword)`;
   let sql = `INSERT INTO utilisateur (name, email, password) VALUES 
     ('${ req.body.name }', '${ req.body.email }', '${ req.body.password }')`;
   await connection.query( sql, (err, result) => {
-  /* if email already exists in database
-    if (req.body.email ?????) {
-      console.log('L'email deja utilisé : ');
-      console.log(req.body.email);
-    } */
+
     if (err) {
       throw err;
     }
-    console.log('L\'info signin est inseré avec le nom: ');
+    console.log('L\'info signup est inseré avec le nom: ');
     console.log(req.body.name);
   });
 });
@@ -97,8 +95,11 @@ app.post('/api/login', async(req, res, next) => {
 //post  ???????????????????????????????????????????? S'il n'y a pas de "file"
 app.post('/api/posts', multer, async(req, res, next) => {
   console.log('post one article');
+  console.log(req.body);
+  let utilisateurId = req.body.utilisateur_id;  //the same with :parseInt(req.body.utilisateur_id)
+  // only JSON file works. not the form-data
   let sql = `INSERT INTO post (postname, comment, utilisateur_id) VALUES 
-    ('${ req.body.postname }', '${ req.body.comment }', '${ req.body.utilisateur_id }')`; //sessionid?
+    ('${ req.body.postname }', '${ req.body.comment }', ${utilisateurId} )`; //sessionid?
   await connection.query( sql, (err, result) => {
     if (err) {
       throw err;
@@ -137,7 +138,7 @@ app.post('/api/posts', multer, async(req, res, next) => {
   });
 });                */
 
-
+/*koko
 //la page d'accueil avec touts les posts
 app.get('/api/posts', async(req, res, next) => {
   console.log('home with posts');
@@ -156,9 +157,9 @@ app.get('/api/posts', async(req, res, next) => {
 });
 
 //Liker 
-/*app.post('/api/posts', async(req, res, next) => {
+app.post('/api/posts', async(req, res, next) => {
   console.log('Liker un post');
-});*/
+});
 
 //modifier  post? put?
 app.put('/api/posts/:id', async(req, res) => {
@@ -166,9 +167,9 @@ app.put('/api/posts/:id', async(req, res) => {
   const postId = req.params.id;
   let postname = req.body.postname;
   let comment = req.body.comment;
-  /*if (req.params.id ===  ) {
+  //if (req.params.id ===  ) {}
 
-  }*/
+
   let sql = `UPDATE post SET postname = ${ req.body.postname } WHERE id = ${ req.params.id } `;
   res.json({ message: 'modifié' });
 });
@@ -184,6 +185,7 @@ app.get('/', (req, res) => {
     //res.render('../index.html');
   }); 
 });
+*/
 /*
 //const utilisateurRouter = require('./routes/utilisateur');
 //app.use('/utilisateur/', utilisateurRouter);
