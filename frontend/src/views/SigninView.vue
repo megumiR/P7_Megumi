@@ -52,14 +52,27 @@
 </template>
 
 <script>
-import WelcomeMsg from '../components/WelcomeMsg.vue'
+import { mapActions } from 'vuex';
 
 export default {
-  name: 'SigninView',
-  components: {
-    WelcomeMsg
-
+  name: 'loginSignin',
+  components: {},
+  data() {
+    return {
+      form: {
+        utilisateur: '',
+        email: '',
+        password: ''
+      },
+      showError: false
+    }
   },
+  methods: {
+    ...mapActions(['login']),
+    async submit() {
+
+    }
+  }
 
 }
 import Vue from 'vue'

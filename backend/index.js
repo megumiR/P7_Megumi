@@ -109,7 +109,9 @@ app.post('/api/posts', multer, async(req, res, next) => {
     res.json({ message: 'Votre post est bien crée!'});
     // Redirect to home page
 		res.redirect('/posts');
+    res.end();
   });
+  
 });
   /*
 app.post('/api/posts', multer, async(req, res, next) => {
@@ -134,6 +136,7 @@ app.post('/api/posts', multer, async(req, res, next) => {
 		res.redirect('/posts');
   });
 });                */
+
 
 //la page d'accueil avec touts les posts
 app.get('/api/posts', async(req, res, next) => {
