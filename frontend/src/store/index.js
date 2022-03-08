@@ -6,8 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     utilisateurId: null,
-    roll: null   //,token peutetre dans localstorage
-
+    roll: null,   //,token peutetre dans localstorage
+    
   },
   getters: {
   },

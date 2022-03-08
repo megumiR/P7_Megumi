@@ -28,7 +28,7 @@
                 <router-view />
 
 
-                <div class="delete PostCard__button--form" id="delete">Supprimer</div> 
+                <div class="delete PostCard__button--form" id="delete" v-if="utilisateurId">Supprimer</div> 
             </div>
 
             <div class="PostCard__iconblock">
@@ -61,7 +61,14 @@ export default {
   },
   methods : {
       increment: function () {
-          this.numberOfLikes++;
+/*          let isLiked = localStorage.getItem('Liked');
+          if (isLiked == utilisateurId) {
+            this.numberOfLikes--;
+          } else {
+*/            this.numberOfLikes++;
+/*            localstorage.setItem('Liked', utilisateurId); 
+          }
+ */
       },
       incrementDislike: function () {
           this.numberOfDislikes++;
