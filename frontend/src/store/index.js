@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    utilisateurId   //,token peutetre dans localstorage
+    utilisateurId: null,
+    roll: null   //,token peutetre dans localstorage
+
   },
   getters: {
   },
   mutations: {
+
+
   },
   actions: { //https://openclassrooms.com/en/courses/6390311-creez-une-application-web-avec-vue-js/6870776-modifiez-vos-donnees-dans-vuex
  /*   logIn: ({ commit }, payload) => {

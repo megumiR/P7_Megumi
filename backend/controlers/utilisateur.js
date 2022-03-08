@@ -9,8 +9,8 @@ const connection = require('../db__connection');  //importer l'info de mysql
 exports.signup = async( req, res, next) => {
     console.log('signup post request');
     const hashedPassword = await bcrypt.hash(req.body.password,10);
-    let sql = `INSERT INTO utilisateur (name, email, password) VALUES 
-        ('${ req.body.name }', '${ req.body.email }', '${hashedPassword}')`;
+    let sql = `INSERT INTO utilisateur (name, email, password, roll) VALUES 
+        ('${ req.body.name }', '${ req.body.email }', '${hashedPassword}', 'user')`;
    /// let sql = `INSERT INTO utilisateur (name, email, password) VALUES 
     //  ('${ req.body.name }', '${ req.body.email }', '${ req.body.password }')`;
     await connection.query( sql, (err, result) => {
@@ -51,7 +51,8 @@ exports.login = async(req, res, next) => {
                             { utilisateurId: utilisateur._id },
                             'RAMDOM_TOKEN_SECRET',
                             { expiresIn: '24h' }
-                        )
+                        ),
+                        roll: utilisateur.roll
                     });
                     // Redirect to home page
                     res.redirect('/api/posts');

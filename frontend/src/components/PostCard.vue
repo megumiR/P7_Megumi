@@ -12,7 +12,7 @@
         <div class="PostCard__img"> 
 <!--            <img :src="imageUrl" :alt="imageAlt" />    
 -->
-            <img src="../assets/logo.png" alt="image" />
+            <img :src="image" alt="image" />
         </div>    
         <div>
             <p>
@@ -22,7 +22,7 @@
             </p>
             
             <div class="PostCard__button">
-                <div class="update PostCard__button--form" id="update">
+                <div class="update PostCard__button--form" id="update" v-if="utilisateurId">
                     <router-link to="/update" > Modifier </router-link> 
                 </div>  
                 <router-view />
@@ -51,7 +51,7 @@
 export default {
   name: 'PostCard',
   props: [
-       'imageUrl', 'imageAlt', 'postName', 'postComment'
+       'image', 'postName', 'postComment'
   ],
   data: function () {
       return {

@@ -68,7 +68,17 @@ export default {
 
       showError: false
     }
-  },/*
+  },
+  methods: {
+    /*    ...mapActions(['logIn']),  //store actions:{ login({commit}, amount){ commit('mutationsstuff',amount)}
+    async submit() {
+
+    }*/
+  }
+
+}
+
+/*
   computed: {
     validUsername: function (username) {
       const validUsername = /^[a-zA-Zéèàîûôïü -]{2,}$/g;
@@ -95,15 +105,6 @@ export default {
       } 
     } 
   },*/
-  methods: {
-    /*    ...mapActions(['logIn']),  //store actions:{ login({commit}, amount){ commit('mutationsstuff',amount)}
-    async submit() {
-
-    }*/
-  }
-
-}
-
 /*
 const formField = new Vue ({
   el: '#formField',

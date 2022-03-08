@@ -1,28 +1,8 @@
 <template>
   <div class="home" id="home">
-<!--    <HeaderLogo title="Groupomaniaaa" />
-
-    <nav>
-      <NavLink url="/" text="Accueil" />
-      <NavLink url="/add" text="Ajouter un post" />
-      <NavLink url="/signup" text="Logout" />
-    </nav>
-
-  <div id="nav">
-    <router-link to="/" > accueil </router-link> |
-    <router-link to="/add" > Ajouter un post </router-link> |
-    <router-link to="/signup" > Logout </router-link> |
-  </div>
-  <router-view />
-
--->
-
-
     <WelcomeMsg msg="Bienvenu :)" recommend=""/>
 
-    <PostCard />
-<!--    v-for="post in list" :key="post" :post="post"  -->
-    
+    <PostCard v-for="post in list" :key="post" :post="post" />    
   </div>
 </template>
 
@@ -40,6 +20,16 @@ export default {
   data() {
     return {
       list: []
+    }
+  },
+  created: function () {
+    this.fetchData();
+  },
+  methods: {
+    fetchData: function() {
+      fetch('http://localhost:3000/api/posts')
+        .then( response => response.json())
+        .then( data => (this.list = data.result));
     }
   }
 }

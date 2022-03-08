@@ -14,6 +14,21 @@ export default {
   name: 'UpdateView',
   components: {
     FormField
+  },
+  data() {
+    return {
+      list: []
+    }
+  },
+  created: function () {
+    this.fetchData();
+  },
+  methods: {
+    fetchData: function() {
+      fetch('http://localhost:3000/api/posts')
+        .then( response => response.json())
+        .then( data => (this.list = data.result));
+    }
   }/* ,
   route: [
     { path: '/update/:id'} //{ path: '/update/:id', components: UpdateView}
