@@ -35,16 +35,14 @@
 
         <div class="">
           <div class="form__commentpost form__commentpost--button">
-            <router-link to="/">
+         <!--   <router-link to="/"> -->
               <input type="submit" value="Signin" id="sendSigninform">
-            </router-link>
+        <!--    </router-link> -->
           </div>
           <div class="form__commentpost form__commentpost--button">
-            <router-link to="/">
-              <input type="submit" value="Login" id="sendLoginform">
-            </router-link>
+            <input type="submit" value="Login" id="sendLoginform">
           </div>
-          <router-view />
+        <!--  <router-view /> -->
         </div>
 
       </form>
@@ -54,9 +52,10 @@
 
 <script>
 //import { mapActions } from 'vuex';
-
+//Vue.use(Vuex)
+//components: {WelcomeMsg},
 export default {
-  name: 'loginSignin',
+  name: 'logIn',  //name: 'SignupView',
   components: {},
   data() {
     return {
@@ -66,24 +65,38 @@ export default {
         email: '',
         password: ''
       },
+
       showError: false
     }
-  },
-  methods: {
-    validUsername(username) {
+  },/*
+  computed: {
+    validUsername: function (username) {
       const validUsername = /^[a-zA-Zéèàîûôïü -]{2,}$/g;
-      return validUsername.test(username);
-      
-    }/*,
-    validEmail(email) {
-      const validationEmail = /^[\w. -]+@[\w. -]+\.[\w]{2,3}$/g;
-      return validationEmail.match(email);
+      if (this.utilisateur !== "" && this.email !== "" && this.password !== "") {
+        return validUsername.test(username);
+      } else {
+        console.log('tous les champs sont obligatoire')
+      }      
     },
-    validPassword(password) {
+    validEmail: function (email) {
+      const validationEmail = /^[\w. -]+@[\w. -]+\.[\w]{2,3}$/g;
+      if (this.utilisateur !== "" && this.email !== "" && this.password !== "") {
+        return validationEmail.match(email);
+      } else {
+        console.log('tous les champs sont obligatoire')
+      }  
+    },
+    validPassword: function (password) {
       const validationPassword = /^[éèàîûôïü\w. -/*._@]+$/g;
-      return validationPassword.match(password);
-    } */
-/*    ...mapActions(['loginSignin']),
+      if (this.utilisateur !== "" && this.email !== "" && this.password !== "") {
+        return validationPassword.match(password);
+      } else {
+        console.log('tous les champs sont obligatoire')
+      } 
+    } 
+  },*/
+  methods: {
+    /*    ...mapActions(['logIn']),  //store actions:{ login({commit}, amount){ commit('mutationsstuff',amount)}
     async submit() {
 
     }*/

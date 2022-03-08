@@ -1,5 +1,5 @@
 const express = require('express');
-const multer = require('multer');
+const multer = require('../middleware/multer-config');
 //const auth = require('../middleware/auth');
 const router = express.Router();
 

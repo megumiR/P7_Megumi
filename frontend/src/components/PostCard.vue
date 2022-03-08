@@ -34,11 +34,13 @@
             <div class="PostCard__iconblock">
                 <div class="PostCard--icon PostCard--iconmargin">
                         <i class="far fa-heart fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
-                        <i class="fas fa-heart fa-lg PostCard--iconposition PostCard--iconcolor"></i>
+                        <i class="fas fa-heart fa-lg PostCard--iconposition PostCard--iconcolor" @click="increment()"></i>
+                        <div>{{ numberOfLikes }}</div>
                 </div>
                 <div class="PostCard--icon PostCard--iconmargin">
                         <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
-                        <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconcolor"></i>
+                        <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconcolor" @click="incrementDislike()"></i>
+                        <div>{{ numberOfDislikes }}</div>
                 </div>
             </div>
         </div>
@@ -50,7 +52,21 @@ export default {
   name: 'PostCard',
   props: [
        'imageUrl', 'imageAlt', 'postName', 'postComment'
-  ] 
+  ],
+  data: function () {
+      return {
+          numberOfLikes : 0,
+          numberOfDislikes : 0
+      }
+  },
+  methods : {
+      increment: function () {
+          this.numberOfLikes++;
+      },
+      incrementDislike: function () {
+          this.numberOfDislikes++;
+      }
+  } 
 }
 </script>
 

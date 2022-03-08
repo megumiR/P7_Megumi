@@ -6,7 +6,12 @@
     <div id="nav">
       <router-link to="/" > Accueil </router-link> |
       <router-link to="/add" > Ajouter un post </router-link> |
-      <router-link to="/signin"><span v-if="!login">Login </span><span v-if="login">Logout </span></router-link> |
+      <router-link to="/signup">
+        <span v-if="mode == 'login'">Login </span>
+        <span v-else>Logout </span>  <!-- @click="" logout??? -->
+      </router-link> |
+
+
     </div>
     <router-view />
 
@@ -21,13 +26,25 @@
 
 <script>
 import HeaderLogo from './components/HeaderLogo'
-
 export default {
   name: 'App',
   components: {    
     HeaderLogo
   }
-}
+}/* ????????????????
+export default {
+  name: 'login',
+  data: function () {
+    return {
+      mode: 'login'
+    } 
+  },
+  methods: {
+    @EventListenerNwme: function() {
+      this.mode = 'eventlistenedand...';
+    }
+  }
+}    */
 /* How can i put the state Login
 import Vue from 'vue'
 new Vue ({

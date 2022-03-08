@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import AccueilView from '../views/AccueilView.vue'
 import AddView from '../views/AddView.vue'
-import SigninView from '../views/SigninView.vue'
+import SignupView from '../views/SignupView.vue'
 import UpdateView from '../views/UpdateView.vue'
 
 
@@ -20,9 +20,9 @@ const routes = [
     component: AddView
   },
   {
-    path: '/signin',
-    name: 'signin',
-    component: SigninView
+    path: '/signup',
+    name: 'signup',
+    component: SignupView
   },
   {
     path: '/update',

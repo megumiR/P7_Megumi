@@ -2,12 +2,12 @@
 const bcrypt = require('bcrypt');
 const connection = require('../db__connection');  //importer l'info de mysql 
 
-
+const fs = require('fs');
 //const jwt = require('jsonwebtoken');
 
 /********* la logique *********/
 //post un post  ?????????????????????? S'il n'y a pas de "file"
-exports.post = async(req, res, next) => {
+exports.createPost = async(req, res, next) => {
     console.log('post one article');
     console.log(req.body);
     let utilisateurId = req.body.utilisateur_id;  //the same with :parseInt(req.body.utilisateur_id)
@@ -21,7 +21,7 @@ exports.post = async(req, res, next) => {
       console.log('L\'article post est inseré : ');
       console.log(result);
   
-      res.json({ message: 'Votre post est bien crée!'});
+      res.status(201).json({ message: 'Votre post est bien crée!'});
       // Redirect to home page
           res.redirect('/posts');
       res.end();
@@ -59,30 +59,96 @@ exports.showallposts = async(req, res, next) => {
       }
       console.log('posts: ', result);
       if (result.length >0) {
-              res.json({ result });
+              res.status(200).json({ result });
       } else {
-        res.json({ message: 'Il n\'y a pas de post à affichier !' });
+        res.status(400).json({ message: 'Il n\'y a pas de post à affichier !' });
       }
     });
 };
-
+//  IL FAUT TESTER depuis la
 exports.liker = async(req, res, next) => {
-    console.log('Liker un post');
+  console.log('Liker un post');
+  let sqlFind = `SELECT * FROM post WHERE id = ${ req.params.id }`;
+  await connection.query( sqlFind, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    console.log('specifié post por liker');
+
+  });
+
 };
-//modifier  post? put?
-exports.updatePost = async(req, res) => {
-    console.log('update specific post');
-    const postId = req.params.id;
-    let postname = req.body.postname;
-    let comment = req.body.comment;
-    //if (req.params.id ===  ) {}
-  
-  
-    let sql = `UPDATE post SET postname = ${ req.body.postname } WHERE id = ${ req.params.id } `;
-    res.json({ message: 'modifié' });
+//modifier 
+exports.updatePost = async(req, res, next) => {
+    console.log('update specific post');  
+    let sqlFind = `SELECT * FROM post WHERE id = ${ req.params.id }`;
+    await connection.query( sqlFind, (err, result) => {
+      if (err) {
+        throw err;
+      }
+      let sqlPostname = `UPDATE post SET postname = ${ req.body.postname } WHERE id = ${ req.params.id } `;
+      let sqlComment = `UPDATE post SET comment = ${ req.body.comment } WHERE id = ${ req.params.id } `;
+      connection.query( sqlPostname, (err, result) => {
+        if (err) {
+          throw err;
+        }
+        console.log('Le postname est changé');
+        connection.query(sqlComment, (err, result) => {
+          if (err) {
+            throw err;
+          }
+          console.log('Le comment est changé');
+        });
+      });
+      res.status(201).json({ message: 'modifié' });
+    });
 };
 //supprimer
 exports.deletePost = async(req, res, next) => {
-    console.log('delete specific post');
+  console.log('delete specific post');
+  let sqlFind = `SELECT * FROM post WHERE id = ${ req.params.id }`;
+  await connection.query( sqlFind, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    const filename = sauce.imageUrl.split('/images/')[1];
+    fs.unlink(`images/${filename}`, () => {
+      let sql = `DELETE FROM post WHERE id = ${ req.params.id } `;
+      connection.query( sql, (err, result) => {
+        if (err) {
+          throw err;
+        }
+        console.log('Le post est bien supprimé');
+        res.status(200).json({ message: 'supprimé' });
+      });
+    });
+  });
+  
 };
+/** session id?????????????????????//
+const cookieParser = require('cookie-parser');
+const session = require('express-session')
+app.use(cookieParser());
+app.use(session({
+    secret: '34SDgsdgspxxxxxxxdfsG', // just a long random string
+    resave: false,
+    saveUninitialized: true
+}));
+//req.sessionID and req.session.id for taking back the id
+app.post('/login', function(req, res)
+{
+  var sid = req.sessionID;
+  var username = req.body.user;
+  var password = req.body.pass;
 
+  users.findOne({username : username, password : password}, function(err, result)
+  { 
+    ...
+    sessionStore.destroy(result.session, function(){
+       ...
+       users.update({_id: result._id}, {$set:{"session" : sid}});
+       ...
+    }
+    ...
+  }
+}*/
