@@ -13,6 +13,19 @@ export default {
   name: 'AddView',
   components: {
     FormField
+  },
+  data() {
+
+  },
+  updated: function () {
+    this.postData();
+  },
+  methods: {
+    postData: function() {
+      fetch("post", 'http://localhost:3000/api/posts')
+        .then( response => response.json())
+        .then( data => (this.list = data.result));
+    }
   }
 }
 </script>

@@ -7,8 +7,8 @@
       <router-link to="/" > Accueil </router-link> |
       <router-link to="/add" > Ajouter un post </router-link> |
       <router-link to="/signup">
-        <span v-if="mode == 'login'">Login </span>
-        <span v-else>Logout </span>  <!-- @click="" logout??? -->
+        <span v-if="utilisateurId">Logout </span>  
+        <span v-else>Login </span>
       </router-link> |
 
 

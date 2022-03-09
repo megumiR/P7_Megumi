@@ -20,14 +20,14 @@ export default {
       list: []
     }
   },
-  created: function () {
-    this.fetchData();
+  updated: function () {
+    this.updateData();
   },
   methods: {
-    fetchData: function() {
-      fetch('http://localhost:3000/api/posts')
+    updateData: function() {
+      fetch("put", 'http://localhost:3000/api/posts/:id')
         .then( response => response.json())
-        .then( data => (this.list = data.result));
+      //  .then( data => (this.list = data.result));
     }
   }/* ,
   route: [

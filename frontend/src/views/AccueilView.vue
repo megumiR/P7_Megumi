@@ -2,7 +2,7 @@
   <div class="home" id="home">
     <WelcomeMsg msg="Bienvenu :)" recommend=""/>
 
-    <PostCard v-for="post in list" :key="post" :post="post" />    
+    <PostCard v-for="post in list" :key="post.comment" :post="post" comment="post.comment"/>    
   </div>
 </template>
 

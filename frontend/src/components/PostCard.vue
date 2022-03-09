@@ -16,7 +16,7 @@
         </div>    
         <div>
             <p>
-                {{ postComment }} <br/>
+                {{ comment }} <br/>
 
                 [ Comment par {{ postName }} ] 
             </p>
@@ -49,10 +49,12 @@
 
 <script>
 export default {
-  name: 'PostCard',
+  name: 'PostCard', /*
   props: [
-       'image', 'postName', 'postComment'
-  ],
+       { image : post.image },
+       { postName : post.postName }, 
+       { comment : post.comment }
+  ],*/
   data: function () {
       return {
           numberOfLikes : 0,

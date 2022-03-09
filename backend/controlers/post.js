@@ -78,7 +78,7 @@ exports.liker = async(req, res, next) => {
   });
 
 };
-//modifier 
+//modifier  image?
 exports.updatePost = async(req, res, next) => {
     console.log('update specific post');  
     let sqlFind = `SELECT * FROM post WHERE id = ${ req.params.id }`;
