@@ -12,7 +12,7 @@
         <div class="PostCard__img"> 
 <!--            <img :src="imageUrl" :alt="imageAlt" />    
 -->
-            <img :src="image" alt="image" />
+            <img :src="image" alt="image" v-if="imageFile"/>
         </div>    
         <div>
             <p>

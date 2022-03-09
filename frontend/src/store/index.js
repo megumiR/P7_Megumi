@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     utilisateurId: null,
     roll: null,   //,token peutetre dans localstorage
-    
+    imageFile: null
   },
   getters: {
   },
