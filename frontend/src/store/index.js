@@ -10,10 +10,15 @@ export default new Vuex.Store({
     imageFile: null
   },
   getters: {
+  /*  Stateimagefile: state => {
+      return state.imageFile
+    }, */
   },
   mutations: {
-
-
+    
+  //  setImagefile (state, imageFile) {
+  //    state.imageFile = imageFile
+  //  }
   },
   actions: { //https://openclassrooms.com/en/courses/6390311-creez-une-application-web-avec-vue-js/6870776-modifiez-vos-donnees-dans-vuex
  /*   logIn: ({ commit }, payload) => {

@@ -10,8 +10,7 @@
             </div>
             -->
         <div class="PostCard__img"> 
-<!--            <img :src="imageUrl" :alt="imageAlt" />    
--->
+
             <img :src="image" alt="image" v-if="imageFile"/>
         </div>    
         <div>
@@ -21,6 +20,7 @@
                 [ Comment par {{ postName }} ] 
             </p>
             
+
             <div class="PostCard__button">
                 <div class="update PostCard__button--form" id="update" v-if="utilisateurId">
                     <router-link to="/update" > Modifier </router-link> 
@@ -48,13 +48,10 @@
 </template>
 
 <script>
+
 export default {
-  name: 'PostCard', /*
-  props: [
-       { image : post.image },
-       { postName : post.postName }, 
-       { comment : post.comment }
-  ],*/
+  name: 'PostCard', 
+  props: [ 'image', 'comment', 'postName' ],  //''内にTemplate上で{{}}書きした名前を入れて親部品中でGetリクエストの内容を反映する
   data: function () {
       return {
           numberOfLikes : 0,
@@ -63,20 +60,24 @@ export default {
   },
   methods : {
       increment: function () {
-/*          let isLiked = localStorage.getItem('Liked');
-          if (isLiked == utilisateurId) {
+          // let isLiked = localStorage.getItem('Liked'); if (isLiked == utilisateurId) {
+          let isLiked = false;
+          if (isLiked) {
             this.numberOfLikes--;
+            isLiked = true;
           } else {
-*/            this.numberOfLikes++;
-/*            localstorage.setItem('Liked', utilisateurId); 
+            this.numberOfLikes++;
+//          localstorage.setItem('Liked', utilisateurId); 
           }
- */
+
       },
       incrementDislike: function () {
           this.numberOfDislikes++;
       }
   } 
 }
+
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

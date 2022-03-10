@@ -40,19 +40,19 @@ exports.login = async(req, res, next) => {
       console.log('L\'info utilisateur: ', result);
       if (result.length >0) {
         console.log('login ok');
-        bcrypt.compare(req.body.password, utilisateur.password) //compare frontend data n database hashed data
+        bcrypt.compare(req.body.password, result.password) //compare frontend data n database hashed data
                 .then(valid => {
                     if (!valid) {
                         return res.status(401).json({ error: 'Le mot de passe est incorrect.' })
                     }
                     res.status(200).json({
-                        utilisateurId: utilisateur._id,
+                        utilisateurId: result._id,
                         token: jwt.sign(    //new token cryptnize
-                            { utilisateurId: utilisateur._id },
+                            { utilisateurId: result._id },
                             'RAMDOM_TOKEN_SECRET',
                             { expiresIn: '24h' }
                         ),
-                        roll: utilisateur.roll
+                        roll: result.roll
                     });
                     // Redirect to home page
                     res.redirect('/api/posts');

@@ -24,6 +24,6 @@ export default {
 <style scoped lang="scss">
 
 a {
-  color: #42b983;
+  color: #481a83;
 }
 </style>

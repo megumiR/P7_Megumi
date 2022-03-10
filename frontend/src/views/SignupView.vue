@@ -51,12 +51,14 @@
 </template>
 
 <script>
+
+import WelcomeMsg from '../components/WelcomeMsg.vue'
 //import { mapActions } from 'vuex';
 //Vue.use(Vuex)
-//components: {WelcomeMsg},
+
 export default {
   name: 'logIn',  //name: 'SignupView',
-  components: {},
+  components: {WelcomeMsg},
   data() {
     return {
       msg: 'Veuillez remplir tous les champs.',
@@ -65,11 +67,11 @@ export default {
         email: '',
         password: ''
       },
-
       showError: false
     }
   },
   methods: {
+   // login: 
     /*    ...mapActions(['logIn']),  //store actions:{ login({commit}, amount){ commit('mutationsstuff',amount)}
     async submit() {
 
