@@ -3,7 +3,8 @@
     <WelcomeMsg msg="Bienvenu au Groupomania chat :)" recommend="Si vous voulez créer un post, inscrivez-vous !"/>
     
     <div class="formField">
-      <p class="formField__msg">{{ msg }}</p>
+      <p class="formField__msg" v-if="mode == 'signup'">Vous avez déjà un compte ?<span class="formField__color" @click="switchToLogin"> Connexion par ici</span></p>
+      <p class="formField__msg" v-else>Vous n'avez pas encore de compte ?<span class="formField__color" @click="switchToSignup"> Créer un compte</span></p>
 <!--      <form id="signinForm" @submit="checkForm" action="" method="post" novalidate="true">
         <div v-if="errors.length">
           Vous avez des erreurs suivantes.
@@ -12,10 +13,10 @@
           </ul>
         </div>
 -->   <form id="signinForm" action="">
-        <div class="form__commentpost">
+        <div class="form__commentpost" v-if="mode == 'signup'">
           <label for="username">Utilisateur : </label>
             <br />
-          <input type="text" name="username" id="username" @blur="validUsername" required /> 
+          <input type="text" name="username" id="username" v-on:blur="validUsername" required /> <!-- @blur="validUsername" -->
         </div>
 
 
@@ -26,7 +27,7 @@
      <!--     <p id="emailErrorMsg"></p>  -->
         </div>
 
-        <div class="form__commentpost">
+        <div class="form__commentpost"> 
           <label for="password">Mot de passe : </label>
             <br />
           <input type="password" name="password" id="password" required /> 
@@ -34,13 +35,14 @@
         </div>
 
         <div class="">
-          <div class="form__commentpost form__commentpost--button">
-         <!--   <router-link to="/"> -->
-              <input type="submit" value="Signin" id="sendSigninform">
+          <div class="form__commentpost" v-if="mode == 'signup'">
+         <!--   <router-link to="/">    <input type="submit" value="Signin" id="sendSigninform"> -->
+              <button class="button" @click="sendSigninform">inscription</button>
         <!--    </router-link> -->
           </div>
-          <div class="form__commentpost form__commentpost--button">
-            <input type="submit" value="Login" id="sendLoginform">
+          <div class="form__commentpost" v-else>
+       <!--     <input type="submit" value="Login" id="sendLoginform">   -->
+            <button class="button" id="sendLoginform">Connexion</button>
           </div>
         <!--  <router-view /> -->
         </div>
@@ -61,16 +63,54 @@ export default {
   components: {WelcomeMsg},
   data() {
     return {
-      msg: 'Veuillez remplir tous les champs.',
+//      msg: 'message ici ', {{ msg }} pour affichier
+      mode: 'signup',
       form: {
-        utilisateur: '',
+        user: '',
         email: '',
         password: ''
       },
       showError: false
     }
   },
+  computed: {
+    validUsername: function (username) {
+      const validUsername = /^[a-zA-Zéèàîûôïü -]{2,}$/g;
+      console.log('username');
+      if (this.user !== "" && this.email !== "" && this.password !== "") {
+        let result = validUsername.test(username);
+        return result;
+      } else {
+        console.log('tous les champs sont obligatoire')
+      }      
+    },
+/*    validEmail: function (email) {
+      const validationEmail = /^[\w. -]+@[\w. -]+\.[\w]{2,3}$/g;
+      if (this.user !== "" && this.email !== "" && this.password !== "") {
+        return validationEmail.match(email);
+      } else {
+        console.log('tous les champs sont obligatoire')
+      }  
+    },
+    validPassword: function (password) {
+      const validationPassword = /^[éèàîûôïü\w. -/*._@]+$/g;
+      if (this.user !== "" && this.email !== "" && this.password !== "") {
+        return validationPassword.match(password);
+      } else {
+        console.log('tous les champs sont obligatoire')
+      } 
+    }
+*/  },
   methods: {
+    switchToLogin: function() {
+      this.mode = 'login';
+    },
+    switchToSignup: function() {
+      this.mode = 'signup';
+    },
+    sendSigninform: function() {
+      console.log('sendSigninform: ' , this.email);
+    },
    // login: 
     /*    ...mapActions(['logIn']),  //store actions:{ login({commit}, amount){ commit('mutationsstuff',amount)}
     async submit() {
@@ -80,33 +120,7 @@ export default {
 
 }
 
-/*
-  computed: {
-    validUsername: function (username) {
-      const validUsername = /^[a-zA-Zéèàîûôïü -]{2,}$/g;
-      if (this.utilisateur !== "" && this.email !== "" && this.password !== "") {
-        return validUsername.test(username);
-      } else {
-        console.log('tous les champs sont obligatoire')
-      }      
-    },
-    validEmail: function (email) {
-      const validationEmail = /^[\w. -]+@[\w. -]+\.[\w]{2,3}$/g;
-      if (this.utilisateur !== "" && this.email !== "" && this.password !== "") {
-        return validationEmail.match(email);
-      } else {
-        console.log('tous les champs sont obligatoire')
-      }  
-    },
-    validPassword: function (password) {
-      const validationPassword = /^[éèàîûôïü\w. -/*._@]+$/g;
-      if (this.utilisateur !== "" && this.email !== "" && this.password !== "") {
-        return validationPassword.match(password);
-      } else {
-        console.log('tous les champs sont obligatoire')
-      } 
-    } 
-  },*/
+
 /*
 const formField = new Vue ({
   el: '#formField',
@@ -152,9 +166,18 @@ const formField = new Vue ({
   &__msg{
     font-style: bold;
   }
+  &__color{
+    color: rgb(216, 53, 12);
+    cursor: pointer;
+  }
 }
-input{
+button{
   cursor: pointer;
-    
+  border: none;
+  border-radius: 8px 8px;
+  padding: 10px 45px;
+  background-color: #fbd8cf;
+  font-size: larger;
+  
 }
 </style>

@@ -7,7 +7,7 @@
       <router-link to="/" > Accueil </router-link> |
       <router-link to="/add" > Ajouter un post </router-link> |
       <router-link to="/signup">
-        <span v-if="utilisateurId">Logout </span>  
+        <span v-if="$store.state.utilisateurId">Logout </span>  
         <span v-else>Login </span>
       </router-link> |
 

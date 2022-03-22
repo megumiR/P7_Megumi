@@ -1,6 +1,7 @@
 <template>
   <div class="home" id="home">
     <WelcomeMsg msg="Bienvenu :) " recommend=""/>
+    <p v-if="$store.state.utilisateurId">{{ $store.state.utilisateurId }}</p>
 
     <p v-if="!list">Pas de post à affichier</p>
     <PostCard v-else v-for="post in list" 

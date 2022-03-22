@@ -61,15 +61,40 @@ export default {
   methods : {
       increment: function () {
           // let isLiked = localStorage.getItem('Liked'); if (isLiked == utilisateurId) {
+          
+          console.log(isLiked);
           let isLiked = false;
-          if (isLiked) {
-            this.numberOfLikes--;
-            isLiked = true;
-          } else {
-            this.numberOfLikes++;
-//          localstorage.setItem('Liked', utilisateurId); 
+          console.log(isLiked);
+        
+          if (!isLiked) {
+              console.log('liked doesnt exsist');
+              isLiked = true;
+              console.log(isLiked);
+          } else if (isLiked == false) {
+              console.log('isLiked == false');
+          } else if (isLiked == true) {
+              console.log('isLiked == true');
           }
-
+              
+          
+          
+          
+          /*
+          let likePost = react.likePost;
+          console.log(likePost);
+          
+          if (isReacted == true && likePost == true) {
+            this.numberOfLikes--;
+            reaction.push({ 'likePost' : 'false'});
+            localStorage.setItem('reaction', reaction); 
+          } else if (isReacted == true && likePost == false) {
+            this.numberOfLikes++;
+            reaction.push({ 'likePost' : 'true'});
+            localStorage.setItem('reaction', reaction); 
+          } else {
+            isReacted = false; 
+          }
+*/
       },
       incrementDislike: function () {
           this.numberOfDislikes++;
