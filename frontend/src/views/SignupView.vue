@@ -17,6 +17,7 @@
           <label for="username">Utilisateur : </label>
             <br />
           <input type="text" name="username" id="username" v-on:blur="validUsername" required /> <!-- @blur="validUsername" -->
+          <p id="userErrorMsg">{{ userErrorMsg }}</p>
         </div>
 
 
@@ -70,21 +71,13 @@ export default {
         email: '',
         password: ''
       },
+      userErrorMsg: '',
       showError: false
     }
   },
-  computed: {
-    validUsername: function (username) {
-      const validUsername = /^[a-zA-Zéèàîûôïü -]{2,}$/g;
-      console.log('username');
-      if (this.user !== "" && this.email !== "" && this.password !== "") {
-        let result = validUsername.test(username);
-        return result;
-      } else {
-        console.log('tous les champs sont obligatoire')
-      }      
-    },
-/*    validEmail: function (email) {
+/*  computed: {
+    
+    validEmail: function (email) {
       const validationEmail = /^[\w. -]+@[\w. -]+\.[\w]{2,3}$/g;
       if (this.user !== "" && this.email !== "" && this.password !== "") {
         return validationEmail.match(email);
@@ -100,7 +93,7 @@ export default {
         console.log('tous les champs sont obligatoire')
       } 
     }
-*/  },
+  },*/
   methods: {
     switchToLogin: function() {
       this.mode = 'login';
@@ -108,7 +101,19 @@ export default {
     switchToSignup: function() {
       this.mode = 'signup';
     },
+    validUsername: function (username) {
+      const checkUsername = /^[a-zA-Zéèàîûôïü -]{2,}$/g;
+      
+      if (!this.user) {
+        this.userErrorMsg = 'L\'utilisateur est obligatoire et ce champ accepte que des lettres et "-"';
+        console.log('user name invalide');  
+      } else {
+        return checkUsername.test(username); 
+       
+      }
+    },
     sendSigninform: function() {
+      
       console.log('sendSigninform: ' , this.email);
     },
    // login: 
