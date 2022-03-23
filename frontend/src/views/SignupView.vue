@@ -101,15 +101,27 @@ export default {
     switchToSignup: function() {
       this.mode = 'signup';
     },
-    validUsername: function (username) {
+    validUsername: function (e) {
       const checkUsername = /^[a-zA-Zéèàîûôïü -]{2,}$/g;
-      
-      if (!this.user) {
-        this.userErrorMsg = 'L\'utilisateur est obligatoire et ce champ accepte que des lettres et "-"';
-        console.log('user name invalide');  
+      console.log('user: '+ this.user);
+      console.log('username of input: '+ e.target.value);
+      let username = e.target.value;
+      this.user = username;
+      console.log('user: '+ this.user);
+      if (this.user) {
+        let result = checkUsername.test(username); 
+        // return checkUsername.test(username); 
+        if (result == true) {
+          console.log('user : valide');
+        } else if (result == false) {
+          this.userErrorMsg = 'Ce champ "utilisateur" accepte que des lettres et "-"';
+          console.log('user name est invalide'); 
+        } else {
+          console.log('error');
+        }     
       } else {
-        return checkUsername.test(username); 
-       
+        this.userErrorMsg = 'L\'utilisateur est obligatoire et ce champ accepte que des lettres et "-"';
+        console.log('user name est vide');
       }
     },
     sendSigninform: function() {
