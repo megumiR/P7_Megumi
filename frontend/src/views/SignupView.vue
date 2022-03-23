@@ -68,8 +68,8 @@ export default {
       mode: 'signup',
       form: {
         user: '',
-        email: '',
-        password: ''
+        email: '',  //null?
+        password: '', //null?
       },
       userErrorMsg: '',
       emailErrorMsg: '',
@@ -167,8 +167,14 @@ export default {
         console.log('password est vide')
       } 
     },
-    sendSigninform: function() {
+    sendSigninform: function(e) {
+      e.preventDefault();
       
+      this.$store.dispatch('sendSigninform', {  //$store.dispatch method triggers actions
+        user: this.user,
+        email: this.email,
+        password: this.password
+      })
       console.log('sendSigninform: ' , this.email);
     },
    // login: 

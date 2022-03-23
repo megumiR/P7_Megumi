@@ -1,3 +1,4 @@
+
 <template>
     <div class="PostCard">
             <!-- v-bind for API
@@ -22,13 +23,13 @@
             
 
             <div class="PostCard__button">
-                <div class="update PostCard__button--form" id="update" v-if="utilisateurId">
+                <div class="update PostCard__button--form" id="update" v-if="$store.userId">
                     <router-link to="/update" > Modifier </router-link> 
                 </div>  
                 <router-view />
 
 
-                <div class="delete PostCard__button--form" id="delete" v-if="utilisateurId">Supprimer</div> 
+                <div class="delete PostCard__button--form" id="delete" v-if="$store.userId">Supprimer</div> 
             </div>
 
             <div class="PostCard__iconblock">
@@ -55,12 +56,12 @@ export default {
   data: function () {
       return {
           numberOfLikes : 0,
-          numberOfDislikes : 0
+          numberOfDislikes : 0,
       }
   },
   methods : {
       increment: function () {
-          // let isLiked = localStorage.getItem('Liked'); if (isLiked == utilisateurId) {
+          // let isLiked = localStorage.getItem('Liked'); if (isLiked == userId) {
           
           console.log(isLiked);
           let isLiked = false;
@@ -74,11 +75,7 @@ export default {
               console.log('isLiked == false');
           } else if (isLiked == true) {
               console.log('isLiked == true');
-          }
-              
-          
-          
-          
+          } 
           /*
           let likePost = react.likePost;
           console.log(likePost);

@@ -17,12 +17,14 @@ exports.signup = async( req, res, next) => {
     // if email already exists in database
       let checkEmailSQL = `SELECT * FROM utilisateur WHERE email LIKE ${ req.body.email } `;
       if (checkEmailSQL.length >0) {
+          console.log(checkEmailSQL.length);  /// ?????
         console.log('L\'email deja utilisé : ');
         console.log(req.body.email);
         res.json({ message: 'L\'email deja existe'});
       } 
       if (err) {
-        throw err;
+       // throw err;
+        console.log(err);
       }
       console.log('L\'info signup est inseré avec le nom: ');
       console.log(req.body.name);
