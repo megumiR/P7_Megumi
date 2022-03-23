@@ -24,15 +24,15 @@
         <div class="form__commentpost">
           <label for="email">Email : </label>
             <br />
-          <input type="email" name="email" id="email" required /> 
-     <!--     <p id="emailErrorMsg"></p>  -->
+          <input type="email" name="email" id="email" v-on:blur="validEmail" required /> 
+          <p id="emailErrorMsg">{{ emailErrorMsg }}</p>  
         </div>
 
         <div class="form__commentpost"> 
           <label for="password">Mot de passe : </label>
             <br />
-          <input type="password" name="password" id="password" required /> 
-          <p id="passwordErrorMsg"><!-- ci est un message d'erreur --></p>
+          <input type="password" name="password" id="password" v-on:blur="validPassword" required /> 
+          <p id="passwordErrorMsg">{{ passwordErrorMsg }}<!-- ci est un message d'erreur --></p>
         </div>
 
         <div class="">
@@ -72,23 +72,25 @@ export default {
         password: ''
       },
       userErrorMsg: '',
+      emailErrorMsg: '',
+      passwordErrorMsg: '', //on n affiche pas d abord mais on change les valeurs dans methods
       showError: false
     }
   },
 /*  computed: {
     
     validEmail: function (email) {
-      const validationEmail = /^[\w. -]+@[\w. -]+\.[\w]{2,3}$/g;
+      const checkEmail = /^[\w. -]+@[\w. -]+\.[\w]{2,3}$/g;
       if (this.user !== "" && this.email !== "" && this.password !== "") {
-        return validationEmail.match(email);
+        return checkEmail.match(email);
       } else {
         console.log('tous les champs sont obligatoire')
       }  
     },
     validPassword: function (password) {
-      const validationPassword = /^[éèàîûôïü\w. -/*._@]+$/g;
+      const checkPassword = /^[éèàîûôïü\w. -/*._@]+$/g;
       if (this.user !== "" && this.email !== "" && this.password !== "") {
-        return validationPassword.match(password);
+        return checkPassword.match(password);
       } else {
         console.log('tous les champs sont obligatoire')
       } 
@@ -108,21 +110,62 @@ export default {
       let username = e.target.value;
       this.user = username;
       console.log('user: '+ this.user);
-      if (this.user) {
+      if (username) {
         let result = checkUsername.test(username); 
         // return checkUsername.test(username); 
         if (result == true) {
           console.log('user : valide');
+          this.userErrorMsg = '';
         } else if (result == false) {
-          this.userErrorMsg = 'Ce champ "utilisateur" accepte que des lettres et "-"';
+          this.userErrorMsg = 'Ce champ "utilisateur" accepte que des caractères et "-"';
           console.log('user name est invalide'); 
         } else {
-          console.log('error');
+          console.log('error : username regex ne marche pas');
         }     
       } else {
-        this.userErrorMsg = 'L\'utilisateur est obligatoire et ce champ accepte que des lettres et "-"';
+        this.userErrorMsg = 'L\'utilisateur est obligatoire.';
         console.log('user name est vide');
       }
+    },
+    validEmail: function (e) {
+      const checkEmail = /^[\w. -]+@[\w. -]+\.[\w]{2,3}$/g;
+      let email = e.target.value;
+      this.email = email;
+      if (email) {
+        //return checkEmail.test(email);
+        let result = email.match(checkEmail);
+        if (result == true) {
+          console.log('email : valide');
+          this.emailErrorMsg = '';
+        } else if (result == false) {
+          this.emailErrorMsg = 'Ce champ "email" est invalide. Ecrivez comme abc@xxx.com .';
+        } else {
+          console.log('error : email regex ne marche pas');
+        }
+      } else {
+        this.emailErrorMsg = 'L\'email est obligatoire.';
+        console.log('email est vide');
+      }  
+    },
+    validPassword: function (e) {
+      const checkPassword = /^[éèàîûôïü\w. -/*._@]+$/g;
+      let password = e.target.value;
+      this.password = password;
+      if (password) {
+        //return checkPassword.match(password);
+        let result = password.match(checkPassword);
+        if (result == true) {
+          console.log('password : valide');
+          this.passwordErrorMsg = '';
+        } else if (result == false) {
+          this.passwordErrorMsg = 'Le mot de passe est invalide. Ecrivez avec des caractères, des nombres et des caractères speciales suivantes -/*._ et @ .';
+        } else {
+          console.log('error : password regex ne marche pas');
+        }
+      } else {
+        this.passwordErrorMsg = 'Le mot de passe est obligatoire.';
+        console.log('password est vide')
+      } 
     },
     sendSigninform: function() {
       
