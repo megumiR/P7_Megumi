@@ -1,57 +1,50 @@
 /********* importer des fichier , modules *************/
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 const connection = require('../db__connection');  //importer l'info de mysql 
-
+const multer = require('../middleware/multer-config');
 const fs = require('fs');
 //const jwt = require('jsonwebtoken');
 
 /********* la logique *********/
 //post un post  ?????????????????????? S'il n'y a pas de "file"
-exports.createPost = async(req, res, next) => {
-    console.log('post one article');
+exports.createPost = /*async(req, res, next) => {
+    console.log('post one article---------');
     console.log(req.body);
-    let utilisateurId = req.body.utilisateur_id;  //the same with :parseInt(req.body.utilisateur_id)
-    // only JSON file works. not the form-data
+    let userId = req.body.utilisateur_id;  //the same with :parseInt(req.body.utilisateur_id)
+    // only JSON file works. not the form-data on postman
     let sql = `INSERT INTO post (postname, comment, utilisateur_id) VALUES 
-      ('${ req.body.postname }', '${ req.body.comment }', ${utilisateurId} )`; //sessionid?
+      ('${ req.body.postname }', '${ req.body.comment }', '${userId}' )`; //sessionid?
     await connection.query( sql, (err, result) => {
       if (err) {
         throw err;
       }
-      console.log('L\'article post est inseré : ');
-      console.log(result);
+      console.log('L\'article post est inseré : '+ req.body.comment);
   
       res.status(201).json({ message: 'Votre post est bien crée!'});
-      // Redirect to home page
-          res.redirect('/posts');
-      res.end();
     });
-};
-/*async(req, res, next) => {
-  console.log('post one article');
-  const postartObject = req.file ?              // s'il y a un fichier {oui traiter l'image}:{non traiter l'objet}
+};*/
+async(req, res, next) => {
+  console.log('post one article---------');
+ // const postObject = JSON.parse(req.body.post);
+  const post = req.file ?              // s'il y a un fichier {oui traiter l'image}:{non traiter l'objet}
   {
-      ...JSON.parse(req.body.postart),
+      ...JSON.parse(req.body.post),
       image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` 
   } : { ...req.body };
-
-  let sql = `INSERT INTO post (postname, comment, image) VALUES 
-    ('${ req.body.postname }', '${ req.body.comment }', '${req.protocol}://${req.get('host')}/images/${req.file.filename}')`; //${ req.body.image }
+  console.log('post: ' + post);
+  let sql = `INSERT INTO post (postname, comment, image, utilisateur_id) VALUES 
+    ('${ req.body.postname }', '${ req.body.comment }', '${req.protocol}://${req.get('host')}/images/${req.file.filename}', '${req.body.utilisateur_id}')`; //${ req.body.image }
   await connection.query( sql, (err, result) => {
     if (err) {
       throw err;
     }
-    console.log('L\'article post est inseré : ');
-    console.log(result);
-
-    res.json({ message: 'Votre post est bien crée!'});
-    // Redirect to home page
-		res.redirect('/posts');
+    console.log('L\'article post est inseré : ' + req.body.comment);
+    res.status(201).json({ message: 'Votre post est bien crée!'});
   });
-});                */
-
+  res.status(400).json({ error });             
+};
 exports.showallposts = async(req, res, next) => {
-    console.log('home with posts');
+    console.log('home with posts---------');
     let sql = `SELECT * FROM post`;
     await connection.query( sql, (err, result) => {
       if (err) {
@@ -59,7 +52,7 @@ exports.showallposts = async(req, res, next) => {
       }
       console.log('posts: ', result);
       if (result.length >0) {
-              res.status(200).json({ result });
+        res.status(200).json({ result });
       } else {
         res.status(400).json({ message: 'Il n\'y a pas de post à affichier !' });
       }
@@ -67,7 +60,7 @@ exports.showallposts = async(req, res, next) => {
 };
 //  IL FAUT TESTER depuis la
 exports.liker = async(req, res, next) => {
-  console.log('Liker un post');
+  console.log('Liker un post---------');
   let sqlFind = `SELECT * FROM post WHERE id = ${ req.params.id }`;
   await connection.query( sqlFind, (err, result) => {
     if (err) {
@@ -80,7 +73,7 @@ exports.liker = async(req, res, next) => {
 };
 //modifier  image?
 exports.updatePost = async(req, res, next) => {
-    console.log('update specific post');  
+    console.log('update specific post---------');  
     let sqlFind = `SELECT * FROM post WHERE id = ${ req.params.id }`;
     await connection.query( sqlFind, (err, result) => {
       if (err) {
@@ -105,7 +98,7 @@ exports.updatePost = async(req, res, next) => {
 };
 //supprimer
 exports.deletePost = async(req, res, next) => {
-  console.log('delete specific post');
+  console.log('delete specific post---------');
   let sqlFind = `SELECT * FROM post WHERE id = ${ req.params.id }`;
   await connection.query( sqlFind, (err, result) => {
     if (err) {

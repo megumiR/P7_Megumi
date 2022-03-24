@@ -15,12 +15,12 @@ exports.signup = async( req, res, next) => {
             // If there is an issue with the query, output the error
             throw err;   
         }
-        console.log('Result of checking db: ');
-        console.log(result);
+        console.log('Result of checking db: ', result);
+        
         if (result.length >0) {
-        console.log(result.length);           
-        console.log('L\'email deja utilisé : ');
-        console.log(req.body.email);
+        console.log('1 for existance of the same email' + result.length);           
+        console.log('L\'email deja utilisé : ' + req.body.email);
+        
         res.status(400).json({ message: 'L\'email deja existe'});
         }
     });
@@ -33,8 +33,8 @@ exports.signup = async( req, res, next) => {
             // If there is an issue with the query, output the error
             throw err;
         }
-        console.log('L\'info signup est inseré avec le nom: ');
-        console.log(req.body.name);
+        console.log('L\'info signup est inseré avec le nom: ' + req.body.name);
+        
         res.status(201).json({ message: 'L\'info d\'user est bien inseré avec le nom: ' + req.body.name});
     });
 };
@@ -52,7 +52,7 @@ exports.login = async(req, res, next) => {
       }
       console.log('L\'info utilisateur: ', result);
       if (result.length >0) {
-        console.log('login ok');
+        console.log('login preceeding...');
         bcrypt.compare(req.body.password, result[0].password) //compare frontend data n database hashed data
                 .then(valid => {
                     if (!valid) {
