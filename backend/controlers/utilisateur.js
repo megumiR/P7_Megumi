@@ -10,34 +10,35 @@ exports.signup = async( req, res, next) => {
     console.log('signup post request');
     // if email already exists in database
     let checkEmailSQL = `SELECT * FROM utilisateur WHERE email = '${ req.body.email }' `;
-    await connection.query( checkEmailSQL, (err, result) => {
+    connection.query( checkEmailSQL, (err, result) => {
         if (err) {
-            throw err;      //console.log(err);
+            throw err;      
         }
         console.log('Result of checking db: ');
         console.log(result);
-    });
-    if (checkEmailSQL.length >0) {
-        console.log(checkEmailSQL.length);  /// ?????
+        if (result.length >0) {
+        console.log(result.length);           
         console.log('L\'email deja utilisé : ');
         console.log(req.body.email);
-        res.json({ message: 'L\'email deja existe'});
-    } else {
-        const hashedPassword = await bcrypt.hash(req.body.password,10);
-        let sql = `INSERT INTO utilisateur (name, email, password, roll) VALUES 
+        res.status(400).json({ message: 'L\'email deja existe'});
+        }
+    });
+    const hashedPassword = await bcrypt.hash(req.body.password,10);
+    let sql = `INSERT INTO utilisateur (name, email, password, roll) VALUES 
             ('${ req.body.name }', '${ req.body.email }', '${hashedPassword}', 'user')`;
     
-        await connection.query( sql, (err, result) => {
-            if (err) {
-                throw err;
-            }
-            console.log('L\'info signup est inseré avec le nom: ');
-            console.log(req.body.name);
-        });
-    }
-        
+    await connection.query( sql, (err, result) => {
+        if (err) {
+            throw err;
+        }
+        console.log('L\'info signup est inseré avec le nom: ');
+        console.log(req.body.name);
+        res.status(201).json({ message: 'L\'info d\'user est bien inseré avec le nom: ' + req.body.name});
+    });
 };
 
+
+/****** Login  ********************/
 exports.login = async(req, res, next) => {
     console.log('login post request');
     
