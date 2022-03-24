@@ -67,7 +67,7 @@ export default {
 //      msg: 'message ici ', {{ msg }} pour affichier
       mode: 'signup',
       form: {
-        user: '',
+        name: '',
         email: '',  //null?
         password: '', //null?
       },
@@ -81,7 +81,7 @@ export default {
     
     validEmail: function (email) {
       const checkEmail = /^[\w. -]+@[\w. -]+\.[\w]{2,3}$/g;
-      if (this.user !== "" && this.email !== "" && this.password !== "") {
+      if (this.name !== "" && this.email !== "" && this.password !== "") {
         return checkEmail.match(email);
       } else {
         console.log('tous les champs sont obligatoire')
@@ -89,7 +89,7 @@ export default {
     },
     validPassword: function (password) {
       const checkPassword = /^[éèàîûôïü\w. -/*._@]+$/g;
-      if (this.user !== "" && this.email !== "" && this.password !== "") {
+      if (this.name !== "" && this.email !== "" && this.password !== "") {
         return checkPassword.match(password);
       } else {
         console.log('tous les champs sont obligatoire')
@@ -105,16 +105,16 @@ export default {
     },
     validUsername: function (e) {
       const checkUsername = /^[a-zA-Zéèàîûôïü -]{2,}$/g;
-      console.log('user: '+ this.user);
+      console.log('name: '+ this.name);
       console.log('username of input: '+ e.target.value);
       let username = e.target.value;
-      this.user = username;
+      this.name = username;
       console.log('user: '+ this.user);
       if (username) {
         let result = checkUsername.test(username); 
         // return checkUsername.test(username); 
         if (result == true) {
-          console.log('user : valide');
+          console.log('name : valide');
           this.userErrorMsg = '';
         } else if (result == false) {
           this.userErrorMsg = 'Ce champ "utilisateur" accepte que des caractères et "-"';
@@ -171,7 +171,7 @@ export default {
       e.preventDefault();
       
       this.$store.dispatch('sendSigninform', {  //$store.dispatch method triggers actions
-        user: this.user,
+        name: this.name,
         email: this.email,
         password: this.password
       })

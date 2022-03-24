@@ -3,38 +3,45 @@ const bcrypt = require('bcrypt');
 const connection = require('../db__connection');  //importer l'info de mysql 
 
 
-//const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 /****** la logique pour signin -- hash avec la fonction bcrypt pour le mot de passe ************/
 exports.signup = async( req, res, next) => {
     console.log('signup post request');
-    const hashedPassword = await bcrypt.hash(req.body.password,10);
-    let sql = `INSERT INTO utilisateur (name, email, password, roll) VALUES 
-        ('${ req.body.name }', '${ req.body.email }', '${hashedPassword}', 'user')`;
-   /// let sql = `INSERT INTO utilisateur (name, email, password) VALUES 
-    //  ('${ req.body.name }', '${ req.body.email }', '${ req.body.password }')`;
-    await connection.query( sql, (err, result) => {
     // if email already exists in database
-      let checkEmailSQL = `SELECT * FROM utilisateur WHERE email LIKE ${ req.body.email } `;
-      if (checkEmailSQL.length >0) {
-          console.log(checkEmailSQL.length);  /// ?????
+    let checkEmailSQL = `SELECT * FROM utilisateur WHERE email = '${ req.body.email }' `;
+    await connection.query( checkEmailSQL, (err, result) => {
+        if (err) {
+            throw err;      //console.log(err);
+        }
+        console.log('Result of checking db: ');
+        console.log(result);
+    });
+    if (checkEmailSQL.length >0) {
+        console.log(checkEmailSQL.length);  /// ?????
         console.log('L\'email deja utilisé : ');
         console.log(req.body.email);
         res.json({ message: 'L\'email deja existe'});
-      } 
-      if (err) {
-       // throw err;
-        console.log(err);
-      }
-      console.log('L\'info signup est inseré avec le nom: ');
-      console.log(req.body.name);
-    });
+    } else {
+        const hashedPassword = await bcrypt.hash(req.body.password,10);
+        let sql = `INSERT INTO utilisateur (name, email, password, roll) VALUES 
+            ('${ req.body.name }', '${ req.body.email }', '${hashedPassword}', 'user')`;
+    
+        await connection.query( sql, (err, result) => {
+            if (err) {
+                throw err;
+            }
+            console.log('L\'info signup est inseré avec le nom: ');
+            console.log(req.body.name);
+        });
+    }
+        
 };
 
 exports.login = async(req, res, next) => {
     console.log('login post request');
     
-    let sql = `SELECT name, email, password FROM utilisateur WHERE email = '${ req.body.email}' `;
+    let sql = `SELECT * FROM utilisateur WHERE email = '${ req.body.email}' `;
     await connection.query( sql, (err, result) => {
       if (err) {
         throw err;
@@ -42,22 +49,21 @@ exports.login = async(req, res, next) => {
       console.log('L\'info utilisateur: ', result);
       if (result.length >0) {
         console.log('login ok');
-        bcrypt.compare(req.body.password, result.password) //compare frontend data n database hashed data
+        bcrypt.compare(req.body.password, result[0].password) //compare frontend data n database hashed data
                 .then(valid => {
                     if (!valid) {
                         return res.status(401).json({ error: 'Le mot de passe est incorrect.' })
                     }
                     res.status(200).json({
-                        utilisateurId: result._id,
+                        utilisateurId: result[0].id,
                         token: jwt.sign(    //new token cryptnize
-                            { utilisateurId: result._id },
+                            { utilisateurId: result[0].id },
                             'RAMDOM_TOKEN_SECRET',
                             { expiresIn: '24h' }
                         ),
-                        roll: result.roll
+                        roll: result[0].roll
                     });
-                    // Redirect to home page
-                    res.redirect('/api/posts');
+                    
                 })
                 .catch(error => 
                     res.status(500).json({ error })

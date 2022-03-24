@@ -61,21 +61,27 @@ export default {
   },
   methods : {
       increment: function () {
-          // let isLiked = localStorage.getItem('Liked'); if (isLiked == userId) {
-          
-          console.log(isLiked);
-          let isLiked = false;
-          console.log(isLiked);
         
+        let reaction = JSON.parse(localStorage.getItem('reaction')); 
+        console.log(isLiked);
+        let isLiked = false;
+        console.log(isLiked);
+
+        if (isLiked == userId) {
+                 
           if (!isLiked) {
               console.log('liked doesnt exsist');
               isLiked = true;
-              console.log(isLiked);
+              console.log('isLiked: ' +isLiked);
+              this.numberOfLikes++;
+              localStorage.setItem('reaction', JSON.stringify(reaction)); 
+              console.log(reaction);
           } else if (isLiked == false) {
               console.log('isLiked == false');
           } else if (isLiked == true) {
               console.log('isLiked == true');
-          } 
+          }
+        }
           /*
           let likePost = react.likePost;
           console.log(likePost);
