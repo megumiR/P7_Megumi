@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-//const { model, modelNames } = require('mongoose');
 
 module.exports = (req, res, next) => {
     try {   //many error occurs so put in try-catch

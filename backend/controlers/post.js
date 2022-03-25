@@ -124,7 +124,7 @@ exports.updatePost = async(req, res, next) => {  ///not considered -> change ima
 
 
 /************* Supprimer un post ******************/
-exports.deletePost = async(req, res, next) => {  ////working on DB, postman BUT image file not deleted 
+exports.deletePost = async(req, res, next) => {  ////working BUT image file not deleted n need to check the userID
   console.log('delete specific post---------');
   console.log('post id : ' + req.params.id);
 
