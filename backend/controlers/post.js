@@ -12,7 +12,7 @@ exports.createPost = /*async(req, res, next) => {
     console.log(req.body);
     // only JSON file works. not the form-data on postman
     let sql = `INSERT INTO post (postname, comment, utilisateur_id) VALUES 
-      ('${ req.body.postname }', '${ req.body.comment }', '${req.headers.utilisateur_id}' )`; //sessionid?
+      ('${ req.body.postname }', '${ req.body.comment }', '${req.headers.utilisateur_id}' )`; //headers = sessionid?
     await connection.query( sql, (err, result) => {
       if (err) {
         throw err;
@@ -96,7 +96,7 @@ exports.liker = async(req, res, next) => {
 
 
 /************* Modifier un post **************/
-exports.updatePost = async(req, res, next) => {
+exports.updatePost = async(req, res, next) => {  ///not considered -> change images
   console.log('update specific post---------');         
   console.log('post id : ' + req.params.id);
 
@@ -124,31 +124,24 @@ exports.updatePost = async(req, res, next) => {
 
 
 /************* Supprimer un post ******************/
-exports.deletePost = async(req, res, next) => {
+exports.deletePost = async(req, res, next) => {  ////working on DB, postman BUT image file not deleted 
   console.log('delete specific post---------');
-  let sqlFind = `SELECT * FROM post WHERE id = ${ req.params.id }`;
-  await connection.query( sqlFind, (err, result) => {
+  console.log('post id : ' + req.params.id);
+
+  let sqlDelete = `DELETE FROM post WHERE id = ${ req.params.id }`;
+  console.log('just wanna delete a post');
+  await connection.query( sqlDelete, (err, result) => {
     if (err) {
       throw err;
     }
-    const filename = sauce.imageUrl.split('/images/')[1];
-    fs.unlink(`images/${filename}`, () => {
-      let sql = `DELETE FROM post WHERE id = ${ req.params.id } `;
-      connection.query( sql, (err, result) => {
-        if (err) {
-          throw err;
-        }
-        console.log('Le post est bien supprimé');
-        res.status(200).json({ message: 'supprimé' });
-      });
-    });
+    res.status(200).json({ message: 'Le post est bien supprimé' }); 
+    console.log('Le post est bien supprimé');
   });
-  
 };
 /************* FIN: Supprimer un post ******************/
 
 
-/** session id?????????????????????//
+/** session id????????????????????? 
 const cookieParser = require('cookie-parser');
 const session = require('express-session')
 app.use(cookieParser());
