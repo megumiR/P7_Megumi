@@ -81,10 +81,10 @@ exports.showallposts = async(req, res, next) => {     ///It works with images to
 
 
 /************ Liker/ Disliker un post ******************/
-//  IL FAUT TESTER depuis la
 exports.liker = async(req, res, next) => {
   console.log('Liker un post---------');
   let sqlFind = `SELECT * FROM post WHERE id = ${ req.params.id }`;
+  console.log(req.params.id);
   await connection.query( sqlFind, (err, result) => {
     if (err) {
       throw err;
@@ -97,28 +97,28 @@ exports.liker = async(req, res, next) => {
 
 /************* Modifier un post **************/
 exports.updatePost = async(req, res, next) => {
-    console.log('update specific post---------');  
-    let sqlFind = `SELECT * FROM post WHERE id = ${ req.params.id }`;
-    await connection.query( sqlFind, (err, result) => {
-      if (err) {
-        throw err;
-      }
-      let sqlPostname = `UPDATE post SET postname = ${ req.body.postname } WHERE id = ${ req.params.id } `;
-      let sqlComment = `UPDATE post SET comment = ${ req.body.comment } WHERE id = ${ req.params.id } `;
-      connection.query( sqlPostname, (err, result) => {
-        if (err) {
-          throw err;
-        }
-        console.log('Le postname est changé');
-        connection.query(sqlComment, (err, result) => {
-          if (err) {
-            throw err;
-          }
-          console.log('Le comment est changé');
-        });
-      });
-      res.status(201).json({ message: 'modifié' });
-    });
+  console.log('update specific post---------');         
+  console.log('post id : ' + req.params.id);
+
+  console.log('just wanna change postname');
+  let sqlPostname = `UPDATE post SET postname = '${ req.body.postname }' WHERE id = ${ req.params.id } `;
+  await connection.query( sqlPostname, (err, result) => {
+    console.log(result);
+    if (err) {
+      throw err;
+    }
+    console.log('Le postname est modifié');
+  });
+
+  console.log('just wanna change COMMENT');
+  let sqlComment = `UPDATE post SET comment = '${ req.body.comment }' WHERE id = ${ req.params.id } `;
+  await connection.query(sqlComment, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    console.log('Le comment est modifié');
+  });
+  res.status(201).json({ message: 'Le comment/ postname est modifié.' }); ///shows before sqls send
 };
 /************* FIN: Modifier un post **************/
 

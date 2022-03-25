@@ -17,7 +17,7 @@ exports.signup = async( req, res, next) => {
         }
         console.log('Result of checking db: ', result);
         
-        if (result.length >0) {
+        if (result.length > 0) {
         console.log('1 for existance of the same email' + result.length);           
         console.log('L\'email deja utilisé : ' + req.body.email);
         
