@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 exports.signup = async( req, res, next) => {
     console.log('signup post request---------');
     // if email already exists in database
-    let checkEmailSQL = `SELECT * FROM utilisateur WHERE email = '${ req.body.email }' `;
+    let checkEmailSQL = `SELECT * FROM user WHERE email = '${ req.body.email }' `;    
     connection.query( checkEmailSQL, (err, result) => {
         if (err) {
             // If there is an issue with the query, output the error
@@ -25,8 +25,8 @@ exports.signup = async( req, res, next) => {
         }
     });
     const hashedPassword = await bcrypt.hash(req.body.password,10);
-    let sql = `INSERT INTO utilisateur (name, email, password, roll) VALUES 
-            ('${ req.body.name }', '${ req.body.email }', '${hashedPassword}', 'user')`;
+    let sql = `INSERT INTO user (name, email, password, roll) VALUES                    
+            ('${ req.body.name }', '${ req.body.email }', '${hashedPassword}', 'user')`;  
     
     await connection.query( sql, (err, result) => {
         if (err) {
@@ -43,7 +43,7 @@ exports.signup = async( req, res, next) => {
 exports.login = async(req, res, next) => {
     console.log('login post request---------');
     
-    let sql = `SELECT * FROM utilisateur WHERE email = '${ req.body.email}' `;
+    let sql = `SELECT * FROM user WHERE email = '${ req.body.email}' `;      
     await connection.query( sql, (err, result) => {
       if (err) {
         throw err;
@@ -57,9 +57,9 @@ exports.login = async(req, res, next) => {
                         return res.status(401).json({ error: 'Le mot de passe est incorrect.' })
                     }
                     res.status(200).json({
-                        utilisateurId: result[0].id,
+                        userId: result[0].id,                     
                         token: jwt.sign(    //new token cryptnize
-                            { utilisateurId: result[0].id },
+                            { userId: result[0].id },                
                             'RAMDOM_TOKEN_SECRET',
                             { expiresIn: '24h' }
                         ),

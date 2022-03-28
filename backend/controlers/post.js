@@ -5,14 +5,14 @@ const fs = require('fs');
 /********* FIN: importer des fichier , modules *************/
 
 
-/***************** Creer un post  ***************/
+/***************** Creer un post  ***************/                       ///DB, here :utilisateur change to user later!!!!!!!
 //////////////////post un post  ?? S'il n'y a pas de "file"
 exports.createPost = /*async(req, res, next) => {
     console.log('post one article---------');
     console.log(req.body);
     // only JSON file works. not the form-data on postman
-    let sql = `INSERT INTO post (postname, comment, utilisateur_id) VALUES 
-      ('${ req.body.postname }', '${ req.body.comment }', '${req.headers.utilisateur_id}' )`; //headers = sessionid?
+    let sql = `INSERT INTO post (postname, comment, user_id) VALUES 
+      ('${ req.body.postname }', '${ req.body.comment }', '${req.headers.user_id}' )`; //headers = sessionid?    
     await connection.query( sql, (err, result) => {
       if (err) {
         throw err;
@@ -33,10 +33,10 @@ async(req, res, next) => {
   console.log('post: ');
   console.log(post);            
   console.log(req.body.image);
-  console.log(req.headers.utilisateur_id);
+  console.log(req.headers.user_id);         
 
-  let sqlWithoutImage = `INSERT INTO post (postname, comment, utilisateur_id ) VALUES 
-    ('${ req.body.postname }', '${ req.body.comment }', '${req.headers.utilisateur_id}')`;   ///need to put utilisateur_id into headers
+  let sqlWithoutImage = `INSERT INTO post (postname, comment, user_id ) VALUES 
+    ('${ req.body.postname }', '${ req.body.comment }', '${req.headers.user_id}')`;   ///need to put user_id into headers  
   await connection.query( sqlWithoutImage, (err, result) => {
     if (err) {
       throw err;
@@ -45,10 +45,10 @@ async(req, res, next) => {
     res.status(201).json({ message: 'Votre post(sans image) est bien crée!'});
   });
   if (req.body.image) {
-    let sqlWithImage = `INSERT INTO post (postname, comment, image, utilisateur_id ) VALUES (
+    let sqlWithImage = `INSERT INTO post (postname, comment, image, user_id ) VALUES (
     '${ req.body.postname }', '${ req.body.comment }', 
     ('LOAD_FILE('${req.protocol}://${req.get('host')}/images/${req.file.filename}')'
-    '${req.headers.utilisateur_id}')`; 
+    '${req.headers.user_id}')`;                                                      
     connection.query( sqlWithImage, (err, result) => {
     if (err) {
       throw err;
