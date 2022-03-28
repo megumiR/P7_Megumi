@@ -83,8 +83,9 @@ exports.showallposts = async(req, res, next) => {     ///It works with images to
 /************ Liker/ Disliker un post ******************/
 exports.liker = async(req, res, next) => {
   console.log('Liker un post---------');
+  console.log('post id : ' + req.params.id);
   let sqlFind = `SELECT * FROM post WHERE id = ${ req.params.id }`;
-  console.log(req.params.id);
+ 
   await connection.query( sqlFind, (err, result) => {
     if (err) {
       throw err;
@@ -96,7 +97,7 @@ exports.liker = async(req, res, next) => {
 
 
 /************* Modifier un post **************/
-exports.updatePost = async(req, res, next) => {  ///not considered -> change images
+exports.updatePost = async(req, res, next) => {  ///not considered -> change images   can be changed by other Id :check the userID, utilisateur_id wont be renewed
   console.log('update specific post---------');         
   console.log('post id : ' + req.params.id);
 
@@ -139,32 +140,3 @@ exports.deletePost = async(req, res, next) => {  ////working BUT image file not 
   });
 };
 /************* FIN: Supprimer un post ******************/
-
-
-/** session id????????????????????? 
-const cookieParser = require('cookie-parser');
-const session = require('express-session')
-app.use(cookieParser());
-app.use(session({
-    secret: '34SDgsdgspxxxxxxxdfsG', // just a long random string
-    resave: false,
-    saveUninitialized: true
-}));
-//req.sessionID and req.session.id for taking back the id
-app.post('/login', function(req, res)
-{
-  var sid = req.sessionID;
-  var username = req.body.user;
-  var password = req.body.pass;
-
-  users.findOne({username : username, password : password}, function(err, result)
-  { 
-    ...
-    sessionStore.destroy(result.session, function(){
-       ...
-       users.update({_id: result._id}, {$set:{"session" : sid}});
-       ...
-    }
-    ...
-  }
-}*/

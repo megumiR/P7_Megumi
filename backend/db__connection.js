@@ -20,10 +20,6 @@ connection.connect((err) => {
       throw err;
     }
     console.log("Connected!");
-  /*  connection.query("SELECT * FROM utilisateur", function (err, result) {
-      if (err) throw err;
-      console.log("Result: " + result);
-    });  */
   });
 
 module.exports = connection; 

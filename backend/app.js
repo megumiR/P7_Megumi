@@ -1,12 +1,7 @@
 /************ importer framework , modules **********/
-//const mysql = require('mysql');
 const express = require('express');
 const path = require('path'); 
 /************ FIN : importer framework , modules ************/
-
-
-/******* connection pour la base de donnee ***********/
-
 
 
 //Appeler la method express(qui permet de creer application express)

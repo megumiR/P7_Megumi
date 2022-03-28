@@ -30,7 +30,6 @@ exports.signup = async( req, res, next) => {
     
     await connection.query( sql, (err, result) => {
         if (err) {
-            // If there is an issue with the query, output the error
             throw err;
         }
         console.log('L\'info signup est inseré avec le nom: ' + req.body.name);
@@ -47,7 +46,6 @@ exports.login = async(req, res, next) => {
     let sql = `SELECT * FROM utilisateur WHERE email = '${ req.body.email}' `;
     await connection.query( sql, (err, result) => {
       if (err) {
-        // If there is an issue with the query, output the error
         throw err;
       }
       console.log('L\'info utilisateur: ', result);
@@ -78,45 +76,4 @@ exports.login = async(req, res, next) => {
     });
 };
 
-
-/********copy   
-app.get('/', (req, res) => {
-    //res.json({ message: 'ok' });
-    connection.query(
-        'SELECT * FROM utilisateur',
-        (error, results) => {
-          console.log(results);
-       //   res.render('../frontend/src/views/AccueilView.vue');
-    }); 
-});*/
-//COPIED.. la requete post pour 
-/*    router.post('/login', (req, res, next) => {
-        // Capture the input fields
-        let username = req.body.username;
-        let password = req.body.password;
-        // Ensure the input fields exists and are not empty
-        if (username && password) {
-            // Execute SQL query that'll select the account from the database based on the specified username and password
-            connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?',
-             [username, password], function(error, results, fields) {
-                // If there is an issue with the query, output the error
-                if (error) throw error;
-                // If the account exists
-                if (results.length > 0) {
-                    // Authenticate the user
-                    req.session.loggedin = true;
-                    req.session.username = username;
-                    // Redirect to home page
-                    res.redirect('/home');
-                } else {
-                    res.send('Incorrect Username and/or Password!');
-                }			
-                res.end();
-            });
-        } else {
-            res.send('Please enter Username and Password!');
-            res.end();
-        }
-    });
-*/    
     
