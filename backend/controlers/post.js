@@ -84,14 +84,49 @@ exports.showallposts = async(req, res, next) => {     ///It works with images to
 exports.liker = async(req, res, next) => {
   console.log('Liker un post---------');
   console.log('post id : ' + req.params.id);
-  let sqlFind = `SELECT * FROM post WHERE id = ${ req.params.id }`;
- 
+  console.log('Like/ Dislike : ' + req.body.likes);
+
+  
+
+  let sqlFind = `SELECT * FROM post WHERE id = '${req.params.id}'`;
   await connection.query( sqlFind, (err, result) => {
     if (err) {
       throw err;
     }
-    console.log('specifié post por liker');
-  });
+    console.log(result); 
+    console.log(req.params.id); 
+    console.log(req.headers.user_id);
+    if ( result[0].id == req.params.id && result[0].user_id != req.headers.user_id ) {
+      let sqlLike = `INSERT INTO post_likes (post_id, user_id, likes) VALUES 
+        ('${result[0].id}', '${result[0].user_id}', '${req.body.likes}')`;
+      connection.query( sqlLike, (err, result) => {
+      if (err) {
+        throw err;
+      }  
+      console.log('post_likes LIKED firsttime');
+      }); 
+    } else if ( result[0].id == req.params.id && result[0].user_id == req.headers.user_id ) {
+      let sqlLikeUpdated = `UPDATE post_likes SET likes = '${ req.body.likes }' `;           /////////Dont know how to choose post id userid here
+      connection.query( sqlLikeUpdated, (err, result) => {
+      if (err) {
+        throw err;
+      }  
+      console.log('post_likes LIKED already');
+      }); 
+    } else {
+      console.log('post_likes didnt do anything');
+    }
+  }); 
+/*
+  let sqlLike = `INSERT INTO post_likes (likes) VALUES ('${req.body.likes}') WHERE post_id = ${ req.params.id }`;
+  let sqlDislike = `UPDATE post_likes SET likes = '${ req.body.likes }' WHERE post_id = ${ req.params.id } `;
+  await connection.query( sqlLike, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    console.log('specifié post pour liker');
+  });  */
+  res.status(200).json({ message: 'Le comment Like/Dislike est enregistré.' }); ///shows before sqls send  
 };
 /************ FIN: Liker/ Disliker un post ******************/
 
