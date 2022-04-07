@@ -51,9 +51,18 @@
 <script>
 
 export default {
-  name: 'PostCard', 
-  props: [ 'image', 'comment', 'postName' ],  //''内にTemplate上で{{}}書きした名前を入れて親部品中でGetリクエストの内容を反映する
-  data: function () {
+  name: 'PostCard',   
+  emits: ['emitname'], //emit is not working
+  created() {
+      this.$emit('emitname', 'msg from child component') //+親template に<子部品名 @emitname="(e)=>dataReturnFromParent=e"> , data(){return{dataReturnFromParent: xxxで反映
+  },
+  props: [ 'image', 'comment', 'postName' ], //''内にTemplate上で{{}}書きした名前
+/*props: { 
+    image: ,
+    comment: String,
+    postName: String
+},  //またはprops:{msg:String}/親部品中でGetリクエストの内容を反映する/<子部品名:msg="xxx--親のdata(){return{xxx:""}"
+*/  data: function () {
       return {
           numberOfLikes : 0,
           numberOfDislikes : 0,
@@ -67,7 +76,7 @@ export default {
         let isLiked = false;
         console.log(isLiked);
 
-        if (isLiked == userId) {
+//        if (isLiked == userId) {
                  
           if (!isLiked) {
               console.log('liked doesnt exsist');
@@ -103,7 +112,7 @@ export default {
           this.numberOfDislikes++;
       }
   } 
-}
+//}
 
 
 </script>

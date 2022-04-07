@@ -39,7 +39,7 @@ async(req, res, next) => {
     ('${ req.body.postname }', '${ req.body.comment }', '${req.headers.user_id}')`;   ///need to put user_id into headers  
   await connection.query( sqlWithoutImage, (err, result) => {
     if (err) {
-      throw err;
+      return res.status(400).json({ message: 'erreur : Insertion post erreur'});
     }
     console.log('L\'article post(comment, postname) est inseré : ' + req.body.comment);
     res.status(201).json({ message: 'Votre post(sans image) est bien crée!'});
@@ -51,7 +51,7 @@ async(req, res, next) => {
     '${req.headers.user_id}')`;                                                      
     connection.query( sqlWithImage, (err, result) => {
     if (err) {
-      throw err;
+      return res.status(400).json({ message: 'erreur : Insertion post (avec image) erreur'});
     }
     console.log('L\'article post(avec image) est inseré : ' + req.body.image);
     res.status(201).json({ message: 'Votre post(avec image) est bien crée!'});
@@ -67,7 +67,7 @@ exports.showallposts = async(req, res, next) => {     ///It works with images to
     let sql = `SELECT * FROM post`;
     await connection.query( sql, (err, result) => {
       if (err) {
-        throw err;
+        return res.status(400).json({ message: 'erreur : on ne peut pas chercher dans le tableau post'});
       }
       console.log('posts: ', result);
       if (result.length >0) {
@@ -89,24 +89,25 @@ exports.liker = async(req, res, next) => {
   let sqlFind = `SELECT * FROM post WHERE id = '${req.params.id}'`;
   await connection.query( sqlFind, (err, result) => {
     if (err) {
-      throw err;
+      return res.status(400).json({ message: 'erreur : on ne trouve pas le post que vous avez choisi'});
     }
     console.log(result); 
     // si l'user a deja Liké ce post et enregistré sur DB
     let sqlFind = `SELECT * FROM post_likes WHERE post_id = '${req.params.id}' AND user_id = '${req.headers.user_id}'`;
     connection.query( sqlFind, (err, res) => {
       if (err) { 
-        throw err; 
+        return res.status(400).json({ message: 'erreur : savoir si c\'est déjà Liker'});
       }
       console.log('step1:Already reacted to this post?');
       console.log(res);
 
       if (!res.length) {  // .length pour savoir si un array est vide ou pas
         console.log('step2:No, react for the 1st time'); 
+        ///////////////////////// foreign key --- check how to insert data into foreign keys
         let sqlLike = `INSERT INTO post_likes (post_id, user_id, likes) VALUES ('${result[0].id}', '${req.headers.user_id}', '${req.body.likes}')`;
         connection.query( sqlLike, (err, result) => {
           if (err) {
-            throw err;
+            return res.status(400).json({ message: 'erreur : Liker pour la 1ere fois'});
           }  
           console.log('Liker/ Disliker post pour la 1ere fois'); 
         }); 
@@ -116,7 +117,7 @@ exports.liker = async(req, res, next) => {
         let sqlLikeUpdated = `UPDATE post_likes SET likes = '${ req.body.likes }' WHERE post_id = '${result[0].id}' AND user_id = '${req.headers.user_id}'`;
         connection.query( sqlLikeUpdated, (err, result) => {
           if (err) {
-            throw err;
+            return res.status(400).json({ message: 'erreur : modifier le Liker' });
           }  
           console.log('Liker/ Disliker modifié');
         });
@@ -138,7 +139,7 @@ exports.updatePost = async(req, res, next) => {  ///not considered -> change ima
   await connection.query( sqlPostname, (err, result) => {
     console.log(result);
     if (err) {
-      throw err;
+      return res.status(400).json({ message: 'erreur : on ne peut pas modifier le post name'});
     }
     console.log('Le postname est modifié');
   });
@@ -147,7 +148,7 @@ exports.updatePost = async(req, res, next) => {  ///not considered -> change ima
   let sqlComment = `UPDATE post SET comment = '${ req.body.comment }' WHERE id = ${ req.params.id } `;
   await connection.query(sqlComment, (err, result) => {
     if (err) {
-      throw err;
+      return res.status(400).json({ message: 'erreur : on ne peut pas modifier le comment'});
     }
     console.log('Le comment est modifié');
   });
@@ -165,7 +166,7 @@ exports.deletePost = async(req, res, next) => {  ////working BUT image file not 
   console.log('just wanna delete a post');
   await connection.query( sqlDelete, (err, result) => {
     if (err) {
-      throw err;
+      return res.status(400).json({ message: 'erreur : on ne peut pas supprimer'});
     }
     res.status(200).json({ message: 'Le post est bien supprimé' }); 
     console.log('Le post est bien supprimé');

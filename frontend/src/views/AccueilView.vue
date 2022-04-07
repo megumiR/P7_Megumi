@@ -9,7 +9,11 @@
       
       :image="post.image" 
       :comment="post.comment" 
-      :postName="post.postname"/>    
+      :postName="post.postname"
+      
+      @emitname="(e) => dataReturnFromParent = e "
+      />    
+      <p>{{ dataReturnFromParent }}</p>
 <!--WHY does :key need?
 The reason has to do with performance. 
 Attribute key helps Vue determine unique items in a list.
@@ -56,18 +60,14 @@ export default {
   },
   data() {
     return {
-      list: []
+      list: [],
+      dataReturnFromParent: "msg from parent"  //emit is not working
     }
   },
-  
-
-  
   created: function () {
     this.fetchData();
   },
-  
   methods: {
-    
     fetchData: function() {
       fetch('http://localhost:3000/api/posts')
         .then( response => response.json())

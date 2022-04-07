@@ -12,7 +12,10 @@ const routes = [
   {
     path: '/',
     name: 'accueil',
-    component: AccueilView
+    component: AccueilView,
+    meta: {
+      requireAuth: true
+    }
   },
   {
     path: '/add',
@@ -40,5 +43,11 @@ const router = new VueRouter({
   mode: 'history',
   routes
 })
-
+/*
+router.beforeEach(async (to, from) => {  //!isAuthenticated &&
+  if ( to.name !== 'accueil' && from.name == 'signup') {
+    return { name: 'accueil' }
+  }
+});
+*/
 export default router

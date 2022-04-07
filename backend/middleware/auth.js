@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
         req.userId = userId; //the id which sends request = token's id
         
         if (req.body.userId && req.body.userId !== userId) {
-            throw '403: unauthorized request.' ;  //'Invalid userId'
+            throw '401: unauthorized request.' ;  //'Invalid userId'
         } else {
             next();
         }

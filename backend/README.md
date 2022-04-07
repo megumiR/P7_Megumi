@@ -7,10 +7,10 @@ This is the front end and back end server for Project 7 of the Web Developer pat
 You will need to create a table called "user", "post" and "post_likes".
 
 Attributes for each table
-"user" : ( id(INT, PRYMARY, AUTO-INCREMENT), name(STRING), email(STRING), password(STRING), roll(STRING) ).
+"user"        : ( id(INT, PRYMARY, AUTO-INCREMENT), name(STRING), email(STRING), password(STRING), roll(STRING) ).
 "post"        : ( id(INT, PRYMARY, AUTO-INCREMENT), postname(STRING), comment(STRING), image(BLOB), user_id(INT, FOREIGN) ).
 "post_likes"  : ( post_id(INT, FOREIGN, PRYMARY), user_id(INT, FOREIGN, PRYMARY), like(BOOLEAN) ).
-Details are at ###MySQL.
+Details are at ### MySQL.
 
 ### Back end Prerequisites and Installation ###
 
