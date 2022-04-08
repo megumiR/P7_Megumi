@@ -31,9 +31,8 @@ exports.signup = async (req, res, next) => {
         userId: result[0].id,
         token: jwt.sign(
           //new token cryptnize
-          { userId: result[0].id },
-          "RAMDOM_TOKEN_SECRET",
- //marche pas         process.env.TOKEN,
+          { userId: result[0].id }, 
+          `${process.env.JWT_KEY}`,
           { expiresIn: "24h" }
         ),
         roll: result[0].roll,
@@ -67,7 +66,7 @@ exports.login = async (req, res, next) => {
             token: jwt.sign(
               //new token cryptnize
               { userId: result[0].id },
-              "RAMDOM_TOKEN_SECRET",
+              `${process.env.JWT_KEY}`,
               { expiresIn: "24h" }
             ),
             roll: result[0].roll,

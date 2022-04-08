@@ -1,3 +1,6 @@
+/************ Environment variables ******************/
+require('dotenv').config();
+
 /************ Importer le fichier et mettre le port pour que app.js peut trouner ***********************/
 const app = require('./app');
 

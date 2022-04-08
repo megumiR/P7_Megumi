@@ -8,8 +8,8 @@ const connection = mysql.createConnection({
   host: "localhost",
   user: "root",         //user name is root for database(admin)
   password: "password",
-  database: "test2"
-//  database: "Groupomania"
+//  database: "test2"
+  database: "Groupomania"
 });
 /****** FIN: l'info de connection mysql *********/
 
