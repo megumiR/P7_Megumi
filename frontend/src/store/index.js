@@ -13,16 +13,14 @@ export default new Vuex.Store({
     userId: null,
     roll: null,   
     imageFile: null,
-    token: localStorage.getItem('token') || '',
+    token: localStorage.getItem('userToken') || '',
     status: ''
   },
-  getters: {
-  //  Stateimagefile: state => { return state.imageFile }, 
+  getters: {  //  Stateimagefile: state => { return state.imageFile }, 
     isAuthenticated: state => !!state.token,
     authStatus: state => state.status
   },
-  mutations: {
-  //  setImagefile (state, imageFile) { state.imageFile = imageFile }
+  mutations: {  //  setImagefile (state, imageFile) { state.imageFile = imageFile }
     sendSigninform: (state) => {
       state.status = 'loading'
     },
@@ -33,34 +31,28 @@ export default new Vuex.Store({
     AUTH_ERROR: (state) => {
       state.status = 'error'
     }
-
   },
   actions: { //https://openclassrooms.com/en/courses/6390311-creez-une-application-web-avec-vue-js/6870776-modifiez-vos-donnees-dans-vuex
- /*   logIn: ({ commit }, payload) => {
-   */   
+ //   logIn: ({ commit }, payload) => {  
     sendSigninform: ({commit, dispatch}, userInfos) => {
-
-      return new Promise ( (resolve, reject) => {
         commit;
         console.log('userInfos');
         console.log(userInfos);
+        
         instance.post('/signup', userInfos)
           .then(function(response) {
             console.log(response);
             const token = response.data.token;
             console.log(token);  //token defined
-            localStorage.setItem('token', token);
+            localStorage.setItem('userToken', token);
+//            if (token) { localStorage.setItem('token', JSON.stringify(response.data)); }
             commit('AUTH_SUCCESS', token);
             dispatch()
-            resolve(response)
           })
           .catch(function(err) {
-           // console.log(err);
             commit('AUTH_ERROR', err);
-            localStorage.removeItem('token');
-            reject(err)
+            localStorage.removeItem('userToken');
           })
-      })
     }
   },
   modules: {
