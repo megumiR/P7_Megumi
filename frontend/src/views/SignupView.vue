@@ -175,7 +175,7 @@ export default {
         email: this.email,
         password: this.password
       }).then(() => {                  //here added  this.$router.push('/')
-        window.location.href = 'http://localhost:8080/';
+      //  window.location.href = 'http://localhost:8080/';
       })
       console.log('sendSigninform: ' , this.email);
     },

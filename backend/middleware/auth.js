@@ -4,6 +4,7 @@ module.exports = (req, res, next) => {
     try {   //many error occurs so put in try-catch
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken = jwt.verify(token, 'RAMDOM_TOKEN_SECRET');
+// Marche pas     const decodedToken = jwt.verify(token, process.env.TOKEN); 
         const userId = decodedToken.userId;
         req.userId = userId; //the id which sends request = token's id
         

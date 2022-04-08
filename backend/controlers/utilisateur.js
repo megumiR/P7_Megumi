@@ -33,6 +33,7 @@ exports.signup = async (req, res, next) => {
           //new token cryptnize
           { userId: result[0].id },
           "RAMDOM_TOKEN_SECRET",
+ //marche pas         process.env.TOKEN,
           { expiresIn: "24h" }
         ),
         roll: result[0].roll,

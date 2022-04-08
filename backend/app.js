@@ -1,3 +1,9 @@
+/* from .env file
+const dotenv = require('dotenv');
+const result = dotenv.config();
+console.log(result.parsed);
+ */
+
 /************ importer framework , modules **********/
 const express = require('express');
 const path = require('path'); 

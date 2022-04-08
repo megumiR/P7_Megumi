@@ -38,7 +38,8 @@ export default new Vuex.Store({
         commit;
         console.log('userInfos');
         console.log(userInfos);
-        
+        console.log(window.localStorage); //it is working
+
         instance.post('/signup', userInfos)
           .then(function(response) {
             console.log(response);
