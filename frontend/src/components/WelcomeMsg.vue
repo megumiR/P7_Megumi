@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>{{ msg }} {{ userIdNumber }}</h1>
     <p>
       {{ recommend }}
       <br />
@@ -11,11 +11,18 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String,
     recommend: String
+  },
+  computed: {
+    ...mapState({
+      userIdNumber: 'userId'
+    })
   }
 }
 </script>

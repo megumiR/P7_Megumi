@@ -1,6 +1,6 @@
 <template>
     <div class="header" >
-      <img class="header__logo" alt="Groupomania logo" src="../assets/icon-above-font.png" />
+      <img class="header__logo" alt="Groupomania logo" src="./../assets/icon-above-font.png" /> 
       <h1 class="header__title header__title--size">{{ title }}</h1>
     </div>
 </template>
@@ -17,7 +17,7 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- Add "scoped" attribute to limit CSS to this component only        ./src/assets/icon-above-font.png   -->
 <style scoped lang="scss">
 .header{
     display: flex;

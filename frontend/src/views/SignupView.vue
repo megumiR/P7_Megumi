@@ -43,7 +43,7 @@
           </div>
           <div class="form__commentpost" v-else>
        <!--     <input type="submit" value="Login" id="sendLoginform">   -->
-            <button class="button" @click="sendLoginform">Connexion</button>
+            <button class="button" @click.prevent="sendLoginform">Connexion</button>
           </div>
         <!--  <router-view /> -->
         </div>
@@ -174,15 +174,22 @@ export default {
         name: this.name,
         email: this.email,
         password: this.password
-      }).then(() => {                  //here added  this.$router.push('/')
-      //  window.location.href = 'http://localhost:8080/';
       })
+      //.then(() => {                  //here added  this.$router.push('/')
+      //  window.location.href = 'http://localhost:8080/'; maybe in indexjs?
+      //})
       console.log('sendSigninform: ' , this.email);
     },
-    sendLoginform: function(e) {
-      e.preventDefault();
-      console.log('login');
+    
+    //  ...mapActions(['sendLoginform'])   
+    sendLoginform: function() {
+      this.$store.dispatch('sendLoginform', {
+        email: this.email,
+        password: this.password
+      })
     }
+    
+      
    // login: 
     /*    ...mapActions(['logIn']),  //store actions:{ login({commit}, amount){ commit('mutationsstuff',amount)}
     async submit() {

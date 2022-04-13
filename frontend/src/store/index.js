@@ -10,7 +10,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userId: null,
+    user: null,
     roll: null,   
     imageFile: null,
     token: localStorage.getItem('userToken') || '',
@@ -21,39 +21,58 @@ export default new Vuex.Store({
     authStatus: state => state.status
   },
   mutations: {  //  setImagefile (state, imageFile) { state.imageFile = imageFile }
-    sendSigninform: (state) => {
-      state.status = 'loading'
-    },
-    AUTH_SUCCESS: (state, token) => {
+    AUTH_SUCCESS: (state, {token, email}) => {
       state.status = 'success'
+      state.user = email 
       state.token = token
     },
     AUTH_ERROR: (state) => {
       state.status = 'error'
-    }
+    },
+   
   },
   actions: { //https://openclassrooms.com/en/courses/6390311-creez-une-application-web-avec-vue-js/6870776-modifiez-vos-donnees-dans-vuex
  //   logIn: ({ commit }, payload) => {  
-    sendSigninform: ({commit, dispatch}, userInfos) => {
-        commit;
-        console.log('userInfos');
-        console.log(userInfos);
-        console.log(window.localStorage); //it is working
-
+    sendSigninform: ({commit}, userInfos) => {
         instance.post('/signup', userInfos)
-          .then(function(response) {
-            console.log(response);
+          .then((response) => {
             const token = response.data.token;
-            console.log(token);  //token defined
             localStorage.setItem('userToken', token);
-//            if (token) { localStorage.setItem('token', JSON.stringify(response.data)); }
-            commit('AUTH_SUCCESS', token);
-            dispatch()
+            commit('AUTH_SUCCESS', token) //commit -> mutation active
+            const email = userInfos.email;
+            commit('AUTH_SUCCESS', email)
+            window.location.href = 'http://localhost:8080/';
           })
-          .catch(function(err) {
-            commit('AUTH_ERROR', err);
+          .catch((err) => {
+            commit('AUTH_ERROR', err)
             localStorage.removeItem('userToken');
           })
+    },
+    sendLoginform: ({ commit }, loginInfos) => {
+      console.log(loginInfos);
+      instance.post('/login', loginInfos)
+        .then((response) => {
+          console.log(response);
+          const token = response.data.token;
+          localStorage.setItem('userToken', token);
+          commit('AUTH_SUCCESS', token)
+          const email = loginInfos.email;
+          commit('AUTH_SUCCESS', email)
+          window.location.href = 'http://localhost:8080/';
+          
+        }).catch((err) => {
+          commit('AUTH_ERROR', err)
+          localStorage.removeItem('userToken');
+        })
+    },
+    fetchAllPosts: ({ commit }) => {
+      
+      instance.get('/posts', this.token)
+        .then((response) => {
+          console.log(response);
+          data => (this.list = data.result)
+          commit()
+        })
     }
   },
   modules: {

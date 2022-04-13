@@ -1,7 +1,7 @@
 <template>
   <div class="home" id="home">
     <WelcomeMsg msg="Bienvenu :) " recommend=""/>
-    <p v-if="$store.state.utilisateurId">{{ $store.state.utilisateurId }}</p>
+    <p v-if="$store.state.userId">{{ $store.state.userId }}</p>
 
     <p v-if="!list">Pas de post à affichier</p>
     <PostCard v-else v-for="post in list" 
@@ -35,11 +35,9 @@ That is why it is must to have :key attribute.
 
 
 
-   import { mapState } from 'Vuex' 
+    
  :utilisateurId="utilisateurId"
- computed: {
-    ...mapState(['utilisateurId'])
-  },
+ 
    -->
     
     
@@ -50,7 +48,7 @@ That is why it is must to have :key attribute.
 <script>
 import WelcomeMsg from '../components/WelcomeMsg.vue'
 import PostCard from '../components/PostCard.vue'
-
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'AccueilView',
@@ -61,18 +59,24 @@ export default {
   data() {
     return {
       list: [],
-      dataReturnFromParent: "msg from parent"  //emit is not working
+      dataReturnFromParent: "msg from parent"  //emit is working
     }
   },
   created: function () {
-    this.fetchData();
+    this.fetchAllPosts();
+  },
+  computed: {
+    ...mapState([ 'userId' ])
   },
   methods: {
-    fetchData: function() {
+    ...mapActions(['fetchAllPosts'])
+    
+    /*
+    fetchAllPosts: function() {
       fetch('http://localhost:3000/api/posts')
         .then( response => response.json())
         .then( data => (this.list = data.result));
-    }
+    }*/
   }
 }
 
