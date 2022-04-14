@@ -10,7 +10,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: null,
+    userId: null,
     roll: null,   
     imageFile: null,
     token: localStorage.getItem('userToken') || '',
@@ -23,15 +23,15 @@ export default new Vuex.Store({
   mutations: {  //  setImagefile (state, imageFile) { state.imageFile = imageFile }
     AUTH_SUCCESS: (state, {token, email}) => {
       state.status = 'success'
-      state.user = email 
+      state.userId = email 
       state.token = token
     },
     AUTH_ERROR: (state) => {
       state.status = 'error'
     },
-   
+   //LOGOUT: (state) => { state.userId = null state.token = null state.status = null}
   },
-  actions: { //https://openclassrooms.com/en/courses/6390311-creez-une-application-web-avec-vue-js/6870776-modifiez-vos-donnees-dans-vuex
+  actions: { 
  //   logIn: ({ commit }, payload) => {  
     sendSigninform: ({commit}, userInfos) => {
         instance.post('/signup', userInfos)
@@ -65,29 +65,36 @@ export default new Vuex.Store({
           localStorage.removeItem('userToken');
         })
     },
-    fetchAllPosts: ({ commit }) => {
+    /* logout: ({commit}) => {
+      commit('LOGOUT')
+      localStorage.removeItem('userToken')
+    } */
+    fetchAllPosts: (states) => {
+      console.log('states: '+ JSON.stringify(states));
+      console.log(states.state.token);
       
-      instance.get('/posts', this.token)
+      let authToken = { 'Authorization': 'Bearer ' + states.state.token};
+      console.log(authToken);
+      let requestHeaders = {
+        headers: authToken
+      }
+      instance.get('/posts', requestHeaders)
         .then((response) => {
           console.log(response);
-          data => (this.list = data.result)
-          commit()
+          console.log(response.data.result);
+          let list = response.data.result;
+          return list;
+         // return data => (this.list = data.result)
+          
+        }).catch((err) => {
+          throw err;
+          //response.status(400).json({ err });
         })
+
     }
   },
   modules: {
   }
+
 })
 
-/*
-login: function() {
-  this.$store.dispatch('login', {
-    utilisateur: this.utilisateur,
-    email: this.email,
-    password: this.password
-  })
-  .then( function (res) {
-    console.log(res);
-  }).catch( err => {
-    throw err;
-  })*/
