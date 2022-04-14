@@ -73,9 +73,9 @@ export default {
   methods: {
   //  ...mapActions(['fetchAllPosts'])
       fetchAllPosts: function() {
-        this.$store.dispatch('fetchAllPosts', {
-          list: this.list
-        })
+        console.log(this.$store.dispatch('fetchAllPosts', {
+          list : this.list
+        }))
       }
     
     /*

@@ -14,17 +14,18 @@ export default new Vuex.Store({
     roll: null,   
     imageFile: null,
     token: localStorage.getItem('userToken') || '',
-    status: ''
+    status: null
   },
   getters: {  //  Stateimagefile: state => { return state.imageFile }, 
     isAuthenticated: state => !!state.token,
     authStatus: state => state.status
   },
   mutations: {  //  setImagefile (state, imageFile) { state.imageFile = imageFile }
-    AUTH_SUCCESS: (state, {token, email}) => {
+    AUTH_SUCCESS: (state, {token, email, roll}) => {
       state.status = 'success'
       state.userId = email 
       state.token = token
+      state.roll = roll
     },
     AUTH_ERROR: (state) => {
       state.status = 'error'
@@ -39,9 +40,10 @@ export default new Vuex.Store({
             const token = response.data.token;
             localStorage.setItem('userToken', token);
             commit('AUTH_SUCCESS', token) //commit -> mutation active
+            commit('AUTH_SUCCESS', response.data.roll)
             const email = userInfos.email;
             commit('AUTH_SUCCESS', email)
-            window.location.href = 'http://localhost:8080/';
+            window.location.href = this.$localhost;
           })
           .catch((err) => {
             commit('AUTH_ERROR', err)
@@ -56,9 +58,10 @@ export default new Vuex.Store({
           const token = response.data.token;
           localStorage.setItem('userToken', token);
           commit('AUTH_SUCCESS', token)
+          commit('AUTH_SUCCESS', response.data.roll)
           const email = loginInfos.email;
           commit('AUTH_SUCCESS', email)
-          window.location.href = 'http://localhost:8080/';
+          window.location.href = this.$localhost;
           
         }).catch((err) => {
           commit('AUTH_ERROR', err)

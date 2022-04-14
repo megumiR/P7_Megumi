@@ -4,9 +4,10 @@ import router from './router'
 import store from './store'
 
 Vue.config.productionTip = false
-
+Vue.prototype.$localhost = 'http://localhost:8080/';
 new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
+
