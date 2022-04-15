@@ -71,21 +71,38 @@ export default {
     ...mapState([ 'userId' ])
   },
   methods: {
-  //  ...mapActions(['fetchAllPosts'])
-      fetchAllPosts: function() {
-        console.log(this.$store.dispatch('fetchAllPosts', {
-          list : this.list
-        }))
-      }
-    
-    /*
+  /* ************OLD ONE******************** ...mapActions(['fetchAllPosts'])
     fetchAllPosts: function() {
-      fetch('http://localhost:3000/api/posts')
-        .then( response => response.json())
-        .then( data => (this.list = data.result));
-    }*/
-  }
-}
+      console.log(this.list);
+      this.$store.dispatch('fetchAllPosts', {
+        list : this.list
+      })
+    }  */
+    fetchAllPosts: function() {
+      const instance = this.$axios.create({
+        baseURL: 'http://localhost:3000/api/'
+      });
+      console.log(localStorage.getItem('userToken'));
+      let authToken = { 
+        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+      };
+      console.log(authToken);
+      let requestHeaders = {
+        headers: authToken
+      }
+      instance.get('/posts', requestHeaders)
+        .then((response) => {
+          console.log(response);
+          console.log(response.data.result);
+          //let list = response.data.result;
+          //return list;
+          return data => (this.list = data.result)
+        })
+        .catch((err) => {
+          throw err;
+        })
+    }
+}}
 
 </script>
 

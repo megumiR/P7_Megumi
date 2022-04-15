@@ -29,7 +29,7 @@ export default new Vuex.Store({
     },
     AUTH_ERROR: (state) => {
       state.status = 'error'
-    },
+    }
    //LOGOUT: (state) => { state.userId = null state.token = null state.status = null}
   },
   actions: { 
@@ -72,10 +72,13 @@ export default new Vuex.Store({
       commit('LOGOUT')
       localStorage.removeItem('userToken')
     } */
+/* **************OLD ONE***************************************
     fetchAllPosts: (states) => {
       console.log('states: '+ JSON.stringify(states));
       console.log(states.state.token);
-      
+    
+    //  console.log(localStorage.getItem('userToken'));
+    //  let authToken = { 'Authorization': 'Bearer ' + localStorage.getItem('userToken')};
       let authToken = { 'Authorization': 'Bearer ' + states.state.token};
       console.log(authToken);
       let requestHeaders = {
@@ -91,10 +94,9 @@ export default new Vuex.Store({
           
         }).catch((err) => {
           throw err;
-          //response.status(400).json({ err });
         })
+    }*/
 
-    }
   },
   modules: {
   }
