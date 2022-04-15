@@ -82,14 +82,16 @@ export default {
       const instance = this.$axios.create({
         baseURL: 'http://localhost:3000/api/'
       });
+      let userToken = localStorage.getItem('userToken');
       let authToken = { 
-        'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+        'Authorization': 'Bearer ' + userToken
       };
       console.log(authToken);
       let requestHeaders = {
         headers: authToken
       }
-      instance.get('/posts', requestHeaders)
+      if (userToken) {
+        instance.get('/posts', requestHeaders)
         .then((response) => {
           console.log(response);
           console.log(response.data.result);
@@ -98,6 +100,10 @@ export default {
         .catch((err) => {
           throw err;
         })
+      } else {
+        console.log('no token user');
+        return this.dataReturnFromParent = 'Vous n\'êtes pas authorizé.';
+      }
     }
 }}
 

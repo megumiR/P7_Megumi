@@ -1,3 +1,4 @@
+import router from '@/router';
 import axios from 'axios';
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -13,7 +14,7 @@ export default new Vuex.Store({
     userId: null,
     roll: null,   
     imageFile: null,
- //   token: localStorage.getItem('userToken') || '',
+ // Pas besoin?  token: localStorage.getItem('userToken') || '',
     status: null
   },
   getters: {  //  Stateimagefile: state => { return state.imageFile }, 
@@ -24,7 +25,6 @@ export default new Vuex.Store({
     AUTH_SUCCESS: (state, { email, roll}) => {
       state.status = 'success'
       state.userId = email 
-    //  state.token = token
       state.roll = roll
     },
     AUTH_ERROR: (state) => {
@@ -39,11 +39,11 @@ export default new Vuex.Store({
           .then((response) => {
             const token = response.data.token;
             localStorage.setItem('userToken', token);
-      //      commit('AUTH_SUCCESS', token) //commit -> mutation active
-            commit('AUTH_SUCCESS', response.data.roll)
+            commit('AUTH_SUCCESS', response.data.roll)  //commit -> mutation active
             const email = userInfos.email;
             commit('AUTH_SUCCESS', email)
-            window.location.href = this.$localhost;
+           // window.location.href = this.$localhost;
+            router.push({ path: '/', replace: true})
           })
           .catch((err) => {
             commit('AUTH_ERROR', err)
@@ -57,12 +57,11 @@ export default new Vuex.Store({
           console.log(response);
           const token = response.data.token;
           localStorage.setItem('userToken', token);
-    //      commit('AUTH_SUCCESS', token)
           commit('AUTH_SUCCESS', response.data.roll)
           const email = loginInfos.email;
           commit('AUTH_SUCCESS', email)
-          window.location.href = this.$localhost;
-          
+          window.location.href = this.$localhost; //not working...
+        //  router.push({ path: '/', replace: true}) // this worked
         }).catch((err) => {
           commit('AUTH_ERROR', err)
           localStorage.removeItem('userToken');
