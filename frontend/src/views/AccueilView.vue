@@ -79,9 +79,6 @@ export default {
       })
     }  */
     fetchAllPosts: function() {
-      const instance = this.$axios.create({
-        baseURL: 'http://localhost:3000/api/'
-      });
       let userToken = localStorage.getItem('userToken');
       let authToken = { 
         'Authorization': 'Bearer ' + userToken
@@ -90,8 +87,12 @@ export default {
       let requestHeaders = {
         headers: authToken
       }
+   /*  const instance = this.$axios.create({
+        baseURL: 'http://localhost:3000/api/'
+      });      */
       if (userToken) {
-        instance.get('/posts', requestHeaders)
+        //instance.get('/posts', requestHeaders)
+        this.$axios.get(this.$requestBaseURL + 'posts', requestHeaders)
         .then((response) => {
           console.log(response);
           console.log(response.data.result);

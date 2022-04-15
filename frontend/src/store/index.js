@@ -36,6 +36,7 @@ export default new Vuex.Store({
  //   logIn: ({ commit }, payload) => {  
     sendSigninform: ({commit}, userInfos) => {
         instance.post('/signup', userInfos)
+// this.$axios.post(this.$requestBaseURL + 'signup', userInfos)
           .then((response) => {
             const token = response.data.token;
             localStorage.setItem('userToken', token);
@@ -53,6 +54,7 @@ export default new Vuex.Store({
     sendLoginform: ({ commit }, loginInfos) => {
       console.log(loginInfos);
       instance.post('/login', loginInfos)
+// this.$axios.post(this.$requestBaseURL + 'login', loginInfos) //global var undefined
         .then((response) => {
           console.log(response);
           const token = response.data.token;
@@ -61,7 +63,7 @@ export default new Vuex.Store({
           const email = loginInfos.email;
           commit('AUTH_SUCCESS', email)
           window.location.href = this.$localhost; //not working...
-        //  router.push({ path: '/', replace: true}) // this worked
+        //  router.push({ path: '/', replace: true}) // this worked but not ->? this.$router.push('/')
         }).catch((err) => {
           commit('AUTH_ERROR', err)
           localStorage.removeItem('userToken');
@@ -72,6 +74,7 @@ export default new Vuex.Store({
       localStorage.removeItem('userToken')
     } */
 /* **************OLD ONE***************************************
+********CHECK async await and search()  https://stackoverflow.com/questions/62265815/returning-data-from-store-js-in-vuejs-returns-typeerror
     fetchAllPosts: (states) => {
       console.log('states: '+ JSON.stringify(states));
       console.log(states.state.token);

@@ -146,10 +146,6 @@ export default {
         email: this.email,
         password: this.password
       })
-      //.then(() => {                  //here added  this.$router.push('/')
-      //  window.location.href = 'http://localhost:8080/'; maybe in indexjs?
-      //})
-      console.log('sendSigninform: ' , this.email);
     },
     
     //  ...mapActions(['sendLoginform'])   

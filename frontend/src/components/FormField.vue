@@ -20,17 +20,14 @@
                 <label for="addImage">{{ imageLabel }}: </label>
                 <br />
                 <input type="file" name="addImage" id="addImage" accept="image/png, image/jpeg" required>
-                <p class="filename">un image ajouté</p>
+                <p class="filename" v-if="$store.state.imageFile">image ajouté !</p>
                 <p id="imageErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
                 
-            <div class="form__commentpost form__commentpost--button">
-                <input type="submit" value="Envoyer !" id="sendCommentpost">
+            <div class="form__commentpost">
+                <button class="button" @click.prevent="postComment">Envoyer !</button>
             </div>
         </form>
-        <div class="form__commentpost form__commentpost--button">
-            <input type="button" value="Retourner à l'accueil" id="backHome">
-        </div>
 
     </div>
 </template>
@@ -71,29 +68,21 @@ file.addEventListener('change', (event) => {
     border: 2em solid;
     border-color: #faedea;
 }
-input{
-    height: 2em;
-    margin-top: 6px;
-    border: none;
-
-    background-color: #fff;
-    border-radius: 4px;
+button {
     cursor: pointer;
-    
+    border: none;
+    border-radius: 8px 8px;
+    padding: 10px 45px;
+    background-color: #fbd8cf;
+    font-size: larger;
+    margin-top: 6px;
 }
 textarea{
     border-color: #9e9e9e;
     border-radius: 4px;
     cursor: pointer;
 }
-.form{
-    &__commentpost{
 
-        &--button{
-            border-bottom: 0.2em solid #fa3200;
-        }
-    }
-}
 #addImage{
     opacity: 0;
     width: 0.1px;
