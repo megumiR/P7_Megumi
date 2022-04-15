@@ -13,18 +13,18 @@ export default new Vuex.Store({
     userId: null,
     roll: null,   
     imageFile: null,
-    token: localStorage.getItem('userToken') || '',
+ //   token: localStorage.getItem('userToken') || '',
     status: null
   },
   getters: {  //  Stateimagefile: state => { return state.imageFile }, 
-    isAuthenticated: state => !!state.token,
+//    isAuthenticated: state => !!state.token,
     authStatus: state => state.status
   },
-  mutations: {  //  setImagefile (state, imageFile) { state.imageFile = imageFile }
-    AUTH_SUCCESS: (state, {token, email, roll}) => {
+  mutations: {  //token,  setImagefile (state, imageFile) { state.imageFile = imageFile }
+    AUTH_SUCCESS: (state, { email, roll}) => {
       state.status = 'success'
       state.userId = email 
-      state.token = token
+    //  state.token = token
       state.roll = roll
     },
     AUTH_ERROR: (state) => {
@@ -39,7 +39,7 @@ export default new Vuex.Store({
           .then((response) => {
             const token = response.data.token;
             localStorage.setItem('userToken', token);
-            commit('AUTH_SUCCESS', token) //commit -> mutation active
+      //      commit('AUTH_SUCCESS', token) //commit -> mutation active
             commit('AUTH_SUCCESS', response.data.roll)
             const email = userInfos.email;
             commit('AUTH_SUCCESS', email)
@@ -57,7 +57,7 @@ export default new Vuex.Store({
           console.log(response);
           const token = response.data.token;
           localStorage.setItem('userToken', token);
-          commit('AUTH_SUCCESS', token)
+    //      commit('AUTH_SUCCESS', token)
           commit('AUTH_SUCCESS', response.data.roll)
           const email = loginInfos.email;
           commit('AUTH_SUCCESS', email)
@@ -89,9 +89,8 @@ export default new Vuex.Store({
           console.log(response);
           console.log(response.data.result);
           let list = response.data.result;
-          return list;
-         // return data => (this.list = data.result)
-          
+          return list; 
+         //return this.list = response.data.result /// return data => (this.list = data.result)
         }).catch((err) => {
           throw err;
         })

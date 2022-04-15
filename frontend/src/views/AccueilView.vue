@@ -82,7 +82,6 @@ export default {
       const instance = this.$axios.create({
         baseURL: 'http://localhost:3000/api/'
       });
-      console.log(localStorage.getItem('userToken'));
       let authToken = { 
         'Authorization': 'Bearer ' + localStorage.getItem('userToken')
       };
@@ -94,9 +93,7 @@ export default {
         .then((response) => {
           console.log(response);
           console.log(response.data.result);
-          //let list = response.data.result;
-          //return list;
-          return data => (this.list = data.result)
+          return this.list = response.data.result
         })
         .catch((err) => {
           throw err;
