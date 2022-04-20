@@ -2,7 +2,7 @@
   <div class="home" id="home">
     <WelcomeMsg msg="Bienvenue :) " recommend=""/>
     <p v-if="$store.state.userId">{{ $store.state.userId }}</p>
-    <p v-if="$store.state.userId">{{ userId }}</p>
+    <p v-if="userId">{{ userId }}</p>
 
 
     <p v-if="!list">Pas de post à affichier</p>
@@ -96,22 +96,29 @@ export default {
         .then((response) => {
           console.log(response);
           console.log(response.data.result);
-/***************** */
-          if (response.data.result.length > 0) {
+/***************** Cannot get n show the image blob as image*/
+     //     if (response.data.result.length > 0 && ) {
             console.log('result exists');
             let result = response.data.result;
             result.forEach(post => {
-              console.log('image'+JSON.stringify(post.image) + 'post id' + post.id);
-              console.log('blob converting...');
-              const blob = new Blob(post.image);
-              const reader = new FileReader();
-              reader.onload = () => {
-                console.log(reader.result);
-                reader.readAsDataURL(blob);
-                console.log(reader.readAsDataURL(blob));
+              if (post.image != null) {
+                console.log('image'+JSON.stringify(post.image) + 'post id' + post.id);
+                console.log('blob converting...');
+              //  let fileName = new Date().getTime() + ".png";  
+                const blob = new Blob([post.image]); //, fileName
+                console.log(blob);
+                const reader = new FileReader();
+                reader.onload = function() {
+                  console.log(JSON.stringify(reader.result));
+                  reader.readAsDataURL(blob);
+                  console.log(reader.readAsDataURL(blob));
+                }
+              } else {
+                console.log('no image for id:' + post.id)
               }
+              
             });
-          }
+       //   }
        /*   console.log('blob converting...');
           const blob = new Blob([result[10].image.data], [result[10].image.type]);
           const reader = new FileReader();

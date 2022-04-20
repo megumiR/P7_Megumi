@@ -37,8 +37,15 @@ export default {
   name: 'FormField',
   props: [
        'PostnameLabel','CommentEreaLabel', 'imageLabel'
-  ]
-  // on click?
+  ],
+  updated: function () {
+    this.postComment();
+  },
+  methods: {
+    postComment: function() {
+      //console.log();
+        this.$store.dispatch('postComment')
+    }
 }
 /*
 const file = document.querySelector('#addImage');
@@ -49,12 +56,10 @@ file.addEventListener('change', (event) => {
 
  //   const fileNameAndSize = `${fileName} - ${fileSize}KB`;
     document.querySelector('.filename').textContent = `${fileName}`;
-});
+});*/
 
 
-*/
-
-
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

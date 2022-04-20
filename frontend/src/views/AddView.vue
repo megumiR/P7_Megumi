@@ -7,7 +7,7 @@
 
 <script>
 import FormField from '../components/FormField.vue'
-
+//import { mapState } from 'vuex'  
 
 export default {
   name: 'AddView',
@@ -17,35 +17,7 @@ export default {
  /* data() {
   },
   */
-  updated: function () {
-    this.postComment();
-  },
-  methods: {
-    postComment: function() {
-      let userToken = localStorage.getItem('userToken');
-      let authToken = { 
-        'Authorization': 'Bearer ' + userToken
-      };
-      console.log(authToken);
-      let requestHeaders = {
-        headers: authToken
-      }
-
-      if (userToken) {
-        this.$axios.post(this.$requestBaseURL + 'posts', requestHeaders)
-        .then((response) => {
-          console.log(response);
-         // return this.list = response.data.result
-        })
-        .catch((err) => {
-          throw err;
-        })
-      } else {
-        console.log('no token user');
-        //return this.dataReturnFromParent = 'Vous n\'êtes pas authorizé.';
-      }
-    }
-  }
+  
 }
 </script>
 

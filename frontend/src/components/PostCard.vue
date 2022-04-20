@@ -12,7 +12,7 @@
             -->
         <div class="PostCard__img"> 
 
-            <img :src="image" alt="image" v-if="$store.state.imageFile"/>
+            <img :src="image" alt="image" v-if="image"/>
         </div>    
         <div>
             <p>
@@ -23,13 +23,13 @@
             
 
             <div class="PostCard__button">
-                <div class="update PostCard__button--form" id="update" v-if="$store.userId">
+                <div class="update PostCard__button--form" id="update" v-if="$store.state.userId == userId">
                     <router-link to="/update" > Modifier </router-link> 
                 </div>  
                 <router-view />
 
 
-                <div class="delete PostCard__button--form" id="delete" v-if="$store.userId">Supprimer</div> 
+                <div class="delete PostCard__button--form" id="delete" v-if="$store.state.userId = userId">Supprimer</div> 
             </div>
 
             <div class="PostCard__iconblock">
@@ -54,7 +54,7 @@ export default {
   name: 'PostCard',   
   emits: ['emitname'], //emit is not working
   created() {
-      this.$emit('emitname', 'msg from child component') //+親template に<子部品名 @emitname="(e)=>dataReturnFromParent=e"> , data(){return{dataReturnFromParent: xxxで反映
+      this.$emit('emitname', 'Touts les posts sont affichés ') //+親template に<子部品名 @emitname="(e)=>dataReturnFromParent=e"> , data(){return{dataReturnFromParent: xxxで反映
   },
   props: [ 'image', 'comment', 'postName' ], //''内にTemplate上で{{}}書きした名前
 /*props: { 
@@ -66,6 +66,8 @@ export default {
       return {
           numberOfLikes : 0,
           numberOfDislikes : 0,
+          userId: '',  ///////////???????????
+          roll: ''     ///////////???????????
       }
   },
   methods : {

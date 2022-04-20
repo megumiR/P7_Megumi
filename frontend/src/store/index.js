@@ -11,26 +11,27 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userId: null,
+    userId: 'toto',
     roll: null,   
     imageFile: null,
- // Pas besoin?  token: localStorage.getItem('userToken') || '',
     status: null
   },
   getters: {  //  Stateimagefile: state => { return state.imageFile }, 
-//    isAuthenticated: state => !!state.token,
     authStatus: state => state.status
   },
-  mutations: {  //token,  setImagefile (state, imageFile) { state.imageFile = imageFile }
-    AUTH_SUCCESS: (state, { email, roll}) => {
+  mutations: {  //  setImagefile (state, imageFile) { state.imageFile = imageFile }
+    AUTH_SUCCESS: (state, { userId, roll}) => {
       state.status = 'success'
-      state.userId = email 
+      state.userId = userId 
       state.roll = roll
     },
     AUTH_ERROR: (state) => {
       state.status = 'error'
-    }
+    },
    //LOGOUT: (state) => { state.userId = null state.token = null state.status = null}
+    IMG_INSERETED: (state, {imageFile}) => {
+      state.imageFile = imageFile
+    }
   },
   actions: { 
  //   logIn: ({ commit }, payload) => {  
@@ -41,8 +42,8 @@ export default new Vuex.Store({
             const token = response.data.token;
             localStorage.setItem('userToken', token);
             commit('AUTH_SUCCESS', response.data.roll)  //commit -> mutation active
-            const email = userInfos.email;
-            commit('AUTH_SUCCESS', email)
+      /////      const email = userInfos.email;
+            commit('AUTH_SUCCESS', response.data.userId)
            // window.location.href = this.$localhost;
             router.push({ path: '/', replace: true})
           })
@@ -52,6 +53,7 @@ export default new Vuex.Store({
           })
     },
     sendLoginform: ({ commit }, loginInfos) => {
+      console.log('loginInfos');
       console.log(loginInfos);
       instance.post('/login', loginInfos)
 // this.$axios.post(this.$requestBaseURL + 'login', loginInfos) //global var undefined
@@ -59,9 +61,10 @@ export default new Vuex.Store({
           console.log(response);
           const token = response.data.token;
           localStorage.setItem('userToken', token);
-          commit('AUTH_SUCCESS', response.data.roll)
-          const email = loginInfos.email;
-          commit('AUTH_SUCCESS', email)
+          console.log(response.data.roll);
+          console.log(response.data.userId);
+          commit('AUTH_SUCCESS', response.data.roll)  //NOT WORKING???
+          commit('AUTH_SUCCESS', response.data.userId)
         //  window.location.href = this.$localhost; //not working...
           router.push({ path: '/', replace: true}) // this worked but not ->? this.$router.push('/')
         }).catch((err) => {
@@ -97,7 +100,38 @@ export default new Vuex.Store({
           throw err;
         })
     }*/
+    postComment: (state) => {
+      console.log(state);
+     /////// authentification //////////
+      let userToken = localStorage.getItem('userToken');
+      let authToken = { 
+        'Authorization': 'Bearer ' + userToken
+      };
+      console.log(authToken);
+      console.log(state.userId); /////////////undefined
+      let requestOptions = {
+        headers: {authToken, 'user_id': state.userId}
+      }
+      console.log(requestOptions);
+      if (userToken) {
+        instance.post('/posts', requestOptions)
+        .then((response) => {
+          console.log(response);
+        
+          // return this.list = response.data.result ???
+          //router.push({ path: '/', replace: true})
+        })
+        .catch((err) => {
+          throw err;
+        })
+      } else {
+        console.log('no token user');
+        //return this.dataReturnFromParent = 'Vous n\'êtes pas authorizé.';
+      }
+    
 
+
+    }
   },
   modules: {
   }

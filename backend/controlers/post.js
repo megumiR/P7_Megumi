@@ -78,7 +78,7 @@ exports.showallposts = async (req, res, next) => {
     if (result.length > 0) {
       result.forEach( post => {
         if ( post.image != null) {
-          console.log(post.image);
+          console.log(post.image);      ///////////////////need to change sth for showing images?
         } else {
           allPostsWithImg.push(post);
         }
