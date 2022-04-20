@@ -62,8 +62,8 @@ export default new Vuex.Store({
           commit('AUTH_SUCCESS', response.data.roll)
           const email = loginInfos.email;
           commit('AUTH_SUCCESS', email)
-          window.location.href = this.$localhost; //not working...
-        //  router.push({ path: '/', replace: true}) // this worked but not ->? this.$router.push('/')
+        //  window.location.href = this.$localhost; //not working...
+          router.push({ path: '/', replace: true}) // this worked but not ->? this.$router.push('/')
         }).catch((err) => {
           commit('AUTH_ERROR', err)
           localStorage.removeItem('userToken');

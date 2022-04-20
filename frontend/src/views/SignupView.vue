@@ -1,6 +1,6 @@
 <template>
   <div class="signin">
-    <WelcomeMsg msg="Bienvenu au Groupomania chat :)" recommend="Si vous voulez créer un post, inscrivez-vous !"/>
+    <WelcomeMsg msg="Bienvenue au Groupomania chat :)" recommend="Si vous voulez créer un post, inscrivez-vous !"/>
     
     <div class="formField">
       <p class="formField__msg" v-if="mode == 'signup'">Vous avez déjà un compte ?<span class="formField__color" @click="switchToLogin"> Connexion par ici</span></p>
@@ -11,7 +11,7 @@
           <label for="username">Utilisateur : </label>
             <br />
           <input type="text" name="username" id="username" v-on:blur="validUsername" required /> <!-- @blur="validUsername" -->
-          <p id="userErrorMsg">{{ userErrorMsg }}</p>
+          <p id="userErrorMsg" class="rouge">{{ userErrorMsg }}</p>
         </div>
 
 
@@ -19,14 +19,14 @@
           <label for="email">Email : </label>
             <br />
           <input type="email" name="email" id="email" v-on:blur="validEmail" required /> 
-          <p id="emailErrorMsg">{{ emailErrorMsg }}</p>  
+          <p id="emailErrorMsg" class="rouge">{{ emailErrorMsg }}</p>  
         </div>
 
         <div class="form__commentpost"> 
           <label for="password">Mot de passe : </label>
             <br />
           <input type="password" name="password" id="password" v-on:blur="validPassword" required /> 
-          <p id="passwordErrorMsg">{{ passwordErrorMsg }}</p>
+          <p id="passwordErrorMsg" class="rouge">{{ passwordErrorMsg }}</p>
         </div>
 
         <div class="">
@@ -103,8 +103,8 @@ export default {
       let email = e.target.value;
       this.email = email;
       if (email) {
-        //return checkEmail.test(email);
-        let result = email.match(checkEmail);
+        // ne marche pas avec ->  email.match(checkEmail);
+        let result = checkEmail.test(email);
         if (result == true) {
           console.log('email : valide');
           this.emailErrorMsg = '';
@@ -123,8 +123,8 @@ export default {
       let password = e.target.value;
       this.password = password;
       if (password) {
-        //return checkPassword.match(password);
-        let result = password.match(checkPassword);
+        //ne marche pas avec ->password.match(checkPassword);
+        let result = checkPassword.test(password);
         if (result == true) {
           console.log('password : valide');
           this.passwordErrorMsg = '';
@@ -173,6 +173,9 @@ export default {
     color: rgb(216, 53, 12);
     cursor: pointer;
   }
+}
+.rouge{
+  color: red;
 }
 button{
   cursor: pointer;

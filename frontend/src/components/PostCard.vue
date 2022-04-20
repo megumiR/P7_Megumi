@@ -12,13 +12,13 @@
             -->
         <div class="PostCard__img"> 
 
-            <img :src="image" alt="image" v-if="imageFile"/>
+            <img :src="image" alt="image" v-if="$store.state.imageFile"/>
         </div>    
         <div>
             <p>
                 {{ comment }} <br/>
 
-                [ Comment par {{ postName }} ] 
+                [ Posté par {{ postName }} ] 
             </p>
             
 
