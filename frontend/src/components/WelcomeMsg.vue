@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }} {{ userIdNumber }}</h1>
+    <h1>{{ msg }} {{ userName }}</h1>
     <p>
       {{ recommend }}
       <br />
@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     ...mapState({
-      userIdNumber: 'userId'
+      userName: 'userName'
     })
   }
 }

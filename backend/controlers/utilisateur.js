@@ -29,6 +29,7 @@ exports.signup = async (req, res, next) => {
       res.status(201).json({
         message: "L'info d'user est bien inseré avec le nom: " + req.body.name,
         userId: result[0].id,
+        userName: result[0].name,
         token: jwt.sign(
           //new token cryptnize
           { userId: result[0].id }, 
@@ -63,6 +64,7 @@ exports.login = async (req, res, next) => {
           }
           res.status(200).json({
             userId: result[0].id,
+            userName: result[0].name,
             token: jwt.sign(
               //new token cryptnize
               { userId: result[0].id },

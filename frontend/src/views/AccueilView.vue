@@ -1,9 +1,6 @@
 <template>
   <div class="home" id="home">
     <WelcomeMsg msg="Bienvenue :) " recommend=""/>
-    <p v-if="$store.state.userId">{{ $store.state.userId }}</p>
-    <p v-if="userId">{{ userId }}</p>
-
 
     <p v-if="!list">Pas de post à affichier</p>
     <PostCard v-else v-for="post in list" 
@@ -50,7 +47,6 @@ That is why it is must to have :key attribute.
 <script>
 import WelcomeMsg from '../components/WelcomeMsg.vue'
 import PostCard from '../components/PostCard.vue'
-import { mapState } from 'vuex'  //mapActions,
 
 export default {
   name: 'AccueilView',
@@ -66,9 +62,6 @@ export default {
   },
   created: function () {
     this.fetchAllPosts();
-  },
-  computed: {
-    ...mapState([ 'userId' ])
   },
   methods: {
   /* ************OLD ONE******************** ...mapActions(['fetchAllPosts'])

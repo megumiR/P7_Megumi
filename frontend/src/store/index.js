@@ -11,7 +11,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userId: 'toto',
+    userId: null,
+    userName: null,
     roll: null,   
     imageFile: null,
     status: null
@@ -23,17 +24,19 @@ export default new Vuex.Store({
     AUTH_SUCCESS_USERID: (state,  userId) => {
       state.userId = userId 
     },
+    AUTH_SUCCESS_USERNAME: (state,  userName) => {
+      state.userName = userName 
+    },
     AUTH_SUCCESS_ROLL: (state,  roll) => {
       state.roll = roll 
     },
     AUTH_SUCCESS: (state) => {
       state.status = 'success'
-
     },
     AUTH_ERROR: (state) => {
       state.status = 'error'
     },
-   //LOGOUT: (state) => { state.userId = null state.token = null state.status = null}
+   //LOGOUT: (state) => { state.userId = null state.roll = null state.status = null}
     IMG_INSERETED: (state, {imageFile}) => {
       state.imageFile = imageFile
     }
@@ -47,9 +50,11 @@ export default new Vuex.Store({
             const token = response.data.token;
             localStorage.setItem('userToken', token);
             commit('AUTH_SUCCESS')  //commit -> mutation active
-            commit('AUTH_SUCCESS_ROLL', response.data.roll)  //commit -> mutation active
-            /////      const email = userInfos.email;
             commit('AUTH_SUCCESS_USERID', response.data.userId)
+            commit('AUTH_SUCCESS_USERNAME', response.data.userName)
+            commit('AUTH_SUCCESS_ROLL', response.data.roll)  
+
+            
             console.log( this.state.userId);
            // window.location.href = this.$localhost;
             router.push({ path: '/', replace: true})
@@ -69,8 +74,10 @@ export default new Vuex.Store({
           const token = response.data.token;
           localStorage.setItem('userToken', token);
           commit('AUTH_SUCCESS')
-          commit('AUTH_SUCCESS_ROLL', response.data.roll)  //NOT WORKING???
           commit('AUTH_SUCCESS_USERID', response.data.userId)
+          commit('AUTH_SUCCESS_USERNAME', response.data.userName)
+          commit('AUTH_SUCCESS_ROLL', response.data.roll) 
+          
         //  window.location.href = this.$localhost; //not working...
           router.push({ path: '/', replace: true}) // this worked but not ->? this.$router.push('/')
         }).catch((err) => {
