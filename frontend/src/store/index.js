@@ -20,10 +20,15 @@ export default new Vuex.Store({
     authStatus: state => state.status
   },
   mutations: {  //  setImagefile (state, imageFile) { state.imageFile = imageFile }
-    AUTH_SUCCESS: (state, { userId, roll}) => {
-      state.status = 'success'
+    AUTH_SUCCESS_USERID: (state,  userId) => {
       state.userId = userId 
-      state.roll = roll
+    },
+    AUTH_SUCCESS_ROLL: (state,  roll) => {
+      state.roll = roll 
+    },
+    AUTH_SUCCESS: (state) => {
+      state.status = 'success'
+
     },
     AUTH_ERROR: (state) => {
       state.status = 'error'
@@ -41,9 +46,11 @@ export default new Vuex.Store({
           .then((response) => {
             const token = response.data.token;
             localStorage.setItem('userToken', token);
-            commit('AUTH_SUCCESS', response.data.roll)  //commit -> mutation active
-      /////      const email = userInfos.email;
-            commit('AUTH_SUCCESS', response.data.userId)
+            commit('AUTH_SUCCESS')  //commit -> mutation active
+            commit('AUTH_SUCCESS_ROLL', response.data.roll)  //commit -> mutation active
+            /////      const email = userInfos.email;
+            commit('AUTH_SUCCESS_USERID', response.data.userId)
+            console.log( this.state.userId);
            // window.location.href = this.$localhost;
             router.push({ path: '/', replace: true})
           })
@@ -61,10 +68,9 @@ export default new Vuex.Store({
           console.log(response);
           const token = response.data.token;
           localStorage.setItem('userToken', token);
-          console.log(response.data.roll);
-          console.log(response.data.userId);
-          commit('AUTH_SUCCESS', response.data.roll)  //NOT WORKING???
-          commit('AUTH_SUCCESS', response.data.userId)
+          commit('AUTH_SUCCESS')
+          commit('AUTH_SUCCESS_ROLL', response.data.roll)  //NOT WORKING???
+          commit('AUTH_SUCCESS_USERID', response.data.userId)
         //  window.location.href = this.$localhost; //not working...
           router.push({ path: '/', replace: true}) // this worked but not ->? this.$router.push('/')
         }).catch((err) => {

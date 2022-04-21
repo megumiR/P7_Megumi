@@ -119,17 +119,20 @@ export default {
       }  
     },
     validPassword: function (e) {
-      const checkPassword = /^[éèàîûôïü\w. -/*._@]+$/g;
       let password = e.target.value;
       this.password = password;
       if (password) {
-        //ne marche pas avec ->password.match(checkPassword);
-        let result = checkPassword.test(password);
+        const containsUppercase = /[A-Z]/.test(password);
+        const containsLowercase = /[a-z]/.test(password);
+        const containsNumber = /[0-9]/.test(password);
+        const containsSpecialCaracter = /[-/*._@]/.test(password);
+        const contains8caracters = /^.{8,}$/.test(password);
+        let result = containsUppercase && containsLowercase && containsNumber && containsSpecialCaracter && contains8caracters ;
         if (result == true) {
           console.log('password : valide');
           this.passwordErrorMsg = '';
         } else if (result == false) {
-          this.passwordErrorMsg = 'Le mot de passe est invalide. Ecrivez avec des caractères, des nombres et des caractères speciales suivantes -/*._ et @ .';
+          this.passwordErrorMsg = 'Le mot de passe est invalide. Ecrivez plus que 8 caractaires avec des caractères, des nombres et des caractères speciales suivantes -/*._ et @ .';
         } else {
           console.log('error : password regex ne marche pas');
         }
