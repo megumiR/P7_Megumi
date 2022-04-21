@@ -64,13 +64,6 @@ export default {
     this.fetchAllPosts();
   },
   methods: {
-  /* ************OLD ONE******************** ...mapActions(['fetchAllPosts'])
-    fetchAllPosts: function() {
-      console.log(this.list);
-      this.$store.dispatch('fetchAllPosts', {
-        list : this.list
-      })
-    }  */
     fetchAllPosts: function() {
       let userToken = localStorage.getItem('userToken');
       let authToken = { 
