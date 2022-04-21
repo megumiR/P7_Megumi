@@ -38,13 +38,24 @@ export default {
   props: [
        'PostnameLabel','CommentEreaLabel', 'imageLabel'
   ],
+  data () {
+      return {
+          postname: '',
+          comment: '',
+      //    img: ''
+      }
+  },
   updated: function () {
     this.postComment();
   },
   methods: {
     postComment: function() {
       //console.log();
-        this.$store.dispatch('postComment')
+        this.$store.dispatch('postComment', {
+            postname: this.postname,
+            comment: this.comment,
+        //    img: this.img
+        })
     }
 }
 /*

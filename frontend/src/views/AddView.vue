@@ -18,7 +18,7 @@ export default {
  /* data() {
   },
   */
-    computed: {
+  computed: {
     ...mapState([ 'userName' ])
   }
 }

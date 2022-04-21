@@ -22,7 +22,7 @@ export default new Vuex.Store({
   },
   mutations: {  //  setImagefile (state, imageFile) { state.imageFile = imageFile }
     AUTH_SUCCESS_USERID: (state,  userId) => {
-      state.userId = userId 
+      state.userId = userId
     },
     AUTH_SUCCESS_USERNAME: (state,  userName) => {
       state.userName = userName 
@@ -49,19 +49,21 @@ export default new Vuex.Store({
           .then((response) => {
             const token = response.data.token;
             localStorage.setItem('userToken', token);
+            localStorage.setItem('userID', response.data.userId);
             commit('AUTH_SUCCESS')  //commit -> mutation active
             commit('AUTH_SUCCESS_USERID', response.data.userId)
             commit('AUTH_SUCCESS_USERNAME', response.data.userName)
             commit('AUTH_SUCCESS_ROLL', response.data.roll)  
 
             
-            console.log( this.state.userId);
+            console.log(this.state.userId);
            // window.location.href = this.$localhost;
             router.push({ path: '/', replace: true})
           })
           .catch((err) => {
             commit('AUTH_ERROR', err)
             localStorage.removeItem('userToken');
+            localStorage.removeItem('userID');
           })
     },
     sendLoginform: ({ commit }, loginInfos) => {
@@ -73,6 +75,7 @@ export default new Vuex.Store({
           console.log(response);
           const token = response.data.token;
           localStorage.setItem('userToken', token);
+          localStorage.setItem('userID', response.data.userId);
           commit('AUTH_SUCCESS')
           commit('AUTH_SUCCESS_USERID', response.data.userId)
           commit('AUTH_SUCCESS_USERNAME', response.data.userName)
@@ -83,11 +86,13 @@ export default new Vuex.Store({
         }).catch((err) => {
           commit('AUTH_ERROR', err)
           localStorage.removeItem('userToken');
+          localStorage.removeItem('userID');
         })
     },
     /* logout: ({commit}) => {
       commit('LOGOUT')
-      localStorage.removeItem('userToken')
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('userID');
     } */
 /* **************OLD ONE***************************************
 ********CHECK async await and search()  https://stackoverflow.com/questions/62265815/returning-data-from-store-js-in-vuejs-returns-typeerror
@@ -113,24 +118,24 @@ export default new Vuex.Store({
           throw err;
         })
     }*/
-    postComment: (state) => {
-      console.log(state);
+    postComment: ({ commit }, sth) => {
+      console.log(sth);
      /////// authentification //////////
       let userToken = localStorage.getItem('userToken');
       let authToken = { 
         'Authorization': 'Bearer ' + userToken
       };
       console.log(authToken);
-      console.log(state.userId); /////////////undefined
+      let userID = localStorage.getItem('userID');
       let requestOptions = {
-        headers: {authToken, 'user_id': state.userId}
+        headers: {authToken, 'user_id': userID}
       }
       console.log(requestOptions);
       if (userToken) {
-        instance.post('/posts', requestOptions)
+        instance.post('/posts', requestOptions, sth)
         .then((response) => {
           console.log(response);
-        
+          commit()
           // return this.list = response.data.result ???
           //router.push({ path: '/', replace: true})
         })

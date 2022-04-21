@@ -23,13 +23,13 @@
             
 
             <div class="PostCard__button">
-                <div class="update PostCard__button--form" id="update" v-if="$store.state.userId == userId">
+                <div class="update PostCard__button--form" id="update" v-if="userId = userId">
                     <router-link to="/update" > Modifier </router-link> 
                 </div>  
                 <router-view />
 
 
-                <div class="delete PostCard__button--form" id="delete" v-if="$store.state.userId = userId">Supprimer</div> 
+                <div class="delete PostCard__button--form" id="delete" v-if="userId = userId">Supprimer</div> 
             </div>
 
             <div class="PostCard__iconblock">
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
 
 export default {
   name: 'PostCard',   
@@ -69,6 +70,11 @@ export default {
           userId: '',  ///////////???????????
           roll: ''     ///////////???????????
       }
+  },
+  computed: {
+    ...mapState({
+      userName: 'userId'
+    })
   },
   methods : {
       increment: function () {

@@ -7,7 +7,7 @@
       <router-link to="/" > Accueil </router-link> |
       <router-link to="/add" > Ajouter un post </router-link> |
       <router-link to="/signup">
-        <span v-if="$store.state.userId">Logout </span>  
+        <span v-if="userName">Logout par {{ userName }}</span>  
         <span v-else>Login </span>
       </router-link> |
 
@@ -26,38 +26,17 @@
 
 <script>
 import HeaderLogo from './components/HeaderLogo'
+import { mapState } from 'vuex'  
+
 export default {
   name: 'App',
   components: {    
     HeaderLogo
-  }
-}/* ????????????????
-export default {
-  name: 'login',
-  data: function () {
-    return {
-      mode: 'login'
-    } 
   },
-  methods: {
-    @EventListenerNwme: function() {
-      this.mode = 'eventlistenedand...';
-    }
+  computed: {
+    ...mapState([ 'userName' ])
   }
-}    */
-/* How can i put the state Login
-import Vue from 'vue'
-new Vue ({
-  el: '#app',
-  data: {
-    login: false
-  },
-  methods: {
-    functionName: function() {
-      this.login = true;
-    }
-  }
-});*/
+}
 </script>
 
 <style lang="scss">
