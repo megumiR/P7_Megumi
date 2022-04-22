@@ -90,12 +90,12 @@ export default {
             headers: {
                 'authorization': 'Bearer ' + userToken,
                 'user_id': localStorage.getItem('userID')
-                }
-            }, postData)
+                }, postData
+            })
         .then((response) => {
           console.log('response');
           console.log(response);
-          console.log(response.data[0]);
+          console.log(response.data.message);
           // return this.list = response.data.result ???
           //router.push({ path: '/', replace: true})
         })

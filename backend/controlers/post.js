@@ -29,12 +29,12 @@ exports.createPost =
     console.log(req.body);
     if (!req.file) {
       let sqlWithoutImage = `INSERT INTO post (postname, comment, user_id ) VALUES 
-      ('${req.body.postname}', '${req.body.comment}', '${req.body.headers.user_id}')`; ///need to put user_id into headers
+      ('${req.body.postData.postname}', '${req.body.postData.comment}', '${req.body.headers.user_id}')`; ///need to put user_id into headers
       await connection.query(sqlWithoutImage, (err, result) => {
         if (err) {
           return res.status(400).json({ message: "erreur : Insertion post erreur" });
         }
-        console.log("L'article post(comment, postname) est inseré : " + req.body.comment);
+        console.log("L'article post(comment, postname) est inseré : " + req.body.postData.comment);
         res.status(201).json({ message: "Votre post(sans image) est bien crée!" });
       });
     } else {
