@@ -58,8 +58,8 @@ export default {
       mode: 'signup',
       form: {
         name: '',
-        email: '',  //null?
-        password: '', //null?
+        email: '', 
+        password: '', 
       },
       userErrorMsg: '',
       emailErrorMsg: '',

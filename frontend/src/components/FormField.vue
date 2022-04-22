@@ -4,14 +4,14 @@
             <div class="form__commentpost">
                 <label for="postname">{{ PostnameLabel }}: </label>
                 <br />
-                <input type="name" name="postname" id="postname" placeholder="Jean" required /> 
+                <input type="name" name="postname" id="postname" placeholder="Jean" @keyup="postname = $event.target.value" required /> 
                 <p id="postnameErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
 
             <div class="form__commentpost">
                 <label for="comment">{{ CommentEreaLabel }}: </label>
                 <br />
-                <textarea name="comment" id="comment" rows="5" cols="33" placeholder="Ecrivez ici votre message !" required> 
+                <textarea name="comment" id="comment" rows="5" cols="33" placeholder="Ecrivez ici votre message !" @keyup="comment = $event.target.value" required> 
                 </textarea>
                 <p id="commentErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
@@ -19,7 +19,7 @@
             <div class="form__commentpost">
                 <label for="addImage">{{ imageLabel }}: </label>
                 <br />
-                <input type="file" name="addImage" id="addImage" accept="image/png, image/jpeg" required>
+                <input type="file" name="addImage" id="addImage" accept="image/png, image/jpeg" @keyup="image = $event.target.value" required>
                 <p class="filename" v-if="$store.state.imageFile">image ajouté !</p>
                 <p id="imageErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
@@ -42,7 +42,7 @@ export default {
       return {
           postname: '',
           comment: '',
-      //    img: ''
+          image: ''
       }
   },
   updated: function () {
@@ -50,12 +50,65 @@ export default {
   },
   methods: {
     postComment: function() {
-      //console.log();
-        this.$store.dispatch('postComment', {
+      /*  this.$store.dispatch('postComment', {
             postname: this.postname,
             comment: this.comment,
         //    img: this.img
         })
+    }*/
+     /////// authentification //////////
+      let userToken = localStorage.getItem('userToken');
+  /*    let authToken = { 
+        'authorization': 'Bearer ' + userToken
+      };
+      console.log(authToken);
+  */ //   let userID = localStorage.getItem('userID');
+   //   let authUserID = { 'user_id': userID }
+       /* console.log(userID);
+        console.log(JSON.parse(userID));
+        console.log(JSON.stringify(userID));
+     *//* let requestOptions = {
+        headers: {
+            'authorization': 'Bearer ' + userToken,
+             'user_id': localStorage.getItem('userID')
+            }
+      }
+      console.log(requestOptions);
+    */  
+      console.log(this.postname);
+      console.log(this.comment);
+    //  console.log(this.image);
+      let postData = {
+          postname: this.postname,
+          comment: this.comment,
+         // image: this.image
+      }; 
+      
+      if (userToken) {
+        //instance.post('/posts', requestOptions)
+        this.$axios.post(this.$requestBaseURL + 'posts', {
+            headers: {
+                'authorization': 'Bearer ' + userToken,
+                'user_id': localStorage.getItem('userID')
+                }
+            }, postData)
+        .then((response) => {
+          console.log('response');
+          console.log(response);
+          console.log(response.data[0]);
+          // return this.list = response.data.result ???
+          //router.push({ path: '/', replace: true})
+        })
+        .catch((err) => {
+          throw err;
+        })
+      } else {
+        console.log('no token user');
+        //return this.dataReturnFromParent = 'Vous n\'êtes pas authorizé.';
+      }
+    
+
+
     }
 }
 /*

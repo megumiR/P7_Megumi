@@ -25,11 +25,11 @@ exports.createPost =
   /////////// s'il y a un fichier {oui traiter l'image}:{non traiter que l'objet}
   async (req, res, next) => {
     console.log("post one article---------"); // this works with the form-data n JSON on postman
-    console.log(req.headers.user_id);
-
+    console.log(req.body.headers.user_id); //ADD .body
+    console.log(req.body);
     if (!req.file) {
       let sqlWithoutImage = `INSERT INTO post (postname, comment, user_id ) VALUES 
-      ('${req.body.postname}', '${req.body.comment}', '${req.headers.user_id}')`; ///need to put user_id into headers
+      ('${req.body.postname}', '${req.body.comment}', '${req.body.headers.user_id}')`; ///need to put user_id into headers
       await connection.query(sqlWithoutImage, (err, result) => {
         if (err) {
           return res.status(400).json({ message: "erreur : Insertion post erreur" });

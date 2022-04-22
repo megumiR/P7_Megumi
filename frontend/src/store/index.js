@@ -118,38 +118,6 @@ export default new Vuex.Store({
           throw err;
         })
     }*/
-    postComment: ({ commit }, sth) => {
-      console.log(sth);
-     /////// authentification //////////
-      let userToken = localStorage.getItem('userToken');
-      let authToken = { 
-        'Authorization': 'Bearer ' + userToken
-      };
-      console.log(authToken);
-      let userID = localStorage.getItem('userID');
-      let requestOptions = {
-        headers: {authToken, 'user_id': userID}
-      }
-      console.log(requestOptions);
-      if (userToken) {
-        instance.post('/posts', requestOptions, sth)
-        .then((response) => {
-          console.log(response);
-          commit()
-          // return this.list = response.data.result ???
-          //router.push({ path: '/', replace: true})
-        })
-        .catch((err) => {
-          throw err;
-        })
-      } else {
-        console.log('no token user');
-        //return this.dataReturnFromParent = 'Vous n\'êtes pas authorizé.';
-      }
-    
-
-
-    }
   },
   modules: {
   }
