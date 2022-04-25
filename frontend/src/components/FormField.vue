@@ -20,7 +20,7 @@
                 <label for="addImage">{{ imageLabel }}: </label>
                 <br />
                 <input type="file" name="addImage" id="addImage" accept="image/png, image/jpeg" @keyup="image = $event.target.value" required>
-                <p class="filename" v-if="$store.state.imageFile">image ajouté !</p>
+                <p class="filename" v-if="image">image ajouté !</p>
                 <p id="imageErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
                 
@@ -61,27 +61,25 @@ export default {
   /*    let authToken = { 
         'authorization': 'Bearer ' + userToken
       };
-      console.log(authToken);
-  */ //   let userID = localStorage.getItem('userID');
-   //   let authUserID = { 'user_id': userID }
-       /* console.log(userID);
-        console.log(JSON.parse(userID));
-        console.log(JSON.stringify(userID));
-     *//* let requestOptions = {
+      
+      let userID = localStorage.getItem('userID');
+      let authUserID = { 
+        'user_id': userID 
+      };
+      let requestOptions = {
         headers: {
             'authorization': 'Bearer ' + userToken,
              'user_id': localStorage.getItem('userID')
             }
-      }
-      console.log(requestOptions);
-    */  
+      } */  
       console.log(this.postname);
       console.log(this.comment);
-    //  console.log(this.image);
+      
+      console.log(this.image);  ///////////////image ne passe pas
       let postData = {
           postname: this.postname,
           comment: this.comment,
-         // image: this.image
+          image: this.image
       }; 
       
       if (userToken) {

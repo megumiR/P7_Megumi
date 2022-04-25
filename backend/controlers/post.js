@@ -38,9 +38,10 @@ exports.createPost =
         res.status(201).json({ message: "Votre post(sans image) est bien crée!" });
       });
     } else {
-      var imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+      let imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
       console.log(imageUrl);
-      fetch(imageUrl)
+      console.log(req.file.filename);
+ /*     fetch(imageUrl)
         .then((resultFetch) => resultFetch.blob())
         .then((imageBlob) => {
           let sqlWithImage = `INSERT INTO post (postname, comment, image, user_id ) VALUES (
@@ -48,6 +49,10 @@ exports.createPost =
             '${req.body.comment}', 
             '${imageBlob}',
             '${req.headers.user_id}')`;
+*/
+      let sqlWithImage = `INSERT INTO post (postname, comment, image, user_id ) VALUES 
+        ('${req.body.postData.postname}', '${req.body.postData.comment}', '${req.file.filename}', '${req.body.headers.user_id}')`; 
+
 
           connection.query(sqlWithImage, (err, result) => {
             if (err) {
@@ -58,7 +63,7 @@ exports.createPost =
             console.log("L'article post(avec image) est inseré : " + imageUrl);
             res.status(201).json({ message: "Votre post(avec image) est bien crée!" });
           });
-        });
+       // });
     }
   };
 /***************** FIN: Creer un post  ***************/
