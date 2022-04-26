@@ -27,7 +27,8 @@ exports.createPost =
     console.log("post one article---------"); // this works with the form-data n JSON on postman
     console.log(req.body.headers.user_id); //ADD .body
     console.log(req.body);
-    if (!req.file) {
+    console.log(req.body.postData.image);
+    if (!req.file) {  // !req.body.postData.image
       let sqlWithoutImage = `INSERT INTO post (postname, comment, user_id ) VALUES 
       ('${req.body.postData.postname}', '${req.body.postData.comment}', '${req.body.headers.user_id}')`; ///need to put user_id into headers
       await connection.query(sqlWithoutImage, (err, result) => {
@@ -38,9 +39,11 @@ exports.createPost =
         res.status(201).json({ message: "Votre post(sans image) est bien crée!" });
       });
     } else {
+      console.log(req.file.filename);
       let imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
       console.log(imageUrl);
-      console.log(req.file.filename);
+      let imgFile = req.file.filename;
+      console.log(imgFile);
  /*     fetch(imageUrl)
         .then((resultFetch) => resultFetch.blob())
         .then((imageBlob) => {

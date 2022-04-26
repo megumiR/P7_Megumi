@@ -19,7 +19,7 @@
             <div class="form__commentpost">
                 <label for="addImage">{{ imageLabel }}: </label>
                 <br />
-                <input type="file" name="addImage" id="addImage" accept="image/png, image/jpeg" @change="showFileName" required>
+                <input type="file" name="addImage" id="addImage" accept="image/png, image/jpeg" @change.prevent="showFileName" required>
                 <p class="filename" v-if="imageFileName">image ajouté ! {{ imageFileName }}</p>
                 <p id="imageErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
@@ -51,15 +51,26 @@ export default {
     this.postComment();
   },
   methods: {
-    showFileName: function(event) {
-        console.log(event.target.files[0]);
-        console.log(event.target.files[0].name);
+    showFileName: async function(event) {
+        event.preventDefault();
         let imageFileName = event.target.files[0].name;
         this.imageFileName = imageFileName;
+        console.log('this.imageFileName ->>>>>');
         console.log(this.imageFileName);
-        let image = event.target.files[0];
+  /*      let image = event.target.files[0];
         this.image = image;
+        console.log('this.image(file) ->>>>>>>');
         console.log(this.image);
+*/
+        await function readFile(file) {
+          let reader = new FileReader();
+          reader.onload = function (e) {
+            console.log(e.target.result);
+            let image = e.target.result;
+          }
+          reader.readAsText(file);
+          console.log('read as Text');
+        }
     },
     postComment: function() {
       /*  this.$store.dispatch('postComment', {postname: this.postname,comment: this.comment,img: this.img})
@@ -81,29 +92,29 @@ export default {
       } */  
       console.log(this.postname);
       console.log(this.comment);
-      const formData = new FormData();
+  /*    const formData = new FormData();
       formData.append('file', this.image);
-     
+  */   
       let postData = {
           postname: this.postname,
           comment: this.comment,
-        //  image: this.imageFileName
+          image: this.image  //this.imageFileName
       }; 
       
       if (userToken) {
 
-        //instance.post('/posts', requestOptions)
-        this.$axios.post(this.$requestBaseURL + 'posts', formData, {
+        //instance.post('/posts', requestOptions)       formData,
+        this.$axios.post(this.$requestBaseURL + 'posts', {
             headers: {
                 'authorization': 'Bearer ' + userToken,
                 'user_id': localStorage.getItem('userID'),
-                'Content-Type': 'multipart/form-data' 
+            //    'Content-Type': 'json.....' //'multipart/form-data'
                 }, postData
             })
         .then((response) => {
           console.log('response');
           console.log(response);
-          console.log(response.data.files);
+          console.log(response.data.files); //undefini dont exist maybe?
 
           console.log(response.data.message);
           // return this.list = response.data.result ???

@@ -32,6 +32,7 @@ app.use((req, res, next) => {
 //image ,path, express static
 /************** Gerer la date du dossier images en maniere statique pour framework express*****************/
 //app.use('/images', express.static(path.join(__dirname, 'images')));
+//app.use(express.static('images'));
 /************** FIN: Gerer la date du dossier images en maniere statique *********************************/ 
 app.use(express.static(path.join(__dirname, 'static')));
 

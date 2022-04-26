@@ -28,12 +28,12 @@ CREATE TABLE `post` (
   `id` int NOT NULL AUTO_INCREMENT,
   `postname` varchar(100) NOT NULL,
   `comment` varchar(500) NOT NULL,
-  `image` text,
   `user_id` int NOT NULL,
+  `image` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (1,'jean','Hello',NULL,1),(2,'jean','Bonjour à tous! On fait la fete de bienvenue ce soir pour Juju?',NULL,1);
+INSERT INTO `post` VALUES (1,'jean','Hello',1,NULL),(2,'jean','Bonjour à tous! On fait la fete de bienvenue ce soir pour Juju?',1,NULL),(24,'lolo','genial! ',24,NULL),(25,'lolo','je ferai des deco! c est ou? la salle 11?',24,NULL);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,4 +118,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-25 12:34:38
+-- Dump completed on 2022-04-26 17:43:54
