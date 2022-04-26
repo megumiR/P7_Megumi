@@ -19,8 +19,8 @@
             <div class="form__commentpost">
                 <label for="addImage">{{ imageLabel }}: </label>
                 <br />
-                <input type="file" name="addImage" id="addImage" accept="image/png, image/jpeg" @keyup="image = $event.target.value" required>
-                <p class="filename" v-if="image">image ajouté !</p>
+                <input type="file" name="addImage" id="addImage" accept="image/png, image/jpeg" @change="showFileName" required>
+                <p class="filename" v-if="imageFileName">image ajouté ! {{ imageFileName }}</p>
                 <p id="imageErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
                 
@@ -42,26 +42,33 @@ export default {
       return {
           postname: '',
           comment: '',
+          imageFileName: '',
           image: ''
       }
   },
   updated: function () {
+    
     this.postComment();
   },
   methods: {
+    showFileName: function(event) {
+        console.log(event.target.files[0]);
+        console.log(event.target.files[0].name);
+        let imageFileName = event.target.files[0].name;
+        this.imageFileName = imageFileName;
+        console.log(this.imageFileName);
+        let image = event.target.files[0];
+        this.image = image;
+        console.log(this.image);
+    },
     postComment: function() {
-      /*  this.$store.dispatch('postComment', {
-            postname: this.postname,
-            comment: this.comment,
-        //    img: this.img
-        })
+      /*  this.$store.dispatch('postComment', {postname: this.postname,comment: this.comment,img: this.img})
     }*/
      /////// authentification //////////
       let userToken = localStorage.getItem('userToken');
   /*    let authToken = { 
         'authorization': 'Bearer ' + userToken
       };
-      
       let userID = localStorage.getItem('userID');
       let authUserID = { 
         'user_id': userID 
@@ -70,29 +77,34 @@ export default {
         headers: {
             'authorization': 'Bearer ' + userToken,
              'user_id': localStorage.getItem('userID')
-            }
+        }
       } */  
       console.log(this.postname);
       console.log(this.comment);
-      
-      console.log(this.image);  ///////////////image ne passe pas
+      const formData = new FormData();
+      formData.append('file', this.image);
+     
       let postData = {
           postname: this.postname,
           comment: this.comment,
-          image: this.image
+        //  image: this.imageFileName
       }; 
       
       if (userToken) {
+
         //instance.post('/posts', requestOptions)
-        this.$axios.post(this.$requestBaseURL + 'posts', {
+        this.$axios.post(this.$requestBaseURL + 'posts', formData, {
             headers: {
                 'authorization': 'Bearer ' + userToken,
-                'user_id': localStorage.getItem('userID')
+                'user_id': localStorage.getItem('userID'),
+                'Content-Type': 'multipart/form-data' 
                 }, postData
             })
         .then((response) => {
           console.log('response');
           console.log(response);
+          console.log(response.data.files);
+
           console.log(response.data.message);
           // return this.list = response.data.result ???
           //router.push({ path: '/', replace: true})
