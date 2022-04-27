@@ -1,15 +1,6 @@
 
 <template>
     <div class="PostCard">
-            <!-- v-bind for API
-             <div class="PostCard" v-for="post in posts"
-                    v-bind:key="post.id"
-                    v-bind:title="post.title"
-                    v-bind:comment="post.comment"
-            >
-                    {{ post.postComment }}
-            </div>
-            -->
         <div class="PostCard__img"> 
 
             <img :src="image" alt="image" v-if="image"/>
@@ -18,18 +9,18 @@
             <p>
                 {{ comment }} <br/>
 
-                [ Posté par {{ postName }} ] 
+                [ Posté par {{ postName }} ] <span id="autherId" class="hide">{{ autherId }}</span>
             </p>
             
 
-            <div class="PostCard__button">
-                <div class="update PostCard__button--form" id="update" v-if="userId = userId">
+            <div class="PostCard__button" v-if="userId = autherId">
+                <div class="update PostCard__button--form" @click.prevent="postToUpdate">
                     <router-link to="/update" > Modifier </router-link> 
                 </div>  
                 <router-view />
 
 
-                <div class="delete PostCard__button--form" id="delete" v-if="userId = userId">Supprimer</div> 
+                <div class="delete PostCard__button--form"  @click.prevent="postToDelete">Supprimer</div> 
             </div>
 
             <div class="PostCard__iconblock">
@@ -49,7 +40,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
+//import { mapState } from "vuex"
 
 export default {
   name: 'PostCard',   
@@ -57,7 +48,7 @@ export default {
   created() {
       this.$emit('emitname', 'Touts les posts sont affichés ') //+親template に<子部品名 @emitname="(e)=>dataReturnFromParent=e"> , data(){return{dataReturnFromParent: xxxで反映
   },
-  props: [ 'image', 'comment', 'postName' ], //''内にTemplate上で{{}}書きした名前
+  props: [ 'image', 'comment', 'postName', 'autherId' ], //''内にTemplate上で{{}}書きした名前
 /*props: { 
     image: ,
     comment: String,
@@ -67,15 +58,15 @@ export default {
       return {
           numberOfLikes : 0,
           numberOfDislikes : 0,
-          userId: '',  ///////////???????????
-          roll: ''     ///////////???????????
+          userId: localStorage.getItem('userID'),  
+          roll: ''
       }
   },
-  computed: {
+/*  computed: {
     ...mapState({
       userName: 'userId'
     })
-  },
+  },*/
   methods : {
       increment: function () {
         
@@ -117,9 +108,16 @@ export default {
 */
       },
       incrementDislike: function () {
-          this.numberOfDislikes++;
+        this.numberOfDislikes++;
+       // this.numberOfDislikes = 'counté';
+      },
+      postToUpdate: function() {
+
+      },
+      postToDelete: function() {
+
       }
-  } 
+  }     
 //}
 
 
@@ -214,5 +212,9 @@ export default {
         }
     }
 
+}
+.hide {
+    color: red;
+  //  opacity: 0;
 }
 </style>

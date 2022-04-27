@@ -9,7 +9,7 @@
       :image="post.image" 
       :comment="post.comment" 
       :postName="post.postname"
-      
+      :autherId="post.user_id"
       @emitname="(e) => dataReturnFromParent = e "
       />    
       <p>{{ dataReturnFromParent }}</p>
@@ -73,21 +73,19 @@ export default {
       let requestHeaders = {
         headers: authToken
       }
-   /*  const instance = this.$axios.create({
-        baseURL: 'http://localhost:3000/api/'
-      });      */
       if (userToken) {
-        //instance.get('/posts', requestHeaders)
         this.$axios.get(this.$requestBaseURL + 'posts', requestHeaders)
         .then((response) => {
           console.log(response);
           console.log(response.data.result);
-/***************** Cannot get n show the image blob as image*/
+/***************** Cannot get n show the image */
      //     if (response.data.result.length > 0 && ) {
             console.log('result exists');
             let result = response.data.result;
             result.forEach(post => {
               if (post.image != null) {
+/*******************??? */
+
                 console.log('image'+JSON.stringify(post.image) + 'post id' + post.id);
                 console.log('blob converting...');
               //  let fileName = new Date().getTime() + ".png";  
@@ -125,7 +123,8 @@ export default {
         return this.dataReturnFromParent = 'Vous n\'êtes pas authorizé.';
       }
     }
-}}
+  }
+}
 
 </script>
 

@@ -67,11 +67,16 @@ export default {
           reader.onload = function (e) {
             console.log(e.target.result);
             let image = e.target.result;
+            this.image = image;
           }
           reader.readAsText(file);
           console.log('read as Text');
         }
     },
+
+
+
+    
     postComment: function() {
       /*  this.$store.dispatch('postComment', {postname: this.postname,comment: this.comment,img: this.img})
     }*/
