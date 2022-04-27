@@ -25,24 +25,29 @@ exports.createPost =
   /////////// s'il y a un fichier {oui traiter l'image}:{non traiter que l'objet}
   async (req, res, next) => {
     console.log("post one article---------"); // this works with the form-data n JSON on postman
-    console.log(req.body.headers.user_id); //ADD .body
-    console.log(req.body);
-    console.log(req.body.postData.image);
-    if (!req.file) {  // !req.body.postData.image
-      let sqlWithoutImage = `INSERT INTO post (postname, comment, user_id ) VALUES 
-      ('${req.body.postData.postname}', '${req.body.postData.comment}', '${req.body.headers.user_id}')`; ///need to put user_id into headers
+    console.log(req.body); //ADD .body
+
+   // console.log(req.body);
+    //console.log(req.body.postData.image);
+    if (!req.body.file) {  
+      
+
+
+      let sqlWithoutImage = `INSERT INTO post (title, content, user_id ) VALUES 
+      ('${req.body.title}', '${req.body.content}', '${req.body.user_id}')`; ///need to put user_id into headers
       await connection.query(sqlWithoutImage, (err, result) => {
         if (err) {
           return res.status(400).json({ message: "erreur : Insertion post erreur" });
         }
-        console.log("L'article post(comment, postname) est inseré : " + req.body.postData.comment);
+        console.log("L'article post(content, title) est inseré : " + req.body.title);
         res.status(201).json({ message: "Votre post(sans image) est bien crée!" });
       });
     } else {
-      console.log(req.file.filename);
-      let imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+      console.log("Il y a une image");
+      console.log(req.body.file.filename);
+      let imageUrl = `${req.protocol}://${req.get("host")}/images/${req.body.file.filename}`;
       console.log(imageUrl);
-      let imgFile = req.file.filename;
+      let imgFile = req.body.file.filename;
       console.log(imgFile);
  /*     fetch(imageUrl)
         .then((resultFetch) => resultFetch.blob())
@@ -53,8 +58,8 @@ exports.createPost =
             '${imageBlob}',
             '${req.headers.user_id}')`;
 */
-      let sqlWithImage = `INSERT INTO post (postname, comment, image, user_id ) VALUES 
-        ('${req.body.postData.postname}', '${req.body.postData.comment}', '${req.file.filename}', '${req.body.headers.user_id}')`; 
+      let sqlWithImage = `INSERT INTO post (title, content, image, user_id ) VALUES 
+        ('${req.body.title}', '${req.body.content}', '${req.body.file.filename}', '${req.body.user_id}')`; 
 
 
           connection.query(sqlWithImage, (err, result) => {

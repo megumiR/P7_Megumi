@@ -118,6 +118,9 @@ export default new Vuex.Store({
           throw err;
         })
     }*/
+    postToUpdate: (states) => {
+      console.log(states);
+    }
   },
   modules: {
   }

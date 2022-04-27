@@ -112,7 +112,7 @@ export default {
        // this.numberOfDislikes = 'counté';
       },
       postToUpdate: function() {
-
+        this.$emit('postToUpdate');
       },
       postToDelete: function() {
 

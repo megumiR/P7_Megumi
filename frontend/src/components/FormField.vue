@@ -1,19 +1,19 @@
 <template>
     <div class="formField ">
-        <form>
+        <form encType="multipart/form-data">
             <div class="form__commentpost">
-                <label for="postname">{{ PostnameLabel }}: </label>
+                <label for="title">{{ TitleLabel }}: </label>
                 <br />
-                <input type="name" name="postname" id="postname" placeholder="Jean" @keyup="postname = $event.target.value" required /> 
-                <p id="postnameErrorMsg"><!-- ci est un message d'erreur --></p>
+                <input type="text" name="title" id="title" placeholder="Jean" @keyup="title = $event.target.value" required /> 
+                <p id="titleErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
 
             <div class="form__commentpost">
-                <label for="comment">{{ CommentEreaLabel }}: </label>
+                <label for="content">{{ ContentAreaLabel }}: </label>
                 <br />
-                <textarea name="comment" id="comment" rows="5" cols="33" placeholder="Ecrivez ici votre message !" @keyup="comment = $event.target.value" required> 
+                <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" @keyup="content = $event.target.value" required> 
                 </textarea>
-                <p id="commentErrorMsg"><!-- ci est un message d'erreur --></p>
+                <p id="contentErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
 
             <div class="form__commentpost">
@@ -36,12 +36,12 @@
 export default {
   name: 'FormField',
   props: [
-       'PostnameLabel','CommentEreaLabel', 'imageLabel'
+       'TitleLabel','ContentAreaLabel', 'imageLabel'
   ],
   data () {
       return {
-          postname: '',
-          comment: '',
+          title: '',
+          content: '',
           imageFileName: '',
           image: ''
       }
@@ -76,7 +76,7 @@ export default {
 
 
 
-    
+
     postComment: function() {
       /*  this.$store.dispatch('postComment', {postname: this.postname,comment: this.comment,img: this.img})
     }*/
@@ -97,25 +97,34 @@ export default {
       } */  
       console.log(this.postname);
       console.log(this.comment);
-  /*    const formData = new FormData();
-      formData.append('file', this.image);
-  */   
-      let postData = {
+      const formData = new FormData();
+      formData.append('file', this.addImage);
+
+      formData.append("title", this.title);
+        formData.append("content", this.content);
+        formData.append("user_id", localStorage.getItem('userID'));
+
+     /* let postData = {
           postname: this.postname,
           comment: this.comment,
-          image: this.image  //this.imageFileName
-      }; 
+        //  image: this.image  //this.imageFileName
+      }; */
       
       if (userToken) {
+        //instance.post('/posts', requestOptions)       
+        this.$axios.post(this.$requestBaseURL + "posts/", formData, {
+            headers: {
+              Authorization: "bearer " + userToken
+            },
+          })
 
-        //instance.post('/posts', requestOptions)       formData,
-        this.$axios.post(this.$requestBaseURL + 'posts', {
+        /*.post(this.$requestBaseURL + 'posts', formData, {
             headers: {
                 'authorization': 'Bearer ' + userToken,
                 'user_id': localStorage.getItem('userID'),
             //    'Content-Type': 'json.....' //'multipart/form-data'
                 }, postData
-            })
+            })*/
         .then((response) => {
           console.log('response');
           console.log(response);
