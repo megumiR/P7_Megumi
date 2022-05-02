@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
     try {   //many error occurs so put in try-catch
-        console.log('test1');
+        console.log('auth.js checking....');
         console.log(req.body);
         if (!req.body.headers) { ///signup login MAYBE all passes here now
             console.log('no body');

@@ -87,13 +87,14 @@ exports.showallposts = async (req, res, next) => {
       });
     }
     console.log("posts: ", result);
+    console.log("posts result until here------------- ");
     var allPostsWithImg = [];
     if (result.length > 0) {
       result.forEach( post => {
         if ( post.image != null) {
-          console.log(post.image);      ///////////////////need to change sth for showing images?
+          console.log('post id: '+ post.id +' --- '+ post.image);      
           post.image = `${req.protocol}://${req.get("host")}/images/${post.image}`;
-          console.log(post.image);
+          console.log('post id: '+ post.id +' --- '+post.image);
           allPostsWithImg.push(post);
         } else {
           allPostsWithImg.push(post);

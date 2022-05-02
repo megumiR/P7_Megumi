@@ -86,8 +86,8 @@ export default {
               if (post.image != null) {
                 console.log('an img exist ...');
                 console.log(post.image);
-                let imageUrl = `http://localhost:3000//images/${post.image}`;  
-                post.image = imageUrl;
+          /*      let imageUrl = `http://localhost:3000/images/${post.image}`;  
+                post.image = imageUrl;*/
               } else {
                 console.log('no image for id:' + post.id)
               }
