@@ -3,9 +3,9 @@
     <div class="PostCard">
         <div class="PostCard__img"> 
 
-            <img :src="image" alt="image" v-if="image"/>
+            <img class="PostCard__img--form" :src="image" alt="image" v-if="image"/>
         </div>    
-        <div>
+        <div class="PostCard__textblock">
             <p> 
                 Title : {{ title }} <span id="autherId" class="hide">{{ autherId }}</span>
                 <br/> 
@@ -138,11 +138,19 @@ export default {
     border: solid #ebebeb;
 
     &__img{
-     //   display: none;  //s'il n'y a pas d'image
-
-        max-height: 30em;
-        
-        margin: 5px 0;
+        max-height: 15em;
+        max-width: 28em;
+        align-self: flex-end;
+        &--form{
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+    }
+    &__textblock{
+        position: relative;
+        bottom: -4em;
+        right: -1em;
     }
     &__button{
         display: flex;
