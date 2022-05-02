@@ -7,8 +7,8 @@
       :key="post.id" 
       
       :image="post.image" 
-      :comment="post.comment" 
-      :postName="post.postname"
+      :content="post.content" 
+      :title="post.title"
       :autherId="post.user_id"
       @emitname="(e) => dataReturnFromParent = e "
       />    
@@ -84,8 +84,15 @@ export default {
             let result = response.data.result;
             result.forEach(post => {
               if (post.image != null) {
+                console.log('an img exist ...');
+                console.log(post.image);
+                let imageUrl = `http://localhost:3000//images/${post.image}`;  
+                post.image = imageUrl;
+              } else {
+                console.log('no image for id:' + post.id)
+              }
 /*******************??? */
-
+/*
                 console.log('image'+JSON.stringify(post.image) + 'post id' + post.id);
                 console.log('blob converting...');
               //  let fileName = new Date().getTime() + ".png";  
@@ -99,18 +106,10 @@ export default {
                 }
               } else {
                 console.log('no image for id:' + post.id)
-              }
+              }*/
               
-            });
+            });  
        //   }
-       /*   console.log('blob converting...');
-          const blob = new Blob([result[10].image.data], [result[10].image.type]);
-          const reader = new FileReader();
-          reader.onload = () => {
-            console.log(reader.result);
-            reader.readAsDataURL(blob);
-            console.log(reader.readAsDataURL(blob));
-          }  */
 
 /******************* */
           return this.list = response.data.result

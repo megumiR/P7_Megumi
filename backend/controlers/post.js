@@ -11,13 +11,13 @@ exports.createPost =
     console.log('post one article---------');
     console.log(req.body);
     // only JSON file works. not the form-data on postman
-    let sql = `INSERT INTO post (postname, comment, user_id) VALUES 
-      ('${ req.body.postname }', '${ req.body.comment }', '${req.headers.user_id}' )`; //headers = sessionid?    
+    let sql = `INSERT INTO post (title, content, user_id) VALUES 
+      ('${ req.body.title }', '${ req.body.content }', '${req.headers.user_id}' )`; //headers = sessionid?    
     await connection.query( sql, (err, result) => {
       if (err) {
         throw err;
       }
-      console.log('L\'article post est inseré : '+ req.body.comment);
+      console.log('L\'article post est inseré : '+ req.body.content);
   
       res.status(201).json({ message: 'Votre post est bien crée!'});
     });
@@ -42,7 +42,7 @@ exports.createPost =
         console.log("L'article post(content, title) est inseré : " + req.body.title);
         res.status(201).json({ message: "Votre post(sans image) est bien crée!" });
       });
-    } else {
+    } else {//// everytime it thinks it is with image because of formdata???
       console.log("Il y a une image");
       console.log(req.body.file.filename);
       let imageUrl = `${req.protocol}://${req.get("host")}/images/${req.body.file.filename}`;
@@ -52,9 +52,9 @@ exports.createPost =
  /*     fetch(imageUrl)
         .then((resultFetch) => resultFetch.blob())
         .then((imageBlob) => {
-          let sqlWithImage = `INSERT INTO post (postname, comment, image, user_id ) VALUES (
-            '${req.body.postname}',
-            '${req.body.comment}', 
+          let sqlWithImage = `INSERT INTO post (title, content, image, user_id ) VALUES (
+            '${req.body.title}',
+            '${req.body.content}', 
             '${imageBlob}',
             '${req.headers.user_id}')`;
 */
@@ -83,7 +83,7 @@ exports.showallposts = async (req, res, next) => {
   await connection.query(allPosts, (err, result) => {
     if (err) {
       return res.status(400).json({
-        message: "erreur : on ne peut pas chercher dans le tableau post",
+        message: "erreur : on ne peut pas chercher de tableau post",
       });
     }
     console.log("posts: ", result);
@@ -92,6 +92,9 @@ exports.showallposts = async (req, res, next) => {
       result.forEach( post => {
         if ( post.image != null) {
           console.log(post.image);      ///////////////////need to change sth for showing images?
+          post.image = `${req.protocol}://${req.get("host")}/images/${req.body.file.filename}`;
+          console.log(post.image);
+          allPostsWithImg.push(post);
         } else {
           allPostsWithImg.push(post);
         }
@@ -152,7 +155,7 @@ exports.liker = async (req, res, next) => {
       }
     });
   });
-  res.status(200).json({ message: "Le comment Like/Dislike est enregistré." }); ///shows before sqls send
+  res.status(200).json({ message: "Le Like/Dislike est enregistré." }); ///shows before sqls send
 };
 /************ FIN: Liker/ Disliker un post ******************/
 
@@ -162,25 +165,25 @@ exports.updatePost = async (req, res, next) => {
   console.log("update specific post---------");
   console.log("post id : " + req.params.id);
 
-  console.log("just wanna change postname");
-  let sqlPostname = `UPDATE post SET postname = '${req.body.postname}' WHERE id = ${req.params.id} `;
-  await connection.query(sqlPostname, (err, result) => {
+  console.log("just wanna change title");
+  let sqltitle = `UPDATE post SET title = '${req.body.title}' WHERE id = ${req.params.id} `;
+  await connection.query(sqltitle, (err, result) => {
     console.log(result);
     if (err) {
       return res.status(400).json({ message: "erreur : on ne peut pas modifier le post name" });
     }
-    console.log("Le postname est modifié");
+    console.log("Le title est modifié");
   });
 
-  console.log("just wanna change COMMENT");
-  let sqlComment = `UPDATE post SET comment = '${req.body.comment}' WHERE id = ${req.params.id} `;
-  await connection.query(sqlComment, (err, result) => {
+  console.log("just wanna change CONTENT!");
+  let sqlcontent = `UPDATE post SET content = '${req.body.content}' WHERE id = ${req.params.id} `;
+  await connection.query(sqlcontent, (err, result) => {
     if (err) {
-      return res.status(400).json({ message: "erreur : on ne peut pas modifier le comment" });
+      return res.status(400).json({ message: "erreur : on ne peut pas modifier le content" });
     }
-    console.log("Le comment est modifié");
+    console.log("Le content est modifié");
   });
-  res.status(201).json({ message: "Le comment/ postname est modifié." }); ///shows before sqls send
+  res.status(201).json({ message: "Le content/ title est modifié." }); ///shows before sqls send
 };
 /************* FIN: Modifier un post **************/
 

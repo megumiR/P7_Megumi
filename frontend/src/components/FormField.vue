@@ -1,14 +1,14 @@
 <template>
     <div class="formField ">
         <form encType="multipart/form-data">
-            <div class="form__commentpost">
+            <div class="form__contentpost">
                 <label for="title">{{ TitleLabel }}: </label>
                 <br />
-                <input type="text" name="title" id="title" placeholder="Jean" @keyup="title = $event.target.value" required /> 
+                <input type="text" name="title" id="title" value="Pas de title" @keyup="title = $event.target.value" required /> 
                 <p id="titleErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
 
-            <div class="form__commentpost">
+            <div class="form__contentpost">
                 <label for="content">{{ ContentAreaLabel }}: </label>
                 <br />
                 <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" @keyup="content = $event.target.value" required> 
@@ -16,15 +16,15 @@
                 <p id="contentErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
 
-            <div class="form__commentpost">
-                <label for="addImage">{{ imageLabel }}: </label>
+            <div class="form__contentpost">
+                <label for="image">{{ imageLabel }}: </label>
                 <br />
-                <input type="file" name="addImage" id="addImage" accept="image/png, image/jpeg" @change.prevent="showFileName" required>
+                <input type="file" name="image" id="image" accept="image/png, image/jpeg" @change="showFileName" required>
                 <p class="filename" v-if="imageFileName">image ajouté ! {{ imageFileName }}</p>
                 <p id="imageErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
                 
-            <div class="form__commentpost">
+            <div class="form__contentpost">
                 <button class="button" @click.prevent="postComment">Envoyer !</button>
             </div>
         </form>
@@ -51,33 +51,18 @@ export default {
     this.postComment();
   },
   methods: {
-    showFileName: async function(event) {
-        event.preventDefault();
+    showFileName: function(event) {
+     
+       // event.preventDefault();
         let imageFileName = event.target.files[0].name;
         this.imageFileName = imageFileName;
         console.log('this.imageFileName ->>>>>');
-        console.log(this.imageFileName);
-  /*      let image = event.target.files[0];
-        this.image = image;
-        console.log('this.image(file) ->>>>>>>');
-        console.log(this.image);
-*/
-        await function readFile(file) {
-          let reader = new FileReader();
-          reader.onload = function (e) {
-            console.log(e.target.result);
-            let image = e.target.result;
-            this.image = image;
-          }
-          reader.readAsText(file);
-          console.log('read as Text');
-        }
+        console.log(this.imageFileName); 
+        this.image = event.target.files[0];
+        console.log('this.image ->>>>>');
+        console.log(this.image);    
     },
-
-
-
-
-    postComment: function() {
+    postComment: async function() {
       /*  this.$store.dispatch('postComment', {postname: this.postname,comment: this.comment,img: this.img})
     }*/
      /////// authentification //////////
@@ -95,21 +80,22 @@ export default {
              'user_id': localStorage.getItem('userID')
         }
       } */  
-      console.log(this.postname);
-      console.log(this.comment);
+      console.log(this.content);
+      console.log('this.image ->>>>>');
+      console.log(this.image); 
       const formData = new FormData();
-      formData.append('file', this.addImage);
+      formData.append('file', this.image);
 
       formData.append("title", this.title);
         formData.append("content", this.content);
         formData.append("user_id", localStorage.getItem('userID'));
-
+      console.log(formData);
      /* let postData = {
           postname: this.postname,
           comment: this.comment,
         //  image: this.image  //this.imageFileName
       }; */
-      
+    
       if (userToken) {
         //instance.post('/posts', requestOptions)       
         this.$axios.post(this.$requestBaseURL + "posts/", formData, {
@@ -128,10 +114,9 @@ export default {
         .then((response) => {
           console.log('response');
           console.log(response);
-          console.log(response.data.files); //undefini dont exist maybe?
+          console.log(response.data); //undefini dont exist maybe?
 
-          console.log(response.data.message);
-          // return this.list = response.data.result ???
+
           //router.push({ path: '/', replace: true})
         })
         .catch((err) => {
@@ -141,13 +126,10 @@ export default {
         console.log('no token user');
         //return this.dataReturnFromParent = 'Vous n\'êtes pas authorizé.';
       }
-    
-
-
     }
 }
 /*
-const file = document.querySelector('#addImage');
+const file = document.querySelector('#image');
 file.addEventListener('change', (event) => {
     const [file] = event.target.files;
     const { name: fileName } = file;
@@ -187,7 +169,7 @@ textarea{
     cursor: pointer;
 }
 
-#addImage{
+#image{
     opacity: 0;
     width: 0.1px;
     height: 0.1px;

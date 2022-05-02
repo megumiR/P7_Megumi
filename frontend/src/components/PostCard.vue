@@ -6,10 +6,10 @@
             <img :src="image" alt="image" v-if="image"/>
         </div>    
         <div>
-            <p>
-                {{ comment }} <br/>
-
-                [ Posté par {{ postName }} ] <span id="autherId" class="hide">{{ autherId }}</span>
+            <p> 
+                Title : {{ title }} <span id="autherId" class="hide">{{ autherId }}</span>
+                <br/> 
+                {{ content }}  
             </p>
             
 
@@ -48,11 +48,11 @@ export default {
   created() {
       this.$emit('emitname', 'Touts les posts sont affichés ') //+親template に<子部品名 @emitname="(e)=>dataReturnFromParent=e"> , data(){return{dataReturnFromParent: xxxで反映
   },
-  props: [ 'image', 'comment', 'postName', 'autherId' ], //''内にTemplate上で{{}}書きした名前
+  props: [ 'image', 'content', 'title', 'autherId' ], //''内にTemplate上で{{}}書きした名前
 /*props: { 
     image: ,
-    comment: String,
-    postName: String
+    content: String,
+    title: String
 },  //またはprops:{msg:String}/親部品中でGetリクエストの内容を反映する/<子部品名:msg="xxx--親のdata(){return{xxx:""}"
 */  data: function () {
       return {

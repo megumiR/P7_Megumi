@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 module.exports = (req, res, next) => {
     try {   //many error occurs so put in try-catch
         console.log('test1');
-        console.log(req.body.headers);
-        if (!req.body.headers) { ///signup login
+        console.log(req.body);
+        if (!req.body.headers) { ///signup login MAYBE all passes here now
             console.log('no body');
             const token = req.headers.authorization.split(' ')[1];
             const decodedToken = jwt.verify(token, `${process.env.JWT_KEY}`);
@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
                 } else {
                     next();
                 }
-        } else {  /// add post 
+        } else {  /// 
             console.log('with body');
             const token = req.body.headers.authorization.split(' ')[1];
             const decodedToken = jwt.verify(token, `${process.env.JWT_KEY}`);
