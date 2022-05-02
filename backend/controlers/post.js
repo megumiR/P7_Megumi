@@ -26,10 +26,10 @@ exports.createPost =
   async (req, res, next) => {
     console.log("post one article---------"); // this works with the form-data n JSON on postman
     console.log(req.body); //ADD .body
-
+    console.log(req.file);
    // console.log(req.body);
     //console.log(req.body.postData.image);
-    if (!req.body.file) {  
+    if (!req.file) {  
       
 
 
@@ -44,10 +44,10 @@ exports.createPost =
       });
     } else {//// everytime it thinks it is with image because of formdata???
       console.log("Il y a une image");
-      console.log(req.body.file.filename);
-      let imageUrl = `${req.protocol}://${req.get("host")}/images/${req.body.file.filename}`;
+      console.log(req.file.filename);
+      let imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
       console.log(imageUrl);
-      let imgFile = req.body.file.filename;
+      let imgFile = req.file.filename;
       console.log(imgFile);
  /*     fetch(imageUrl)
         .then((resultFetch) => resultFetch.blob())
@@ -59,7 +59,7 @@ exports.createPost =
             '${req.headers.user_id}')`;
 */
       let sqlWithImage = `INSERT INTO post (title, content, image, user_id ) VALUES 
-        ('${req.body.title}', '${req.body.content}', '${req.body.file.filename}', '${req.body.user_id}')`; 
+        ('${req.body.title}', '${req.body.content}', '${req.file.filename}', '${req.body.user_id}')`; 
 
 
           connection.query(sqlWithImage, (err, result) => {
@@ -92,7 +92,7 @@ exports.showallposts = async (req, res, next) => {
       result.forEach( post => {
         if ( post.image != null) {
           console.log(post.image);      ///////////////////need to change sth for showing images?
-          post.image = `${req.protocol}://${req.get("host")}/images/${req.body.file.filename}`;
+          post.image = `${req.protocol}://${req.get("host")}/images/${post.image}`;
           console.log(post.image);
           allPostsWithImg.push(post);
         } else {
