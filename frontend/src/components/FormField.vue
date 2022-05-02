@@ -53,7 +53,7 @@ export default {
   methods: {
     showFileName: function(event) {
      
-       // event.preventDefault();
+        event.preventDefault();
         let imageFileName = event.target.files[0].name;
         this.imageFileName = imageFileName;
         console.log('this.imageFileName ->>>>>');
@@ -116,7 +116,7 @@ export default {
           console.log(response);
           console.log(response.data); //undefini dont exist maybe?
 
-
+          window.location.href = this.$localhost;
           //router.push({ path: '/', replace: true})
         })
         .catch((err) => {
