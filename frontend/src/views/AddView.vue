@@ -2,7 +2,7 @@
   <div class="add">
     <h2 v-if="userName">{{ userName }}, ajouter votre article sur la plateforme !</h2>
     <h2 v-else>Ajouter votre article sur la plateforme !</h2>
-    <FormField TitleLabel='Titre' ContentAreaLabel='Description' imageLabel='Ajouter une image'/>
+    <FormField TitleLabel='Titre' ContentAreaLabel='Description' imageLabel='Ajouter une image' ButtonLabel='Envoyer !'/>
   </div>
 </template>
 

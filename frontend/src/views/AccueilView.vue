@@ -10,6 +10,7 @@
       :content="post.content" 
       :title="post.title"
       :authorId="post.user_id"
+      :postId="post.id"
       @emitname="(e) => dataReturnFromParent = e "
       />    
       <p>{{ dataReturnFromParent }}</p>
@@ -99,6 +100,33 @@ export default {
       } else {
         console.log('no token user');
         return this.dataReturnFromParent = 'Vous n\'êtes pas authorizé.';
+      }
+    },
+    postToUpdate: function() {
+      console.log('accueilview');
+      //get request??? but didnt make one for backend
+    },
+    postToDelete: function() {
+//      let postDeleteId = ;
+      let userToken = localStorage.getItem('userToken');
+      let authToken = { 
+        'Authorization': 'Bearer ' + userToken
+      };
+      console.log(authToken);
+      let requestHeaders = {
+        headers: authToken
+      }
+      if (userToken) {
+        this.$axios.get(this.$requestBaseURL + 'posts/' , requestHeaders) //  /:id need to add...
+        .then((response) => {
+          console.log(response);
+          
+        })
+        .catch((err) => {
+          throw err;
+        })
+      } else {
+        console.log('no token user');
       }
     }
   }

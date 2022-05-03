@@ -7,7 +7,7 @@
         </div>    
         <div class="PostCard__textblock">
             <p> 
-                Title : {{ title }} <span id="authorId" class="hide">{{ authorId }}</span>
+                Title : {{ title }} <span id="postId" class="hide">postId:{{postId}}</span> <span id="authorId" class="hide">by authorId:{{ authorId }}</span>
                 <br/> 
                 {{ content }}  
             </p>
@@ -18,7 +18,7 @@
                     <router-link to="/update" > Modifier </router-link> 
                 </div>  
                 <router-view />
-                
+
 
 
                 <div class="delete PostCard__button--form"  @click.prevent="postToDelete">Supprimer</div> 
@@ -49,7 +49,7 @@ export default {
   created() {
       this.$emit('emitname', 'Touts les posts sont affichés ') //+親template に<子部品名 @emitname="(e)=>dataReturnFromParent=e"> , data(){return{dataReturnFromParent: xxxで反映
   },
-  props: [ 'image', 'content', 'title', 'authorId' ], //''内にTemplate上で{{}}書きした名前
+  props: [ 'image', 'content', 'title', 'authorId', 'postId' ], //''内にTemplate上で{{}}書きした名前
 /*props: { 
     image: ,
     content: String,
@@ -113,10 +113,11 @@ export default {
        // this.numberOfDislikes = 'counté';
       },
       postToUpdate: function() {
-        this.$emit('postToUpdate');
+       // this.$emit('postToUpdate');
+        console.log('postcard');
       },
       postToDelete: function() {
-
+          
       }
   }     
 //}

@@ -23,9 +23,9 @@
                 <p class="filename" v-if="imageFileName">image ajouté ! {{ imageFileName }}</p>
                 <p id="imageErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
-                
+               
             <div class="form__contentpost">
-                <button class="button" @click.prevent="postComment">Envoyer !</button>
+                <button class="button" @click.prevent="postComment">{{ ButtonLabel }}</button>
             </div>
         </form>
 
@@ -36,7 +36,7 @@
 export default {
   name: 'FormField',
   props: [
-       'TitleLabel','ContentAreaLabel', 'imageLabel'
+       'TitleLabel','ContentAreaLabel', 'imageLabel', 'ButtonLabel'
   ],
   data () {
       return {
