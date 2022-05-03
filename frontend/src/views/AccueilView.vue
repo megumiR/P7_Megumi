@@ -9,7 +9,7 @@
       :image="post.image" 
       :content="post.content" 
       :title="post.title"
-      :autherId="post.user_id"
+      :authorId="post.user_id"
       @emitname="(e) => dataReturnFromParent = e "
       />    
       <p>{{ dataReturnFromParent }}</p>

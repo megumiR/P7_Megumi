@@ -7,17 +7,18 @@
         </div>    
         <div class="PostCard__textblock">
             <p> 
-                Title : {{ title }} <span id="autherId" class="hide">{{ autherId }}</span>
+                Title : {{ title }} <span id="authorId" class="hide">{{ authorId }}</span>
                 <br/> 
                 {{ content }}  
             </p>
             
 
-            <div class="PostCard__button" v-if="userId = autherId">
+            <div class="PostCard__button" v-if="userId = authorId">
                 <div class="update PostCard__button--form" @click.prevent="postToUpdate">
                     <router-link to="/update" > Modifier </router-link> 
                 </div>  
                 <router-view />
+                
 
 
                 <div class="delete PostCard__button--form"  @click.prevent="postToDelete">Supprimer</div> 
@@ -48,7 +49,7 @@ export default {
   created() {
       this.$emit('emitname', 'Touts les posts sont affichés ') //+親template に<子部品名 @emitname="(e)=>dataReturnFromParent=e"> , data(){return{dataReturnFromParent: xxxで反映
   },
-  props: [ 'image', 'content', 'title', 'autherId' ], //''内にTemplate上で{{}}書きした名前
+  props: [ 'image', 'content', 'title', 'authorId' ], //''内にTemplate上で{{}}書きした名前
 /*props: { 
     image: ,
     content: String,
