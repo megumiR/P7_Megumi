@@ -14,8 +14,9 @@ export default new Vuex.Store({
     userId: null,
     userName: null,
     roll: null,   
-    imageFile: null,
-    status: null
+   // imageFile: null,
+    status: null,
+    mode: null
   },
   getters: {  //  Stateimagefile: state => { return state.imageFile }, 
     authStatus: state => state.status
@@ -36,10 +37,13 @@ export default new Vuex.Store({
     AUTH_ERROR: (state) => {
       state.status = 'error'
     },
-   //LOGOUT: (state) => { state.userId = null state.roll = null state.status = null}
-    IMG_INSERETED: (state, {imageFile}) => {
-      state.imageFile = imageFile
+    MODE_UPDATE: (state) => {
+      state.mode = 'update'
     }
+             //LOGOUT: (state) => { state.userId = null state.roll = null state.status = null}
+  //  IMG_INSERETED: (state, {imageFile}) => {
+  //    state.imageFile = imageFile
+  //  }
   },
   actions: { 
  //   logIn: ({ commit }, payload) => {  
@@ -118,9 +122,14 @@ export default new Vuex.Store({
           throw err;
         })
     }*/
-    postToUpdate: (states) => {
+    postToUpdate: ({commit}, states) => {
       console.log(states);
-    }
+      commit('MODE_UPDATE')
+    },
+   /*   document.getElementById('titleBeforeUpdate').textContent = `Ancien title: ${post.title}` ;
+
+
+  */
   },
   modules: {
   }

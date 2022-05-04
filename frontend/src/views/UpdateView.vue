@@ -31,9 +31,24 @@ export default {
   },
   methods: {
     updateComment: function() {
-      fetch("put", 'http://localhost:3000/api/posts/:id')
-        .then( response => response.json())
-      //  .then( data => (this.list = data.result));
+      let userToken = localStorage.getItem('userToken');
+      let requestHeaders = {
+        headers: {'Authorization': `Bearer ${userToken}`}
+      }
+      console.log(this.content); //undefined
+
+      if (userToken) {
+        this.$axios.put(this.$requestBaseURL + 'posts/' , requestHeaders) //  posts/:id need to add...
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          throw err;
+        })
+      } else {
+        console.log('no token user');
+      }
+      
     }
   }/* ,
   route: [

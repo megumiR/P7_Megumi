@@ -2,6 +2,8 @@
   <div class="home" id="home">
     <WelcomeMsg msg="Bienvenue :) " recommend=""/>
 
+    <p v-if="roll == admin">{{ roll }}</p>
+
     <p v-if="!list">Pas de post à affichier</p>
     <PostCard v-else v-for="post in list" 
       :key="post.id" 
@@ -33,14 +35,8 @@ it simply changes the DOM but doesn't destroy existing components
 and that can cause local state mismatch. 
 That is why it is must to have :key attribute.
 
-
-
-    
  :utilisateurId="utilisateurId"
- 
    -->
-    
-    
   </div>
 </template>
 
@@ -48,6 +44,7 @@ That is why it is must to have :key attribute.
 <script>
 import WelcomeMsg from '../components/WelcomeMsg.vue'
 import PostCard from '../components/PostCard.vue'
+import { mapState } from 'vuex' 
 
 export default {
   name: 'AccueilView',
@@ -60,6 +57,9 @@ export default {
       list: [],
       dataReturnFromParent: "msg from parent"  //emit is working
     }
+  }, 
+  computed: {
+    ...mapState([ 'roll' ])
   },
   created: function () {
     this.fetchAllPosts();
@@ -90,7 +90,12 @@ export default {
                 post.image = imageUrl;*/
             } else {
               console.log('no image for id:' + post.id)
-            }              
+            }  
+            if ($store.state.roll == 'admin' && post.user_id !== localStorage.getItem('userID')) {
+              console.log('in 2nd if sentence');
+              /////here not to show the buttons update/delete
+              document.getElementById('noMatch').setAttribute('class',`color: red;`);
+            }            
           });  
           return this.list = response.data.result
         })
@@ -128,7 +133,8 @@ export default {
       } else {
         console.log('no token user');
       }
-    }
+    },
+
   }
 }
 

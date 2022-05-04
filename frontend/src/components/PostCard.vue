@@ -14,14 +14,14 @@
             
 
             <div class="PostCard__button" v-if="userId = authorId">
-                <div class="update PostCard__button--form" @click.prevent="postToUpdate">
+                <div class="update PostCard__button--form" id="noMatch" @click.prevent="postToUpdate">
                     <router-link to="/update" > Modifier </router-link> 
                 </div>  
                 <router-view />
 
 
 
-                <div class="delete PostCard__button--form"  @click.prevent="postToDelete">Supprimer</div> 
+                <div class="delete PostCard__button--form" id="noMatch"  @click.prevent="postToDelete">Supprimer</div> 
             </div>
 
             <div class="PostCard__iconblock">
@@ -70,7 +70,6 @@ export default {
   },*/
   methods : {
       increment: function () {
-        
         let reaction = JSON.parse(localStorage.getItem('reaction')); 
         console.log(isLiked);
         let isLiked = false;
@@ -112,12 +111,13 @@ export default {
         this.numberOfDislikes++;
        // this.numberOfDislikes = 'counté';
       },
-      postToUpdate: function() {
+    /*  postToUpdate: function() {
        // this.$emit('postToUpdate');
         console.log('postcard');
+        this.mode = ;
+        // get the post id and send infos to the UpdateView.vue
       },
-      postToDelete: function() {
-          
+  */    postToDelete: function() {
       }
   }     
 //}
