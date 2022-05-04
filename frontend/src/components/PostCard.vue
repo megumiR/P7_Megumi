@@ -13,8 +13,8 @@
             </p>
             
 
-            <div class="PostCard__button" v-if="userId = authorId">
-                <div class="update PostCard__button--form" id="noMatch" @click.prevent="postToUpdate">
+            <div class="PostCard__button" v-if="userId == authorId">
+                <div class="update PostCard__button--form" id="noMatch" @click="postToUpdate">
                     <router-link to="/update" > Modifier </router-link> 
                 </div>  
                 <router-view />
@@ -111,13 +111,13 @@ export default {
         this.numberOfDislikes++;
        // this.numberOfDislikes = 'counté';
       },
-    /*  postToUpdate: function() {
+      postToUpdate: function() {
        // this.$emit('postToUpdate');
         console.log('postcard');
-        this.mode = ;
+      //  this.mode = ;
         // get the post id and send infos to the UpdateView.vue
       },
-  */    postToDelete: function() {
+      postToDelete: function() {
       }
   }     
 //}

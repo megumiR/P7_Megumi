@@ -19,7 +19,8 @@ export default new Vuex.Store({
     mode: null
   },
   getters: {  //  Stateimagefile: state => { return state.imageFile }, 
-    authStatus: state => state.status
+    authStatus: state => state.status,
+    rollAdmin: state => state.roll
   },
   mutations: {  //  setImagefile (state, imageFile) { state.imageFile = imageFile }
     AUTH_SUCCESS_USERID: (state,  userId) => {
@@ -122,10 +123,7 @@ export default new Vuex.Store({
           throw err;
         })
     }*/
-    postToUpdate: ({commit}, states) => {
-      console.log(states);
-      commit('MODE_UPDATE')
-    },
+
    /*   document.getElementById('titleBeforeUpdate').textContent = `Ancien title: ${post.title}` ;
 
 

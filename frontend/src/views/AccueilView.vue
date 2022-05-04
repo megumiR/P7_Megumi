@@ -2,7 +2,7 @@
   <div class="home" id="home">
     <WelcomeMsg msg="Bienvenue :) " recommend=""/>
 
-    <p v-if="roll == admin">{{ roll }}</p>
+    <p v-if="this.$store.getters.rollAdmin == admin">{{ roll }}</p>
 
     <p v-if="!list">Pas de post à affichier</p>
     <PostCard v-else v-for="post in list" 
@@ -91,10 +91,13 @@ export default {
             } else {
               console.log('no image for id:' + post.id)
             }  
-            if ($store.state.roll == 'admin' && post.user_id !== localStorage.getItem('userID')) {
-              console.log('in 2nd if sentence');
+            console.log(this.$store.getters);
+            console.log(this.$store.getters.rollAdmin);
+         //   if (this.$store.getters.rollAdmin == 'admin' && post.user_id !== localStorage.getItem('userID')) {
+            if (post.user_id !== localStorage.getItem('userID')) {
+                console.log('in 2nd if sentence');
               /////here not to show the buttons update/delete
-              document.getElementById('noMatch').setAttribute('class',`color: red;`);
+            //  document.getElementById('noMatch').setAttribute('class',`opacity: 0;`);
             }            
           });  
           return this.list = response.data.result
