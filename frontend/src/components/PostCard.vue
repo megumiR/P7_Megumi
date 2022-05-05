@@ -14,14 +14,10 @@
             
 
             <div class="PostCard__button" v-if="userId == authorId">
-                <div class="update PostCard__button--form" id="noMatch" @click="postToUpdate">
-                    <router-link to="/update" > Modifier </router-link> 
+                <div class="update PostCard__button--form" @click="postToUpdate">
+                    <router-link to="/update" > Modifier/ Supprimer </router-link> 
                 </div>  
                 <router-view />
-
-
-
-                <div class="delete PostCard__button--form" id="noMatch"  @click.prevent="postToDelete">Supprimer</div> 
             </div>
 
             <div class="PostCard__iconblock">

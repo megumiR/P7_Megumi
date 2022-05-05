@@ -6,7 +6,7 @@
                 <br />
                 <input type="text" name="title" id="title" value="Pas de title" @keyup="title = $event.target.value" required /> 
   
-                <p id="titleErrorMsg"><!-- ci est un message d'erreur --></p>
+                <p id="titleErrorMsg"></p>
             </div>
 
             <div class="form__contentpost">
@@ -15,7 +15,7 @@
                 <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" @keyup="content = $event.target.value" required> 
                 </textarea>
                 
-                <p id="contentErrorMsg"><!-- ci est un message d'erreur --></p>
+                <p id="contentErrorMsg"></p>
             </div>
 
             <div class="form__contentpost">
@@ -24,7 +24,7 @@
                 <input type="file" name="image" id="image" accept="image/png, image/jpeg" @change="showFileName" required>
                 <p class="filename" v-if="imageFileName">image ajouté ! {{ imageFileName }}</p>
                 
-                <p id="imageErrorMsg"><!-- ci est un message d'erreur --></p>
+                <p id="imageErrorMsg"></p>
             </div>
                
             <div class="form__contentpost">
