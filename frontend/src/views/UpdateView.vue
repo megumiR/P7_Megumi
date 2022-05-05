@@ -1,7 +1,7 @@
 <template>
   <div class="update">
     <h2>{{ userName }}, modifier ou supprimer votre article !</h2>
-    <PostCard  
+    <PostCard  v-for="post in list" 
       :key="post.id" 
       
       :image="post.image" 
@@ -54,6 +54,7 @@
 <script>
 import PostCard from '../components/PostCard.vue'
 import { mapState } from 'vuex'  
+import { required } from 'vuelidate/lib/validators'
 
 export default {
   name: 'UpdateView',
@@ -61,9 +62,17 @@ export default {
     PostCard
   },
   data() {
-    return {
-      list: []
+    return {         
+      list: [], 
+      title: '',
+      content: '',
+      imageFileName: '',
+      image: ''
     }
+  },
+  validations: {
+    title: {required,},
+    content: {required,}, 
   },
   computed: {
     ...mapState([ 'userName' ])
@@ -73,19 +82,47 @@ export default {
   },
   methods: {
     getOnePost: function() {
-
+      let userToken = localStorage.getItem('userToken');
+      let requestHeaders = {
+        headers: {'Authorization': 'Bearer ' + userToken}
+      }
+      if (userToken) {
+        this.$axios.get(this.$requestBaseURL + 'posts', requestHeaders) // need post id
+        .then((response) => {
+          console.log(response);
+          console.log(response.data.result);  
+          return this.list = response.data.result
+        })
+        .catch((err) => {
+          throw err;
+        })
+      } else {
+        console.log('no token user');
+      }
+    },
+    showFileName: function(event) {
+      event.preventDefault();
+      this.imageFileName = event.target.files[0].name;
+      this.image = event.target.files[0];
     },
     updatePost: function() {
       let userToken = localStorage.getItem('userToken');
-      let requestHeaders = {
-        headers: {'Authorization': `Bearer ${userToken}`}
-      }
-      console.log(this.content); //undefined
-
+      const formData = new FormData();
+      formData.append('file', this.image);
+      formData.append("title", this.title);
+      formData.append("content", this.content);
+      formData.append("user_id", localStorage.getItem('userID'));
+      console.log(formData);
+      
       if (userToken) {
-        this.$axios.put(this.$requestBaseURL + 'posts/' , requestHeaders) //  posts/:id need to add...
+        this.$axios.put(this.$requestBaseURL + "posts/", formData, {
+            headers: {
+              Authorization: "bearer " + userToken
+            },
+          }) //  posts/:id need to add...
         .then((response) => {
           console.log(response);
+         // window.location.href = this.$localhost; 
         })
         .catch((err) => {
           throw err;
