@@ -5,7 +5,7 @@
                 <label for="title">{{ TitleLabel }}: </label>
                 <br />
                 <input type="text" name="title" id="title" value="Pas de title" @keyup="title = $event.target.value" required /> 
-                <p id="titleBeforeUpdate"></p>
+  
                 <p id="titleErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
 
@@ -14,7 +14,7 @@
                 <br />
                 <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" @keyup="content = $event.target.value" required> 
                 </textarea>
-                <p id="contentBeforeUpdate"></p>
+                
                 <p id="contentErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
 
@@ -23,7 +23,7 @@
                 <br />
                 <input type="file" name="image" id="image" accept="image/png, image/jpeg" @change="showFileName" required>
                 <p class="filename" v-if="imageFileName">image ajouté ! {{ imageFileName }}</p>
-                <p id="imageBeforeUpdate"></p>
+                
                 <p id="imageErrorMsg"><!-- ci est un message d'erreur --></p>
             </div>
                
@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
+
 export default {
   name: 'FormField',
   props: [
@@ -49,48 +51,30 @@ export default {
           image: ''
       }
   },
+  validations: {
+    title: {required,},
+    content: {required,}, 
+  },
   updated: function () {
     this.postComment();
   },
   methods: {
     showFileName: function(event) {
-     
-        event.preventDefault();
-        let imageFileName = event.target.files[0].name;
-        this.imageFileName = imageFileName;
-        console.log('this.imageFileName ->>>>>');
-        console.log(this.imageFileName); 
-        this.image = event.target.files[0];
-        console.log('this.image ->>>>>');
-        console.log(this.image);    
+      event.preventDefault();
+      this.imageFileName = event.target.files[0].name;
+      this.image = event.target.files[0];
     },
     postComment: async function() {
       /*  this.$store.dispatch('postComment', {postname: this.postname,comment: this.comment,img: this.img})
     }*/
      /////// authentification //////////
       let userToken = localStorage.getItem('userToken');
-  /*    let authToken = { 
-        'authorization': 'Bearer ' + userToken
-      };
-      let userID = localStorage.getItem('userID');
-      let authUserID = { 
-        'user_id': userID 
-      };
-      let requestOptions = {
-        headers: {
-            'authorization': 'Bearer ' + userToken,
-             'user_id': localStorage.getItem('userID')
-        }
-      } */  
-      console.log(this.content);
-      console.log('this.image ->>>>>');
-      console.log(this.image); 
+  /*  let requestOptions = {headers: { 'authorization': 'Bearer ' + userToken,   'user_id': localStorage.getItem('userID') }} */  
       const formData = new FormData();
       formData.append('file', this.image);
-
       formData.append("title", this.title);
-        formData.append("content", this.content);
-        formData.append("user_id", localStorage.getItem('userID'));
+      formData.append("content", this.content);
+      formData.append("user_id", localStorage.getItem('userID'));
       console.log(formData);
      /* let postData = {
           postname: this.postname,
@@ -114,12 +98,8 @@ export default {
                 }, postData
             })*/
         .then((response) => {
-          console.log('response');
-          console.log(response);
-          console.log(response.data); //undefini dont exist maybe?
-
-          window.location.href = this.$localhost;
-          //router.push({ path: '/', replace: true})
+          console.log('response'+ response);
+          window.location.href = this.$localhost;   //router.push({ path: '/', replace: true})
         })
         .catch((err) => {
           throw err;
@@ -129,23 +109,11 @@ export default {
         //return this.dataReturnFromParent = 'Vous n\'êtes pas authorizé.';
       }
     }
-}
-/*
-const file = document.querySelector('#image');
-file.addEventListener('change', (event) => {
-    const [file] = event.target.files;
-    const { name: fileName } = file;
-   // const fileSize = (size / 1000).toFixed(2);
-
- //   const fileNameAndSize = `${fileName} - ${fileSize}KB`;
-    document.querySelector('.filename').textContent = `${fileName}`;
-});*/
-
-
+  }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style lang="scss">
 .formField{
     width: 90%;

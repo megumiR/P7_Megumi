@@ -97,7 +97,7 @@ export default {
             if (post.user_id !== localStorage.getItem('userID')) {
                 console.log('in 2nd if sentence');
               /////here not to show the buttons update/delete
-            //  document.getElementById('noMatch').setAttribute('class',`opacity: 0;`);
+            //  document.getElementById('').setAttribute('class',`opacity: 0;`);
             }            
           });  
           return this.list = response.data.result
