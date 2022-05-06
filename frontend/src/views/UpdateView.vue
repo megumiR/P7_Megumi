@@ -86,8 +86,11 @@ export default {
       let requestHeaders = {
         headers: {'Authorization': 'Bearer ' + userToken}
       }
+      let search_params = new URLSearchParams(document.location.search);
+      let postId = search_params.get('postId');
+      console.log('URL postid ----> '+ postId);
       if (userToken) {
-        this.$axios.get(this.$requestBaseURL + 'posts', requestHeaders) // need post id
+        this.$axios.get(this.$requestBaseURL + 'posts' + postId , requestHeaders) // need post id
         .then((response) => {
           console.log(response);
           console.log(response.data.result);  
@@ -131,7 +134,31 @@ export default {
         console.log('no token user');
       }
       
-    }
+    },
+    deletePost: function() {
+//      let postDeleteId = ;
+      let userToken = localStorage.getItem('userToken');
+      let authToken = { 
+        'Authorization': 'Bearer ' + userToken
+      };
+      console.log(authToken);
+      let requestHeaders = {
+        headers: authToken
+      }
+      if (userToken) {
+        this.$axios.get(this.$requestBaseURL + 'posts/' , requestHeaders) //  /:id need to add...
+        .then((response) => {
+          console.log(response);
+          
+        })
+        .catch((err) => {
+          throw err;
+        })
+      } else {
+        console.log('no token user');
+      }
+    },
+
   }/* ,
   route: [
     { path: '/update/:id'} //{ path: '/update/:id', components: UpdateView}

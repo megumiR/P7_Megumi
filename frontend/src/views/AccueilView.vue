@@ -2,7 +2,7 @@
   <div class="home" id="home">
     <WelcomeMsg msg="Bienvenue :) " recommend=""/>
 
-    <p v-if="this.$store.getters.rollAdmin == admin">{{ roll }}</p>
+  <!--  <p v-if="this.$store.getters.rollAdmin == admin">{{ roll }}</p>  -->
 
     <p v-if="!list">Pas de post à affichier</p>
     <PostCard v-else v-for="post in list" 
@@ -77,30 +77,22 @@ export default {
       if (userToken) {
         this.$axios.get(this.$requestBaseURL + 'posts', requestHeaders)
         .then((response) => {
-          console.log(response);
+ /*         console.log(response);
           console.log(response.data.result);
           console.log('result exists');
           let result = response.data.result;
           result.forEach(post => {
             if (post.image != null) {
-              console.log('an img exist ...');
-              console.log(post.image);
-          /*   C'est fait sur controller/postjs sur le backend
-               let imageUrl = `http://localhost:3000/images/${post.image}`;  
-                post.image = imageUrl;*/
+              console.log('an img exist ...' + post.image);
+           
+          //////   C'est fait sur controller/postjs sur le backend
+          //////     let imageUrl = `http://localhost:3000/images/${post.image}`;  
+          //////      post.image = imageUrl;
             } else {
               console.log('no image for id:' + post.id)
-            }  
-            console.log(this.$store.getters);
-            console.log(this.$store.getters.rollAdmin);
-         //   if (this.$store.getters.rollAdmin == 'admin' && post.user_id !== localStorage.getItem('userID')) {
-            if (post.user_id !== localStorage.getItem('userID')) {
-                console.log('in 2nd if sentence');
-              /////here not to show the buttons update/delete
-            //  document.getElementById('').setAttribute('class',`opacity: 0;`);
-            }            
+            }         
           });  
-          return this.list = response.data.result
+  */        return this.list = response.data.result
         })
         .catch((err) => {
           throw err;
@@ -112,32 +104,10 @@ export default {
     },
     postToUpdate: function() {
       console.log('accueilview');
-      //get request??? but didnt make one for backend
-    },
-    postToDelete: function() {
-//      let postDeleteId = ;
-      let userToken = localStorage.getItem('userToken');
-      let authToken = { 
-        'Authorization': 'Bearer ' + userToken
-      };
-      console.log(authToken);
-      let requestHeaders = {
-        headers: authToken
-      }
-      if (userToken) {
-        this.$axios.get(this.$requestBaseURL + 'posts/' , requestHeaders) //  /:id need to add...
-        .then((response) => {
-          console.log(response);
-          
-        })
-        .catch((err) => {
-          throw err;
-        })
-      } else {
-        console.log('no token user');
-      }
-    },
+            //get request??? but how do i put id on url
 
+
+    }
   }
 }
 

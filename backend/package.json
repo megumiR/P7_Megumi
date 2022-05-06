@@ -12,7 +12,8 @@
     "node": "^17.4.0",
     "node-fetch": "^2.6.7",
     "password-validator": "^5.2.1",
-    "server": "^1.0.37"
+    "server": "^1.0.37",
+    "uuid": "^8.3.2"
   },
   "name": "backend",
   "version": "1.0.0",

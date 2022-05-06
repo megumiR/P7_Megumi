@@ -2,6 +2,7 @@
 const connection = require("../db__connection"); //importer l'info de mysql
 const fetch = require("node-fetch");
 const fs = require("fs");
+const uuid = require('uuid/v1');
 /********* FIN: importer des fichier , modules *************/
 
 /***************** Creer un post  ***************/ ///DB, here :utilisateur change to user later!!!!!!!
@@ -27,12 +28,8 @@ exports.createPost =
     console.log("post one article---------"); // this works with the form-data n JSON on postman
     console.log(req.body); //ADD .body
     console.log(req.file);
-   // console.log(req.body);
-    //console.log(req.body.postData.image);
     if (!req.file) {  
       
-
-
       let sqlWithoutImage = `INSERT INTO post (title, content, user_id ) VALUES 
       ('${req.body.title}', '${req.body.content}', '${req.body.user_id}')`; ///need to put user_id into headers
       await connection.query(sqlWithoutImage, (err, result) => {
@@ -77,10 +74,10 @@ exports.createPost =
 /***************** FIN: Creer un post  ***************/
 
 /******************* Afficher tous les posts *********************/
-exports.showallposts = async (req, res, next) => {
+exports.showonePost = async (req, res, next) => {
   console.log("home with posts---------");
-  let allPosts = `SELECT * FROM post`;
-  await connection.query(allPosts, (err, result) => {
+  let onePost = `SELECT * FROM post`;
+  await connection.query(onePost, (err, result) => {
     if (err) {
       return res.status(400).json({
         message: "erreur : on ne peut pas chercher de tableau post",
@@ -88,18 +85,18 @@ exports.showallposts = async (req, res, next) => {
     }
     console.log("posts: ", result);
     console.log("posts result until here------------- ");
-    var allPostsWithImg = [];
+    var onePostWithImg = [];
     if (result.length > 0) {
       result.forEach( post => {
         if ( post.image != null) { 
           post.image = `${req.protocol}://${req.get("host")}/images/${post.image}`;
           console.log('post id: '+ post.id +' --- '+post.image);
-          allPostsWithImg.push(post);
+          onePostWithImg.push(post);
         } else {
-          allPostsWithImg.push(post);
+          onePostWithImg.push(post);
         }
       });
-     // result = allPostsWithImg;
+     // result = onePostWithImg;
       res.status(200).json({ result });
     } else {
       res.status(400).json({ message: "Il n'y a pas de post à affichier !" });
@@ -107,6 +104,84 @@ exports.showallposts = async (req, res, next) => {
   });
 };
 /******************* FIN: Afficher tous les posts *********************/
+
+/******************* Afficher le post *********************/
+exports.showOnepost = async (req, res, next) => {
+  console.log("one post---------");
+  let onePost = `SELECT * FROM post WHERE id = ${req.params.id}`;
+  await connection.query(onePost, (err, result) => {
+    if (err) {
+      return res.status(400).json({
+        message: "erreur : on ne peut pas chercher de tableau post",
+      });
+    }
+    console.log("posts: ", result);
+    var onePostWithImg = [];
+    if ( result.image != null) { 
+      result.image = `${req.protocol}://${req.get("host")}/images/${result.image}`;
+      onePostWithImg.push(result);
+    } else {
+      onePostWithImg.push(result);
+    }
+     // result = onePostWithImg;
+    res.status(200).json({ result });
+//    } else {
+ //     res.status(400).json({ message: "Il n'y a pas de post à affichier !" });
+ //   }
+  });
+};
+
+exports.choosePost = (req, res, next) => {
+  if (!req.body.id ||
+      !req.body.title ||
+      !req.body.content ||
+      !req.body.user_id) {
+    return res.status(400).send(new Error('Bad request!'));
+  }
+  let query = {};
+  const queryPromise = new Promise((resolve, reject) => {
+    let onePost = `SELECT * FROM post WHERE id = ${req.params.id}`;
+    await connection.query(onePost, (err, result) => {
+      if (err) {
+        return res.status(400).json({
+          message: "erreur : on ne peut pas chercher de tableau post",
+        });
+      }
+    })
+    .then((post) => {
+        if (!post) {
+          reject('Post not found: ' + post.id);
+        }
+        post.image = `${req.protocol}://${req.get("host")}/images/${post.image}`;
+        resolve(post);
+      }
+    ).catch(
+      () => {
+        reject('Database error!');
+      }
+    )
+  });
+  query.push(queryPromise);
+
+  Promise.all(query)
+  .then((posts) => {///?????
+      const postId = uuid();
+      return res.status(201).json({
+        title: req.body.title,
+        posts: posts,  ///?????
+        postId: postId
+      })
+    }
+    
+  ).catch(
+    (error) => {
+      return res.status(500).json(new Error(error));
+    }
+  );
+};
+
+
+/******************* FIN: Afficher le post *********************/
 
 /************ Liker/ Disliker un post ******************/
 exports.liker = async (req, res, next) => {
