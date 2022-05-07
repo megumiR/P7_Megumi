@@ -7,7 +7,7 @@
         </div>    
         <div class="PostCard__textblock">
             <p> 
-                Title : {{ title }} <span id="postId" class="hide">postId:{{postId}}</span> <span id="authorId" class="hide">by authorId:{{ authorId }}</span>
+                Title : {{ title }} <span id="authorId" class="hide"> authorId:{{ authorId }}</span>
                 <br/> 
                 {{ content }}  
             </p>
@@ -15,7 +15,7 @@
 
             <div class="PostCard__button" v-if="userId == authorId || this.$store.getters.rollAdmin == 'admin'">
                 <div class="update PostCard__button--form" @click.prevent="postToUpdate">
-                    <router-link to="/update" > Modifier/ Supprimer </router-link> 
+                    <router-link :to="`/update/${postId}`" > Detail de <span id="postId">{{postId}}</span> </router-link> 
                 </div>  
                 <router-view />
             </div>
@@ -106,6 +106,9 @@ export default {
       incrementDislike: function () {
         this.numberOfDislikes++;
        // this.numberOfDislikes = 'counté';
+      },
+      postToUpdate: function() {
+          this.$emit('postToUpdate');
       }
   }     
 //}

@@ -77,22 +77,7 @@ export default {
       if (userToken) {
         this.$axios.get(this.$requestBaseURL + 'posts', requestHeaders)
         .then((response) => {
- /*         console.log(response);
-          console.log(response.data.result);
-          console.log('result exists');
-          let result = response.data.result;
-          result.forEach(post => {
-            if (post.image != null) {
-              console.log('an img exist ...' + post.image);
-           
-          //////   C'est fait sur controller/postjs sur le backend
-          //////     let imageUrl = `http://localhost:3000/images/${post.image}`;  
-          //////      post.image = imageUrl;
-            } else {
-              console.log('no image for id:' + post.id)
-            }         
-          });  
-  */        return this.list = response.data.result
+          return this.list = response.data.result
         })
         .catch((err) => {
           throw err;
@@ -103,9 +88,8 @@ export default {
       }
     },
     postToUpdate: function() {
-      console.log('accueilview');
-            //get request??? but how do i put id on url
-
+      let postId = document.getElementById('postId').value;      //get request??? but how do i put id on url
+      console.log(postId);
 
     }
   }

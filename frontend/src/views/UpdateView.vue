@@ -77,8 +77,8 @@ export default {
   computed: {
     ...mapState([ 'userName' ])
   },
-  updated: function () {
-    this.updatePost();
+  mounted() {
+    this.getOnePost();
   },
   methods: {
     getOnePost: function() {

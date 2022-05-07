@@ -2,7 +2,7 @@
 const connection = require("../db__connection"); //importer l'info de mysql
 const fetch = require("node-fetch");
 const fs = require("fs");
-const uuid = require('uuid/v1');
+//const uuid = require('uuid/v1');
 /********* FIN: importer des fichier , modules *************/
 
 /***************** Creer un post  ***************/ ///DB, here :utilisateur change to user later!!!!!!!
@@ -74,10 +74,10 @@ exports.createPost =
 /***************** FIN: Creer un post  ***************/
 
 /******************* Afficher tous les posts *********************/
-exports.showonePost = async (req, res, next) => {
+exports.showallposts = async (req, res, next) => {
   console.log("home with posts---------");
-  let onePost = `SELECT * FROM post`;
-  await connection.query(onePost, (err, result) => {
+  let allPost = `SELECT * FROM post`;
+  await connection.query(allPost, (err, result) => {
     if (err) {
       return res.status(400).json({
         message: "erreur : on ne peut pas chercher de tableau post",
@@ -85,18 +85,18 @@ exports.showonePost = async (req, res, next) => {
     }
     console.log("posts: ", result);
     console.log("posts result until here------------- ");
-    var onePostWithImg = [];
+    var allPostWithImg = [];
     if (result.length > 0) {
       result.forEach( post => {
         if ( post.image != null) { 
           post.image = `${req.protocol}://${req.get("host")}/images/${post.image}`;
           console.log('post id: '+ post.id +' --- '+post.image);
-          onePostWithImg.push(post);
+          allPostWithImg.push(post);
         } else {
-          onePostWithImg.push(post);
+          allPostWithImg.push(post);
         }
       });
-     // result = onePostWithImg;
+     // result = allPostWithImg;
       res.status(200).json({ result });
     } else {
       res.status(400).json({ message: "Il n'y a pas de post à affichier !" });
@@ -130,7 +130,7 @@ exports.showOnepost = async (req, res, next) => {
  //   }
   });
 };
-
+/*
 exports.choosePost = (req, res, next) => {
   if (!req.body.id ||
       !req.body.title ||
@@ -141,7 +141,7 @@ exports.choosePost = (req, res, next) => {
   let query = {};
   const queryPromise = new Promise((resolve, reject) => {
     let onePost = `SELECT * FROM post WHERE id = ${req.params.id}`;
-    await connection.query(onePost, (err, result) => {
+    connection.query(onePost, (err, result) => {
       if (err) {
         return res.status(400).json({
           message: "erreur : on ne peut pas chercher de tableau post",
@@ -178,7 +178,7 @@ exports.choosePost = (req, res, next) => {
       return res.status(500).json(new Error(error));
     }
   );
-};
+};*/
 
 
 /******************* FIN: Afficher le post *********************/
