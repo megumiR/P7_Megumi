@@ -24,14 +24,14 @@
                 <div class="PostCard__iconblock">
                     <div class="PostCard--icon PostCard--iconmargin">
                             <i class="far fa-heart fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
-                            <i class="fas fa-heart fa-lg PostCard--iconposition PostCard--iconcolor" @click="increment()"></i>
+<!--                            <i class="fas fa-heart fa-lg PostCard--iconposition PostCard--iconcolor" @click="increment()"></i>
                             <div>{{ numberOfLikes }}</div>
-                    </div>
+    -->                </div>
                     <div class="PostCard--icon PostCard--iconmargin">
                             <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
-                            <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconcolor" @click="incrementDislike()"></i>
+    <!--                        <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconcolor" @click="incrementDislike()"></i>
                             <div>{{ numberOfDislikes }}</div>
-                    </div>
+        -->            </div>
                 </div>
             </router-link>
         </div>
@@ -55,11 +55,11 @@ export default {
 },  //またはprops:{msg:String}/親部品中でGetリクエストの内容を反映する/<子部品名:msg="xxx--親のdata(){return{xxx:""}"
 */  data: function () {
       return {
-          numberOfLikes : 0,
-          numberOfDislikes : 0,
+      /*    numberOfLikes : 0,
+          numberOfDislikes : 0,   */
           userId: localStorage.getItem('userID'),  
           roll: '',
-          isLiked: localStorage.getItem('isLiked')
+       /*   isLiked: localStorage.getItem('isLiked')*/
       }
   },
 /*  computed: {
@@ -68,46 +68,9 @@ export default {
     })
   },*/
   methods : {
-      increment: function () {
-        this.isLiked = JSON.parse(localStorage.getItem('isLiked')); 
-        console.log(this.isLiked);
-                 
-          if (!this.isLiked ) { //  || this.isLiked not include userid,,,
-              console.log('no one liked yet');
-              localStorage.setItem('isLiked', this.userId );
-             
-              console.log('isLiked: ' +this.isLiked);
-              this.numberOfLikes--;
-           
-          } else {
-              this.isLiked = '';
-              console.log('isLiked: ' +this.isLiked);
-              this.numberOfLikes++;
-          }
-        }
-          /*
-          let likePost = react.likePost;
-          console.log(likePost);
-          
-          if (isReacted == true && likePost == true) {
-            this.numberOfLikes--;
-            reaction.push({ 'likePost' : 'false'});
-            localStorage.setItem('reaction', reaction); 
-          } else if (isReacted == true && likePost == false) {
-            this.numberOfLikes++;
-            reaction.push({ 'likePost' : 'true'});
-            localStorage.setItem('reaction', reaction); 
-          } else {
-            isReacted = false; 
-          }
-*/
-      },
-      incrementDislike: function () {
-        this.numberOfDislikes++;
-       // this.numberOfDislikes = 'counté';
-      },
+      
   }     
-//}
+}
 
 
 </script>
