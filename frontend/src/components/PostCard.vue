@@ -20,18 +20,20 @@
                 <router-view />
             </div>
 
-            <div class="PostCard__iconblock">
-                <div class="PostCard--icon PostCard--iconmargin">
-                        <i class="far fa-heart fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
-                        <i class="fas fa-heart fa-lg PostCard--iconposition PostCard--iconcolor" @click="increment()"></i>
-                        <div>{{ numberOfLikes }}</div>
+            <router-link :to="`/onepost/${postId}`" >
+                <div class="PostCard__iconblock">
+                    <div class="PostCard--icon PostCard--iconmargin">
+                            <i class="far fa-heart fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
+                            <i class="fas fa-heart fa-lg PostCard--iconposition PostCard--iconcolor" @click="increment()"></i>
+                            <div>{{ numberOfLikes }}</div>
+                    </div>
+                    <div class="PostCard--icon PostCard--iconmargin">
+                            <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
+                            <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconcolor" @click="incrementDislike()"></i>
+                            <div>{{ numberOfDislikes }}</div>
+                    </div>
                 </div>
-                <div class="PostCard--icon PostCard--iconmargin">
-                        <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
-                        <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconcolor" @click="incrementDislike()"></i>
-                        <div>{{ numberOfDislikes }}</div>
-                </div>
-            </div>
+            </router-link>
         </div>
     </div>
 </template>

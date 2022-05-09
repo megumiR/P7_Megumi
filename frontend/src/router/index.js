@@ -4,7 +4,7 @@ import AccueilView from '../views/AccueilView.vue'
 import AddView from '../views/AddView.vue'
 import SignupView from '../views/SignupView.vue'
 import UpdateView from '../views/UpdateView.vue'
-
+import OnepostView from '../views/OnepostView.vue'
 
 Vue.use(VueRouter)
 
@@ -26,6 +26,11 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: SignupView
+  },  
+  {
+    path: '/onepost/:id',
+    name: 'onepost',
+    component: OnepostView
   },
   {
     path: '/update/:id',
