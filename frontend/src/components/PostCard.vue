@@ -14,7 +14,7 @@
             
 
             <div class="PostCard__button" v-if="userId == authorId || this.$store.getters.rollAdmin == 'admin'">
-                <div class="update PostCard__button--form" >
+                <div class="PostCard__button--form" >
     <!--      @click.prevent="postToUpdate"     -->
                     <router-link :to="`/update/${postId}`" > Detail de <span id="postId">{{postId}}</span> </router-link> 
                 </div>  

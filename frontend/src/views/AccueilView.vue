@@ -87,11 +87,7 @@ export default {
         return this.dataReturnFromParent = 'Vous n\'êtes pas authorizé.';
       }
     },
-    postToUpdate: function() {
-      let postId = document.getElementById('postId').value;      //get request??? but how do i put id on url
-      console.log(postId);
 
-    }
   }
 }
 
