@@ -15,7 +15,6 @@
 
             <div class="PostCard__button" v-if="userId == authorId || this.$store.getters.rollAdmin == 'admin'">
                 <div class="PostCard__button--form" >
-    <!--      @click.prevent="postToUpdate"     -->
                     <router-link :to="`/update/${postId}`" > Detail de <span id="postId">{{postId}}</span> </router-link> 
                 </div>  
                 <router-view />
@@ -57,7 +56,8 @@ export default {
           numberOfLikes : 0,
           numberOfDislikes : 0,
           userId: localStorage.getItem('userID'),  
-          roll: ''
+          roll: '',
+          isLiked: localStorage.getItem('isLiked')
       }
   },
 /*  computed: {
@@ -67,24 +67,20 @@ export default {
   },*/
   methods : {
       increment: function () {
-        let reaction = JSON.parse(localStorage.getItem('reaction')); 
-        console.log(isLiked);
-        let isLiked = false;
-        console.log(isLiked);
-
-//        if (isLiked == userId) {
+        this.isLiked = JSON.parse(localStorage.getItem('isLiked')); 
+        console.log(this.isLiked);
                  
-          if (!isLiked) {
-              console.log('liked doesnt exsist');
-              isLiked = true;
-              console.log('isLiked: ' +isLiked);
+          if (!this.isLiked ) { //  || this.isLiked not include userid,,,
+              console.log('no one liked yet');
+              localStorage.setItem('isLiked', this.userId );
+             
+              console.log('isLiked: ' +this.isLiked);
+              this.numberOfLikes--;
+           
+          } else {
+              this.isLiked = '';
+              console.log('isLiked: ' +this.isLiked);
               this.numberOfLikes++;
-              localStorage.setItem('reaction', JSON.stringify(reaction)); 
-              console.log(reaction);
-          } else if (isLiked == false) {
-              console.log('isLiked == false');
-          } else if (isLiked == true) {
-              console.log('isLiked == true');
           }
         }
           /*
@@ -108,9 +104,6 @@ export default {
         this.numberOfDislikes++;
        // this.numberOfDislikes = 'counté';
       },
- /*     postToUpdate: function() {
-          this.$emit('postToUpdate');
-      }*/
   }     
 //}
 

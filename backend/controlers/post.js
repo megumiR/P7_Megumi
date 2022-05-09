@@ -2,32 +2,13 @@
 const connection = require("../db__connection"); //importer l'info de mysql
 const fetch = require("node-fetch");
 const fs = require("fs");
-//const uuid = require('uuid/v1');
 /********* FIN: importer des fichier , modules *************/
 
-/***************** Creer un post  ***************/ ///DB, here :utilisateur change to user later!!!!!!!
-//////////////////post un post  ?? S'il n'y a pas de "file"
+/***************** Creer un post  ***************/ 
 exports.createPost =
-  /*async(req, res, next) => {
-    console.log('post one article---------');
-    console.log(req.body);
-    // only JSON file works. not the form-data on postman
-    let sql = `INSERT INTO post (title, content, user_id) VALUES 
-      ('${ req.body.title }', '${ req.body.content }', '${req.headers.user_id}' )`; //headers = sessionid?    
-    await connection.query( sql, (err, result) => {
-      if (err) {
-        throw err;
-      }
-      console.log('L\'article post est inseré : '+ req.body.content);
-  
-      res.status(201).json({ message: 'Votre post est bien crée!'});
-    });
-};*/
   /////////// s'il y a un fichier {oui traiter l'image}:{non traiter que l'objet}
   async (req, res, next) => {
-    console.log("post one article---------"); // this works with the form-data n JSON on postman
-    console.log(req.body); //ADD .body
-    console.log(req.file);
+    console.log("post one article---------"); 
     if (!req.file) {  
       
       let sqlWithoutImage = `INSERT INTO post (title, content, user_id ) VALUES 
@@ -39,22 +20,11 @@ exports.createPost =
         console.log("L'article post(content, title) est inseré : " + req.body.title);
         res.status(201).json({ message: "Votre post(sans image) est bien crée!" });
       });
-    } else {//// everytime it thinks it is with image because of formdata???
+    } else {
       console.log("Il y a une image");
       console.log(req.file.filename);
       let imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-      console.log(imageUrl);
-      let imgFile = req.file.filename;
-      console.log(imgFile);
- /*     fetch(imageUrl)
-        .then((resultFetch) => resultFetch.blob())
-        .then((imageBlob) => {
-          let sqlWithImage = `INSERT INTO post (title, content, image, user_id ) VALUES (
-            '${req.body.title}',
-            '${req.body.content}', 
-            '${imageBlob}',
-            '${req.headers.user_id}')`;
-*/
+
       let sqlWithImage = `INSERT INTO post (title, content, image, user_id ) VALUES 
         ('${req.body.title}', '${req.body.content}', '${req.file.filename}', '${req.body.user_id}')`; 
 
@@ -84,13 +54,12 @@ exports.showallposts = async (req, res, next) => {
       });
     }
     console.log("posts: ", result);
-    console.log("posts result until here------------- ");
     var allPostWithImg = [];
     if (result.length > 0) {
       result.forEach( post => {
         if ( post.image != null) { 
           post.image = `${req.protocol}://${req.get("host")}/images/${post.image}`;
-          console.log('post id: '+ post.id +' --- '+post.image);
+          
           allPostWithImg.push(post);
         } else {
           allPostWithImg.push(post);
@@ -172,11 +141,8 @@ exports.liker = async (req, res, next) => {
 
 /************* Modifier un post **************/
 exports.updatePost = async (req, res, next) => {
-  ///not considered -> change images   can be changed by other Id :check the userID, utilisateur_id wont be renewed
+  ///not considered -> change image
   console.log("update specific post---------");
-  console.log("post id : " + req.params.id);
-
-  console.log("just wanna change title");
   let sqltitle = `UPDATE post SET title = '${req.body.title}' WHERE id = ${req.params.id} `;
   await connection.query(sqltitle, (err, result) => {
     console.log(result);
@@ -186,7 +152,6 @@ exports.updatePost = async (req, res, next) => {
     console.log("Le title est modifié");
   });
 
-  console.log("just wanna change CONTENT!");
   let sqlcontent = `UPDATE post SET content = '${req.body.content}' WHERE id = ${req.params.id} `;
   await connection.query(sqlcontent, (err, result) => {
     if (err) {
@@ -206,7 +171,6 @@ exports.deletePost = async (req, res, next) => {
     if (err) {
       return res.status(500).json({ message: "erreur : probleme de mySQL" });
     }
-    console.log(result);
     console.log(result[0].image);
     if (result[0].image) {
       fs.unlink(`./images/${result[0].image}`, (err) => {
@@ -232,14 +196,5 @@ exports.deletePost = async (req, res, next) => {
       });
     }   
   });
- /* let sqlDelete = `DELETE FROM post WHERE id = ${req.params.id}`;
-  console.log("just wanna delete a post");
-  connection.query(sqlDelete, (err, result) => {
-    if (err) {
-      return res.status(400).json({ message: "erreur : on ne peut pas supprimer" });
-    }
-    res.status(200).json({ message: "Le post est bien supprimé" });
-    console.log("Le post est bien supprimé");
-  });*/
 };
 /************* FIN: Supprimer un post ******************/

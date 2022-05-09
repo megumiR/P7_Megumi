@@ -7,7 +7,7 @@
       <router-link to="/" > Accueil </router-link> |
       <router-link to="/add" > Ajouter un post </router-link> |
       <router-link to="/signup">
-        <span v-if="userName">Logout par {{ userName }}</span>  
+        <span v-if="userName" @click.prevent="logout">Logout par {{ userName }}</span>  
         <span v-else>Login </span>
       </router-link> |
 
@@ -35,7 +35,15 @@ export default {
   },
   computed: {
     ...mapState([ 'userName' ])
-  }
+  },
+  methods: {
+    logout: function() {
+      this.$store.dispatch('logout', {
+        email: this.email,
+        password: this.password
+      })
+    }
+  },
 }
 </script>
 

@@ -49,7 +49,9 @@
         </div>
           -->     
         <div class="form__contentpost">
-          <button class="button" @click.prevent="updatePost">Modification envoyer !</button>
+          <button class="button" @click.prevent="updatePost">
+            Modification envoyer !
+          </button>
         </div>
       </form>
     </div>

@@ -14,15 +14,14 @@ export default new Vuex.Store({
     userId: null,
     userName: null,
     roll: null,   
-   // imageFile: null,
     status: null,
     mode: null
   },
-  getters: {  //  Stateimagefile: state => { return state.imageFile }, 
+  getters: {  
     authStatus: state => state.status,
     rollAdmin: state => state.roll
   },
-  mutations: {  //  setImagefile (state, imageFile) { state.imageFile = imageFile }
+  mutations: {  
     AUTH_SUCCESS_USERID: (state,  userId) => {
       state.userId = userId
     },
@@ -38,13 +37,11 @@ export default new Vuex.Store({
     AUTH_ERROR: (state) => {
       state.status = 'error'
     },
-    MODE_UPDATE: (state) => {
-      state.mode = 'update'
+    LOGOUT: (state) => { 
+      state.userId = null 
+      state.roll = null 
+      state.status = null
     }
-             //LOGOUT: (state) => { state.userId = null state.roll = null state.status = null}
-  //  IMG_INSERETED: (state, {imageFile}) => {
-  //    state.imageFile = imageFile
-  //  }
   },
   actions: { 
  //   logIn: ({ commit }, payload) => {  
@@ -94,11 +91,12 @@ export default new Vuex.Store({
           localStorage.removeItem('userID');
         })
     },
-    /* logout: ({commit}) => {
+    logout: ({commit}) => {
       commit('LOGOUT')
       localStorage.removeItem('userToken');
       localStorage.removeItem('userID');
-    } */
+      location.reload();
+    } 
 /* **************OLD ONE***************************************
 ********CHECK async await and search()  https://stackoverflow.com/questions/62265815/returning-data-from-store-js-in-vuejs-returns-typeerror
     fetchAllPosts: (states) => {
