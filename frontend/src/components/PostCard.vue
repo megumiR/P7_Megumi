@@ -14,7 +14,8 @@
             
 
             <div class="PostCard__button" v-if="userId == authorId || this.$store.getters.rollAdmin == 'admin'">
-                <div class="update PostCard__button--form" @click.prevent="postToUpdate">
+                <div class="update PostCard__button--form" >
+    <!--      @click.prevent="postToUpdate"     -->
                     <router-link :to="`/update/${postId}`" > Detail de <span id="postId">{{postId}}</span> </router-link> 
                 </div>  
                 <router-view />
@@ -107,9 +108,9 @@ export default {
         this.numberOfDislikes++;
        // this.numberOfDislikes = 'counté';
       },
-      postToUpdate: function() {
+ /*     postToUpdate: function() {
           this.$emit('postToUpdate');
-      }
+      }*/
   }     
 //}
 
@@ -117,7 +118,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<style lang="scss">
 .PostCard{
     width: 90%;
     min-height: 5em;

@@ -1,7 +1,8 @@
 <template>
+
   <div class="update">
     <h2>{{ userName }}, modifier ou supprimer votre article !</h2>
-    <PostCard  v-for="post in list" 
+<!--    <PostCard  v-for="post in list" 
       :key="post.id" 
       
       :image="post.image" 
@@ -11,10 +12,21 @@
       :postId="post.id"
       @emitname="(e) => dataReturnFromParent = e "
       />  
-            
+-->
+    <div class="PostCard" v-for="post in list" :key="post.id" >
+      <div class="PostCard__textblock">
+        {{ post.title }}<br/>
+        {{ post.content }}
+      </div>
+      <div class="PostCard__img">
+        <img class="PostCard__img--form" :src="image" alt="image" v-if="image"/>
+      </div>      
+      <div>{{ post.imageFileName }}</div>
+    </div>
+
     <div class="PostCard__button--form" @click.prevent="deletePost">Supprimer ce post</div> 
   
-        <div class="formField ">
+        <div class="formField">
         <form encType="multipart/form-data">
             <div class="form__contentpost">
                 <label for="title">Titre à modifier: </label>
@@ -32,7 +44,7 @@
                 
                 <p id="contentErrorMsg"></p>
             </div>
-
+<!--
             <div class="form__contentpost">
                 <label for="image">Changer votre image: </label>
                 <br />
@@ -41,7 +53,7 @@
                 
                 <p id="imageErrorMsg"></p>
             </div>
-               
+          -->     
             <div class="form__contentpost">
                 <button class="button" @click.prevent="updatePost">Modification envoyer !</button>
             </div>
@@ -52,15 +64,15 @@
 </template>
 
 <script>
-import PostCard from '../components/PostCard.vue'
+// import PostCard from '../components/PostCard.vue'
 import { mapState } from 'vuex'  
 import { required } from 'vuelidate/lib/validators'
 
 export default {
   name: 'UpdateView',
-  components: {
-    PostCard
-  },
+//  components: {
+//    PostCard
+//  },
   data() {
     return {         
       list: [], 
@@ -86,11 +98,12 @@ export default {
       let requestHeaders = {
         headers: {'Authorization': 'Bearer ' + userToken}
       }
-      let search_params = new URLSearchParams(document.location.search);
-      let postId = search_params.get('postId');
+   //   let search_params = new URLSearchParams(document.location.search);
+     // let postId = search_params.get('postId'); //this.$route.params.id;
+      let postId = this.$route.params.id;
       console.log('URL postid ----> '+ postId);
       if (userToken) {
-        this.$axios.get(this.$requestBaseURL + 'posts' + postId , requestHeaders) // need post id
+        this.$axios.get(this.$requestBaseURL + 'posts/' + postId , requestHeaders) // need post id
         .then((response) => {
           console.log(response);
           console.log(response.data.result);  

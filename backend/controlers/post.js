@@ -115,14 +115,14 @@ exports.showOnepost = async (req, res, next) => {
         message: "erreur : on ne peut pas chercher de tableau post",
       });
     }
-    console.log("posts: ", result);
+ /*   console.log("posts: ", result);
     var onePostWithImg = [];
     if ( result.image != null) { 
       result.image = `${req.protocol}://${req.get("host")}/images/${result.image}`;
       onePostWithImg.push(result);
     } else {
       onePostWithImg.push(result);
-    }
+    }*/
      // result = onePostWithImg;
     res.status(200).json({ result });
 //    } else {
@@ -130,57 +130,6 @@ exports.showOnepost = async (req, res, next) => {
  //   }
   });
 };
-/*
-exports.choosePost = (req, res, next) => {
-  if (!req.body.id ||
-      !req.body.title ||
-      !req.body.content ||
-      !req.body.user_id) {
-    return res.status(400).send(new Error('Bad request!'));
-  }
-  let query = {};
-  const queryPromise = new Promise((resolve, reject) => {
-    let onePost = `SELECT * FROM post WHERE id = ${req.params.id}`;
-    connection.query(onePost, (err, result) => {
-      if (err) {
-        return res.status(400).json({
-          message: "erreur : on ne peut pas chercher de tableau post",
-        });
-      }
-    })
-    .then((post) => {
-        if (!post) {
-          reject('Post not found: ' + post.id);
-        }
-        post.image = `${req.protocol}://${req.get("host")}/images/${post.image}`;
-        resolve(post);
-      }
-    ).catch(
-      () => {
-        reject('Database error!');
-      }
-    )
-  });
-  query.push(queryPromise);
-
-  Promise.all(query)
-  .then((posts) => {///?????
-      const postId = uuid();
-      return res.status(201).json({
-        title: req.body.title,
-        posts: posts,  ///?????
-        postId: postId
-      })
-    }
-    
-  ).catch(
-    (error) => {
-      return res.status(500).json(new Error(error));
-    }
-  );
-};*/
-
-
 /******************* FIN: Afficher le post *********************/
 
 /************ Liker/ Disliker un post ******************/

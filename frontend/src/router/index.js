@@ -28,7 +28,7 @@ const routes = [
     component: SignupView
   },
   {
-    path: '/update',
+    path: '/update/:id',
     name: 'update',
     component: UpdateView
   }
