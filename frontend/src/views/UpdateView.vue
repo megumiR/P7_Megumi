@@ -58,15 +58,11 @@
 </template>
 
 <script>
-// import PostCard from '../components/PostCard.vue'
 import { mapState } from 'vuex'  
 import { required } from 'vuelidate/lib/validators'
 
 export default {
   name: 'UpdateView',
-//  components: {
-//    PostCard
-//  },
   data() {
     return {         
       list: [], 
@@ -92,15 +88,10 @@ export default {
       let requestHeaders = {
         headers: {'Authorization': 'Bearer ' + userToken}
       }
-   //   let search_params = new URLSearchParams(document.location.search);
-     // let postId = search_params.get('postId'); //this.$route.params.id;
       let postId = this.$route.params.id;
-      console.log('URL postid ----> '+ postId);
       if (userToken) {
-        this.$axios.get(this.$requestBaseURL + 'posts/' + postId , requestHeaders) // need post id
-        .then((response) => {
-          console.log(response);
-          console.log(response.data.result);  
+        this.$axios.get(this.$requestBaseURL + 'posts/' + postId , requestHeaders) 
+        .then((response) => { 
           if ( response.data.result[0].image != null) {
             this.image = `http://localhost:3000/images/${response.data.result[0].image}`;
           }
@@ -126,16 +117,16 @@ export default {
       formData.append("content", this.content);
       formData.append("user_id", localStorage.getItem('userID'));
       console.log(formData);
-      
+      let postId = this.$route.params.id;
       if (userToken) {
-        this.$axios.put(this.$requestBaseURL + "posts/", formData, {
+        this.$axios.put(this.$requestBaseURL + "posts/" + postId , formData, {
             headers: {
               Authorization: "bearer " + userToken
             },
-          }) //  posts/:id need to add...
+          }) 
         .then((response) => {
           console.log(response);
-         // window.location.href = this.$localhost; 
+          window.location.href = this.$localhost; 
         })
         .catch((err) => {
           throw err;
@@ -146,20 +137,16 @@ export default {
       
     },
     deletePost: function() {
-//      let postDeleteId = ;
       let userToken = localStorage.getItem('userToken');
-      let authToken = { 
-        'Authorization': 'Bearer ' + userToken
-      };
-      console.log(authToken);
       let requestHeaders = {
-        headers: authToken
+        headers: {'Authorization': 'Bearer ' + userToken}
       }
+      let postId = this.$route.params.id;
       if (userToken) {
-        this.$axios.get(this.$requestBaseURL + 'posts/' , requestHeaders) //  /:id need to add...
+        this.$axios.delete(this.$requestBaseURL + 'posts/' + postId, requestHeaders) 
         .then((response) => {
           console.log(response);
-          
+          window.location.href = this.$localhost;
         })
         .catch((err) => {
           throw err;
@@ -169,13 +156,7 @@ export default {
       }
     },
 
-  }/* ,
-  route: [
-    { path: '/update/:id'} //{ path: '/update/:id', components: UpdateView}
-  
-  ]  */
-  //const router = new VueRouter ({
-
+  }
 }
 
 </script>

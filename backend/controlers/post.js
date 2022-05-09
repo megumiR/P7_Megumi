@@ -96,7 +96,6 @@ exports.showallposts = async (req, res, next) => {
           allPostWithImg.push(post);
         }
       });
-     // result = allPostWithImg;
       res.status(200).json({ result });
     } else {
       res.status(400).json({ message: "Il n'y a pas de post à affichier !" });
@@ -115,19 +114,7 @@ exports.showOnepost = async (req, res, next) => {
         message: "erreur : on ne peut pas chercher de tableau post",
       });
     }
- /*   console.log("posts: ", result);
-    var onePostWithImg = [];
-    if ( result.image != null) { 
-      result.image = `${req.protocol}://${req.get("host")}/images/${result.image}`;
-      onePostWithImg.push(result);
-    } else {
-      onePostWithImg.push(result);
-    }*/
-     // result = onePostWithImg;
     res.status(200).json({ result });
-//    } else {
- //     res.status(400).json({ message: "Il n'y a pas de post à affichier !" });
- //   }
   });
 };
 /******************* FIN: Afficher le post *********************/
@@ -213,18 +200,46 @@ exports.updatePost = async (req, res, next) => {
 
 /************* Supprimer un post ******************/
 exports.deletePost = async (req, res, next) => {
-  ////working BUT image file not deleted n need to check the userID
-  console.log("delete specific post---------");
-  console.log("post id : " + req.params.id);
-
-  let sqlDelete = `DELETE FROM post WHERE id = ${req.params.id}`;
+  console.log("delete post ------>");
+  let sqlSelect = `SELECT * FROM post WHERE id = ${req.params.id}`;
+  await connection.query(sqlSelect, (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: "erreur : probleme de mySQL" });
+    }
+    console.log(result);
+    console.log(result[0].image);
+    if (result[0].image) {
+      fs.unlink(`./images/${result[0].image}`, (err) => {
+        if (err) {
+          throw err;
+        }
+        let sqlDelete = `DELETE FROM post WHERE id = ${req.params.id}`;
+        connection.query(sqlDelete, (err, result) => {
+          if (err) {
+            return res.status(500).json({ message: "erreur : on ne peut pas supprimer" });
+          }
+          res.status(200).json({ message: "Le post est bien supprimé" });
+        })
+      })
+    } else {
+      let sqlDelete = `DELETE FROM post WHERE id = ${req.params.id}`;
+      connection.query(sqlDelete, (err, result) => {
+        if (err) {
+          return res.status(500).json({ message: "erreur : on ne peut pas supprimer" });
+        }
+        res.status(200).json({ message: "Le post est bien supprimé" });
+        console.log(result);
+      });
+    }   
+  });
+ /* let sqlDelete = `DELETE FROM post WHERE id = ${req.params.id}`;
   console.log("just wanna delete a post");
-  await connection.query(sqlDelete, (err, result) => {
+  connection.query(sqlDelete, (err, result) => {
     if (err) {
       return res.status(400).json({ message: "erreur : on ne peut pas supprimer" });
     }
     res.status(200).json({ message: "Le post est bien supprimé" });
     console.log("Le post est bien supprimé");
-  });
+  });*/
 };
 /************* FIN: Supprimer un post ******************/
