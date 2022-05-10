@@ -2,44 +2,43 @@
     <div>
         <WelcomeMsg msg="Bienvenue :) " recommend=""/>
         <div class="PostCard" v-for="post in list" :key="post.id" >
-        <div class="PostCard__img">
-            <img class="PostCard__img--form" :src="image" alt="image" v-if="image"/>
-        </div>  
-        <div class="PostCard__textblock">
-            Titre: {{ post.title }}<br/>
-            Description: <br/>
-            {{ post.content }}
-        </div>
-        <div>
-            <div class="PostCard__iconblock">
-                <div class="PostCard--icon PostCard--iconmargin">
-                        <i class="far fa-heart fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
-                        <i class="fas fa-heart fa-lg PostCard--iconposition PostCard--iconcolor" @click="increment()"></i>
-                        <div>{{ numberOfLikes }}</div>
-                </div>
-                <div class="PostCard--icon PostCard--iconmargin">
-                        <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
-                        <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconcolor" @click="incrementDislike()"></i>
-                        <div>{{ numberOfDislikes }}</div>
-                </div>
-            </div>
-        </div>
-    </div>
+          
+          <div class="PostCard__img">
+              <img class="PostCard__img--form" :src="post.image" alt="image" v-if="post.image"/>
+          </div>  
+          
+          <div class="PostCard__textblock">
+              Titre: {{ post.title }}<br/>
+              Description: <br/>
+              {{ post.content }}
 
+              <div class="PostCard__iconblock">
+                  <div class="PostCard--icon PostCard--iconmargin">
+                          <i class="far fa-heart fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
+                          <i class="fas fa-heart fa-lg PostCard--iconposition PostCard--iconcolor" @click="increment()"></i>
+                          <div>{{ numberOfLikes }}</div>
+                  </div>
+                  <div class="PostCard--icon PostCard--iconmargin">
+                          <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
+                          <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconcolor" @click="numberOfDislikes++"></i>
+                          <div>{{ numberOfDislikes }}</div>
+                  </div>
+              </div>
+
+          </div>
+
+        </div>
     </div>
-    
 </template>
 
 <script>
 import WelcomeMsg from '../components/WelcomeMsg.vue'
-//import PostCard from '../components/PostCard.vue'
 //import { mapState } from 'vuex' 
 
 export default {
   name: 'OnepostView',
   components: {
-    WelcomeMsg,
-  //  PostCard
+    WelcomeMsg
   },
   data() {
     return {
@@ -51,7 +50,7 @@ export default {
       userId: localStorage.getItem('userID'),  
       roll: '',
       isLiked: localStorage.getItem('isLiked'),
-      image: ''
+    
     }
   }, 
  /* computed: {
@@ -70,9 +69,6 @@ export default {
       if (userToken) {
         this.$axios.get(this.$requestBaseURL + 'posts/' + postId , requestHeaders) 
         .then((response) => { 
-          if ( response.data.result[0].image != null) {
-            this.image = `http://localhost:3000/images/${response.data.result[0].image}`;
-          }
           return this.list = response.data.result
         })
         .catch((err) => {
@@ -127,6 +123,8 @@ increment: function () {
 
 </script>
 
-<style lang="scss">
-
+<style scoped lang="scss">
+.PostCard__iconblock {
+  margin: 1em;
+}
 </style>

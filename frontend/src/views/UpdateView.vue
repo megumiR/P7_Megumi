@@ -4,7 +4,7 @@
 
     <div class="PostCard" v-for="post in list" :key="post.id" >
       <div class="PostCard__img">
-        <img class="PostCard__img--form" :src="image" alt="image" v-if="image"/>
+        <img class="PostCard__img--form" :src="post.image" alt="image" v-if="post.image"/>
       </div>  
       <div class="PostCard__textblock">
         Titre: {{ post.title }}<br/>
@@ -94,9 +94,6 @@ export default {
       if (userToken) {
         this.$axios.get(this.$requestBaseURL + 'posts/' + postId , requestHeaders) 
         .then((response) => { 
-          if ( response.data.result[0].image != null) {
-            this.image = `http://localhost:3000/images/${response.data.result[0].image}`;
-          }
           return this.list = response.data.result
         })
         .catch((err) => {

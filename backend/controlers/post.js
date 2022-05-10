@@ -83,6 +83,11 @@ exports.showOnepost = async (req, res, next) => {
         message: "erreur : on ne peut pas chercher de tableau post",
       });
     }
+    console.log(result[0].image);
+    if ( result[0].image != null) {
+      result[0].image = `${req.protocol}://${req.get("host")}/images/${result[0].image}`;
+    }
+    console.log(result[0].image);
     res.status(200).json({ result });
   });
 };
