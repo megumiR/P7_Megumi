@@ -50,7 +50,7 @@ export default {
       userId: localStorage.getItem('userID'),  
       roll: '',
       isLiked: localStorage.getItem('isLiked'),
-    
+      likes: ''
     }
   }, 
  /* computed: {
@@ -81,37 +81,72 @@ export default {
 
 increment: function () {
         this.isLiked = JSON.parse(localStorage.getItem('isLiked')); 
-        console.log(this.isLiked);
-                 
+        console.log('local'+ this.isLiked);
+        let userToken = localStorage.getItem('userToken');         
           if (!this.isLiked ) { //  || this.isLiked not include userid,,,
               console.log('no one liked yet');
               localStorage.setItem('isLiked', this.userId );
-             
-              console.log('isLiked: ' +this.isLiked);
-              this.numberOfLikes--;
-           
-          } else {
-              this.isLiked = '';
+              this.isLiked = localStorage.getItem('isLiked');
               console.log('isLiked: ' +this.isLiked);
               this.numberOfLikes++;
+           
+            
+            /*let requestHeaders = {
+              headers: {'Authorization': 'Bearer ' + userToken}
+            }*/
+            this.likes = 1; // 1 = like, -1 = dislike , '' = no reaction
+            const formData = new FormData();
+            formData.append("likes", this.likes);
+            formData.append("user_id", localStorage.getItem('userID'));
+            console.log(formData);
+            let postId = this.$route.params.id;
+            if (userToken) {    //
+              this.$axios.post(this.$requestBaseURL + 'like/' + postId, formData ,{
+                headers: {
+                  Authorization: "bearer " + userToken
+                },
+              })
+              .then((response) => { 
+               // return this.list = response.data.result
+               console.log(response);
+              })
+              .catch((err) => {
+                throw err;
+              })
+            } else {
+              console.log('no token user');
+            }
+
+          } else {
+            localStorage.removeItem('isLiked');
+             // this.isLiked = '';
+            console.log('ELSE -- isLiked: ' +this.isLiked);
+              //delete
+            this.numberOfLikes--;
+            this.likes = ''; // 1 = like, -1 = dislike , '' = no reaction
+            const formData = new FormData();
+      //      formData.append("likes", this.likes);
+            formData.append("user_id", localStorage.getItem('userID'));
+            console.log(formData);
+            let postId = this.$route.params.id;
+            if (userToken) {  //
+              this.$axios.delete(this.$requestBaseURL + 'like/' + postId, formData , {
+                headers: {
+                  Authorization: "bearer " + userToken
+                },
+              }) 
+              .then((response) => { 
+               // return this.list = response.data.result
+               console.log(response);
+              })
+              .catch((err) => {
+                throw err;
+              })
+            } else {
+              console.log('no token user');
+            }
           }
         }
-          /*
-          let likePost = react.likePost;
-          console.log(likePost);
-          
-          if (isReacted == true && likePost == true) {
-            this.numberOfLikes--;
-            reaction.push({ 'likePost' : 'false'});
-            localStorage.setItem('reaction', reaction); 
-          } else if (isReacted == true && likePost == false) {
-            this.numberOfLikes++;
-            reaction.push({ 'likePost' : 'true'});
-            localStorage.setItem('reaction', reaction); 
-          } else {
-            isReacted = false; 
-          }
-*/
       },
       incrementDislike: function () {
         this.numberOfDislikes++;

@@ -40,12 +40,12 @@ app.use(express.static('images'));
 /********* ajouter des routes **********************/
 const utilisateurRoutes = require('./routes/utilisateur');
 const postRoutes = require('./routes/post');
-
+const likeRoutes = require('./routes/like');
 
 //ajouter auth apres
 app.use('/api', utilisateurRoutes);
 app.use('/api/posts', postRoutes);
-
+app.use('/api/like', likeRoutes);
 /********* FIN: ajouter des routes****************/
 
 

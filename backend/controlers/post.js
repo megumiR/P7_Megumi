@@ -93,56 +93,6 @@ exports.showOnepost = async (req, res, next) => {
 };
 /******************* FIN: Afficher le post *********************/
 
-/************ Liker/ Disliker un post ******************/
-exports.liker = async (req, res, next) => {
-  console.log("Liker un post---------");
-  console.log("post id : " + req.params.id);
-  console.log("Who is trying to react?: id " + req.headers.user_id);
-
-  let sqlFind = `SELECT * FROM post WHERE id = '${req.params.id}'`;
-  await connection.query(sqlFind, (err, result) => {
-    if (err) {
-      return res.status(400).json({
-        message: "erreur : on ne trouve pas le post que vous avez choisi",
-      });
-    }
-    console.log(result);
-    // si l'user a deja Liké ce post et enregistré sur DB
-    let sqlFind = `SELECT * FROM post_likes WHERE post_id = '${req.params.id}' AND user_id = '${req.headers.user_id}'`;
-    connection.query(sqlFind, (err, res) => {
-      if (err) {
-        return res.status(400).json({ message: "erreur : savoir si c'est déjà Liker" });
-      }
-      console.log("step1:Already reacted to this post?");
-      console.log(res);
-
-      if (!res.length) {
-        // .length pour savoir si un array est vide ou pas
-        console.log("step2:No, react for the 1st time");
-        ///////////////////////// foreign key --- check how to insert data into foreign keys
-        let sqlLike = `INSERT INTO post_likes (post_id, user_id, likes) VALUES ('${result[0].id}', '${req.headers.user_id}', '${req.body.likes}')`;
-        connection.query(sqlLike, (err, result) => {
-          if (err) {
-            return res.status(400).json({ message: "erreur : Liker pour la 1ere fois" });
-          }
-          console.log("Liker/ Disliker post pour la 1ere fois");
-        });
-      } else if (res.length > 0) {
-        console.log("step2:Yes, already reacted to the post");
-        // update the existed result
-        let sqlLikeUpdated = `UPDATE post_likes SET likes = '${req.body.likes}' WHERE post_id = '${result[0].id}' AND user_id = '${req.headers.user_id}'`;
-        connection.query(sqlLikeUpdated, (err, result) => {
-          if (err) {
-            return res.status(400).json({ message: "erreur : modifier le Liker" });
-          }
-          console.log("Liker/ Disliker modifié");
-        });
-      }
-    });
-  });
-  res.status(200).json({ message: "Le Like/Dislike est enregistré." }); ///shows before sqls send
-};
-/************ FIN: Liker/ Disliker un post ******************/
 
 /************* Modifier un post **************/
 exports.updatePost = async (req, res, next) => {

@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
         console.log('auth.js checking....');
         console.log(req.body);
         if (!req.body.headers) { ///signup login MAYBE all passes here now
-            console.log('no body');
+            console.log('Auth no body');
             const token = req.headers.authorization.split(' ')[1];
             const decodedToken = jwt.verify(token, `${process.env.JWT_KEY}`);
             const userId = decodedToken.userId;
@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
                     next();
                 }
         } else {  /// 
-            console.log('with body');
+            console.log('Auth with body');
             const token = req.body.headers.authorization.split(' ')[1];
             const decodedToken = jwt.verify(token, `${process.env.JWT_KEY}`);
             const userId = decodedToken.userId;

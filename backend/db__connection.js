@@ -7,8 +7,7 @@ const mysql = require('mysql');
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",         //user name is root for database(admin)
-  password: "password",      //pw removed because we need to for WAMP server
-//  database: "test2"
+  password: "password",     
   database: "groupomania"
 });
 /****** FIN: l'info de connection mysql *********/
