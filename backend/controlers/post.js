@@ -119,6 +119,18 @@ exports.updatePost = async (req, res, next) => {
 
 /************* Supprimer un post ******************/
 exports.deletePost = async (req, res, next) => {
+
+
+
+  let sqlDeleteLike = `DELETE FROM post_likes WHERE post_id = ${req.params.id}`;
+  connection.query(sqlDeleteLike, (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: "erreur : on ne peut pas supprimer les likes" });
+    }
+    
+  });
+
+
   console.log("delete post ------>");
   let sqlSelect = `SELECT * FROM post WHERE id = ${req.params.id}`;
   await connection.query(sqlSelect, (err, result) => {

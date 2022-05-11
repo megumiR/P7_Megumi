@@ -13,17 +13,13 @@ exports.signup = async (req, res, next) => {
                 ('${req.body.name}', '${req.body.email}', '${hashedPassword}', 'user')`;
 
   await connection.query(sql, (err, result) => {
-      console.log("test manu");
     if (err) {
       return res.status(400).json("Inscription impossible, un utilisateur est déjà déclaré pour cet email");
     }
-    console.log("test manu2");
-    console.log("L'info signup est inseré avec le nom: " + req.body.name);
     /////////// Need to get token for signup too so put these instead of //// res.status(201).json({ message: 'L\'info d\'user est bien inseré avec le nom: ' + req.body.name});
     let sql = `SELECT * FROM user WHERE email = '${req.body.email}' `;
     connection.query(sql, (err, result) => {
       if (err) {
-
         return res.status(400).json("Une erreur s'est produite");
       }
       res.status(201).json({

@@ -1,8 +1,8 @@
 <template>
   <div class="update">
     <h2>{{ userName }}, voici c'est votre article sélectionnée!</h2>
-
-    <div class="PostCard" v-for="post in list" :key="post.id" >
+    <div v-for="post in list" :key="post.id" >
+    <div class="PostCard" >
       <div class="PostCard__img">
         <img class="PostCard__img--form" :src="post.image" alt="image" v-if="post.image"/>
       </div>  
@@ -25,7 +25,7 @@
         <div class="form__contentpost">
           <label for="title">Nouveau titre: </label>
           <br />
-          <input type="text" name="title" id="title" value="Pas de title" @keyup="title = $event.target.value" required /> 
+          <input type="text" name="title" id="title" :value="post.title" required /> 
 
           <p id="titleErrorMsg"></p>
         </div>
@@ -33,21 +33,12 @@
         <div class="form__contentpost">
           <label for="content">Nouvelle description: </label>
           <br />
-          <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" @keyup="content = $event.target.value" required> 
+          <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" :value="post.content" required> 
           </textarea>
                 
           <p id="contentErrorMsg"></p>
         </div>
-<!--
-        <div class="form__contentpost">
-          <label for="image">Changer votre image: </label>
-          <br />
-          <input type="file" name="image" id="image" accept="image/png, image/jpeg" @change="showFileName" required>
-          <p class="filename" v-if="imageFileName">image ajouté ! {{ imageFileName }}</p>
-                
-          <p id="imageErrorMsg"></p>
-        </div>
-          -->     
+    
         <div class="form__contentpost">
           <button class="button" @click.prevent="updatePost">
             Modification envoyer !
@@ -55,7 +46,7 @@
         </div>
       </form>
     </div>
-  
+  </div>
   </div>
 </template>
 
@@ -111,11 +102,14 @@ export default {
     updatePost: function() {
       let userToken = localStorage.getItem('userToken');
       const formData = new FormData();
+      const form_title=document.querySelector('#title').value;
+      
+      const form_content=document.querySelector('#content').value;
       formData.append('file', this.image);
-      formData.append("title", this.title);
-      formData.append("content", this.content);
+      formData.append("title", form_title);
+      formData.append("content", form_content);
       formData.append("user_id", localStorage.getItem('userID'));
-      console.log(formData);
+
       let postId = this.$route.params.id;
       if (userToken) {
         this.$axios.put(this.$requestBaseURL + "posts/" + postId , formData, {
