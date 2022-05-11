@@ -1,15 +1,16 @@
 const express = require('express');
 const multer = require('../middleware/multer-config');
 const auth = require('../middleware/auth');
+const postvalidator = require('../middleware/postvalidator');
 const router = express.Router();
 
 const postCtrl = require('../controlers/post');
 //const likeCtrl = require('../controlers/like');
 
-router.post('/', auth, multer, postCtrl.createPost);  //validator
+router.post('/', auth, multer, postvalidator, postCtrl.createPost);  //validator
 router.get('/', auth, postCtrl.showallposts);  // Like 9GAG equals without auth???   router.get('/', postCtrl.showallposts);  
 router.get('/:id', auth, postCtrl.showOnepost); 
-router.put('/:id', auth, multer, postCtrl.updatePost);  //validator
+router.put('/:id', auth, multer, postvalidator, postCtrl.updatePost);  //validator
 router.delete('/:id', auth, postCtrl.deletePost);
 
 //router.post('/like/:id', auth, likeCtrl.liker);  
