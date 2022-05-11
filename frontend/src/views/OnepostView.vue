@@ -21,7 +21,7 @@
                   <div class="PostCard--icon PostCard--iconmargin">
                           <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
                           <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconcolor" @click="incrementDislike()"></i>
-                         
+                         <div>{{ numberOfDislikes }}</div>
                   </div>
               </div>
 
@@ -43,7 +43,7 @@ export default {
     return {
       list: [],
       numberOfLikes : 0,
-     // numberOfDislikes : 0,
+      numberOfDislikes : 0,
       userId: localStorage.getItem('userID'),  
       likes: ''
     }
@@ -124,19 +124,81 @@ export default {
     let requestHeaders = {
       headers: {'Authorization': 'Bearer ' + userToken}
     } 
-    let data = {
-        "likes": this.likes,
-        "user_id": localStorage.getItem('userID')
-    };
     let postId = this.$route.params.id;
 
     switch (this.likes) {
-      case null:
-        this.numberOfDislikes++;            
+      case (this.likes = 0):
+        this.numberOfDislikes = 1;            
         this.likes = -1;
-        console.log('case null');
-
+        console.log('case 0');
+        if (userToken) {  
+          let data = {
+            "likes": this.likes,
+            "user_id": localStorage.getItem('userID')
+          };
+          this.$axios.put(this.$requestBaseURL + 'like/' + postId, data , requestHeaders) 
+          .then((response) => { 
+            console.log(response);
+          })
+          .catch((err) => {
+            throw err;
+          })
+        } else {
+          console.log('no token user');
+        }
+        
+        break;
+      case (this.likes = -1):
+        this.numberOfDislikes = 0;
+        this.likes = 0; 
+        console.log('case dislike');
+        if (userToken) {  
+          let data = {
+            "likes": this.likes,
+            "user_id": localStorage.getItem('userID')
+          };
+          this.$axios.put(this.$requestBaseURL + 'like/' + postId, data , requestHeaders) 
+          .then((response) => { 
+            console.log(response);
+          })
+          .catch((err) => {
+            throw err;
+          })
+        } else {
+          console.log('no token user');
+        }
+        break;
+      case (this.likes = 1):
+        this.numberOfLikes = 0;
+        this.numberOfDislikes = 1;
+        this.likes = -1;
+        console.log('case like');
+        if (userToken) {  
+          let data = {
+            "likes": this.likes,
+            "user_id": localStorage.getItem('userID')
+          };
+          this.$axios.put(this.$requestBaseURL + 'like/' + postId, data , requestHeaders) 
+          .then((response) => { 
+            console.log(response);
+          })
+          .catch((err) => {
+            throw err;
+          })
+        } else {
+          console.log('no token user');
+        }
+        break;
+      default:
+        console.log('default = no reaction');
+        this.numberOfDislikes = 1;
+        this.likes = -1;
+        
         if (userToken) { 
+          let data = {
+            "likes": this.likes,
+            "user_id": localStorage.getItem('userID')
+          };
           this.$axios.post(this.$requestBaseURL + 'like/' + postId, data , requestHeaders)
             .then((response) => { 
              console.log(response);
@@ -147,23 +209,6 @@ export default {
         } else {
           console.log('no token user');
         }
-        break;
-      case -1:
-        this.numberOfDislikes--;
-        this.likes = 0; 
-        console.log('case dislike');
-        
-        break;
-      case 1:
-        this.numberOfLikes--;
-        this.numberOfDislikes++;
-        this.likes = -1;
-        console.log('case like');
-        break;
-      default:
-        console.log('default = no reaction');
-        this.numberOfDislikes++;
-        this.likes = -1;
     }
     
 /*

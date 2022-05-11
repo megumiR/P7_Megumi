@@ -7,7 +7,7 @@
         </div>    
         <div class="PostCard__textblock">
             <p> 
-                Title : {{ title }} <span id="authorId" class="hide"> authorId:{{ authorId }}</span>
+                Title : {{ title }}
                 <br/> 
                 {{ content }}  
             </p>
