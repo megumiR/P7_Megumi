@@ -76,8 +76,8 @@ export default {
       let requestHeaders = {
         headers: {'Authorization': 'Bearer ' + userToken}
       }        
-      if (!this.likes) {
-        console.log('no one liked yet');
+      if (!this.likes) {  // inclus this.likes == 0
+        console.log('no one liked yet : !this.likes');
         this.numberOfLikes++;            
         this.likes = 1; // 1 = like, -1 = dislike , 0 = no reaction
         let data = {
@@ -97,14 +97,14 @@ export default {
               console.log('no token user');
             }
 
-        } else {  // this.likes est déjà existé
+        } else { // (this.likes == 1)  this.likes est déjà existé
           this.numberOfLikes--;
           this.likes = 0; 
           let data = {
             "likes": this.likes,
             "user_id": localStorage.getItem('userID')
           };
-          console.log('ELSE data: '+ data);
+          console.log('ELSE IF data: '+ data);
           let postId = this.$route.params.id;
           if (userToken) {  //
             this.$axios.put(this.$requestBaseURL + 'like/' + postId, data , requestHeaders) 
@@ -114,11 +114,10 @@ export default {
             .catch((err) => {
               throw err;
             })
-        } else {
-          console.log('no token user');
+          } else {
+            console.log('no token user');
+          }
         }
-      }
-    }
   },
   incrementDislike: function () {
     let userToken = localStorage.getItem('userToken');
@@ -258,6 +257,7 @@ export default {
   */
 
   },
+}
 }
 
 </script>
