@@ -65,48 +65,33 @@ export default {
       this.image = event.target.files[0];
     },
     postComment: async function() {
-      /*  this.$store.dispatch('postComment', {postname: this.postname,comment: this.comment,img: this.img})
-    }*/
+
      /////// authentification //////////
       let userToken = localStorage.getItem('userToken');
-  /*  let requestOptions = {headers: { 'authorization': 'Bearer ' + userToken,   'user_id': localStorage.getItem('userID') }} */  
+
       const formData = new FormData();
       formData.append('file', this.image);
       formData.append("title", this.title);
       formData.append("content", this.content);
       formData.append("user_id", localStorage.getItem('userID'));
       console.log(formData);
-     /* let postData = {
-          postname: this.postname,
-          comment: this.comment,
-        //  image: this.image  //this.imageFileName
-      }; */
     
-      if (userToken) {
-        //instance.post('/posts', requestOptions)       
+      if (userToken) {      
         this.$axios.post(this.$requestBaseURL + "posts/", formData, {
             headers: {
               Authorization: "bearer " + userToken
             },
           })
 
-        /*.post(this.$requestBaseURL + 'posts', formData, {
-            headers: {
-                'authorization': 'Bearer ' + userToken,
-                'user_id': localStorage.getItem('userID'),
-            //    'Content-Type': 'json.....' //'multipart/form-data'
-                }, postData
-            })*/
         .then((response) => {
           console.log('response'+ response);
-          window.location.href = this.$localhost;   //router.push({ path: '/', replace: true})
+          window.location.href = this.$localhost;   
         })
         .catch((err) => {
           throw err;
         })
       } else {
         console.log('no token user');
-        //return this.dataReturnFromParent = 'Vous n\'êtes pas authorizé.';
       }
     }
   }

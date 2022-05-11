@@ -10,7 +10,7 @@
         <div class="form__commentpost" v-if="mode == 'signup'">
           <label for="username">Utilisateur : </label>
             <br />
-          <input type="text" name="username" id="username" v-on:blur="validUsername" required /> <!-- @blur="validUsername" -->
+          <input type="text" name="username" id="username" v-on:blur="validUsername" required /> 
           <p id="userErrorMsg" class="rouge">{{ userErrorMsg }}</p>
         </div>
 
@@ -46,7 +46,6 @@
 <script>
 
 import WelcomeMsg from '../components/WelcomeMsg.vue'
-//import { mapActions } from 'vuex';
 //Vue.use(Vuex)
 
 export default {
@@ -54,7 +53,6 @@ export default {
   components: {WelcomeMsg},
   data() {
     return {
-//      msg: 'message ici ', {{ msg }} pour affichier
       mode: 'signup',
       form: {
         name: '',
@@ -83,7 +81,6 @@ export default {
       console.log('user: '+ this.user);
       if (username) {
         let result = checkUsername.test(username); 
-        // return checkUsername.test(username); 
         if (result == true) {
           console.log('name : valide');
           this.userErrorMsg = '';
@@ -103,7 +100,6 @@ export default {
       let email = e.target.value;
       this.email = email;
       if (email) {
-        // ne marche pas avec ->  email.match(checkEmail);
         let result = checkEmail.test(email);
         if (result == true) {
           console.log('email : valide');
@@ -150,19 +146,13 @@ export default {
         password: this.password
       })
     },
-    
-    //  ...mapActions(['sendLoginform'])   
+      
     sendLoginform: function() {
       this.$store.dispatch('sendLoginform', {
         email: this.email,
         password: this.password
       })
     }     
-   // login: 
-    /*    ...mapActions(['logIn']),  //store actions:{ login({commit}, amount){ commit('mutationsstuff',amount)}
-    async submit() {
-
-    }*/
   }
 }
 </script>

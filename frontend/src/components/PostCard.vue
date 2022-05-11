@@ -15,7 +15,7 @@
 
             <div class="PostCard__button" v-if="userId == authorId || this.$store.getters.rollAdmin == 'admin'">
                 <div class="PostCard__button--form" >
-                    <router-link :to="`/update/${postId}`" > Detail de <span id="postId">{{postId}}</span> </router-link> 
+                    <router-link :to="`/update/${postId}`" > modifier ce post <span id="postId">{{postId}}</span> </router-link> 
                 </div>  
                 <router-view />
             </div>
@@ -24,14 +24,10 @@
                 <div class="PostCard__iconblock">
                     <div class="PostCard--icon PostCard--iconmargin">
                             <i class="far fa-heart fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
-<!--                            <i class="fas fa-heart fa-lg PostCard--iconposition PostCard--iconcolor" @click="increment()"></i>
-                            <div>{{ numberOfLikes }}</div>
-    -->                </div>
+                    </div>
                     <div class="PostCard--icon PostCard--iconmargin">
                             <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
-    <!--                        <i class="fas fa-thumbs-down fa-lg PostCard--iconposition PostCard--iconcolor" @click="incrementDislike()"></i>
-                            <div>{{ numberOfDislikes }}</div>
-        -->            </div>
+                    </div>
                 </div>
             </router-link>
         </div>
@@ -39,7 +35,6 @@
 </template>
 
 <script>
-//import { mapState } from "vuex"
 
 export default {
   name: 'PostCard',   
@@ -48,27 +43,14 @@ export default {
       this.$emit('emitname', 'Touts les posts sont affichés ') //+親template に<子部品名 @emitname="(e)=>dataReturnFromParent=e"> , data(){return{dataReturnFromParent: xxxで反映
   },
   props: [ 'image', 'content', 'title', 'authorId', 'postId' ], //''内にTemplate上で{{}}書きした名前
-/*props: { 
-    image: ,
-    content: String,
-    title: String
-},  //またはprops:{msg:String}/親部品中でGetリクエストの内容を反映する/<子部品名:msg="xxx--親のdata(){return{xxx:""}"
-*/  data: function () {
+  //またはprops:{msg:String}/親部品中でGetリクエストの内容を反映する/<子部品名:msg="xxx--親のdata(){return{xxx:""}"
+  data: function () {
       return {
-      /*    numberOfLikes : 0,
-          numberOfDislikes : 0,   */
           userId: localStorage.getItem('userID'),  
           roll: '',
-       /*   isLiked: localStorage.getItem('isLiked')*/
       }
   },
-/*  computed: {
-    ...mapState({
-      userName: 'userId'
-    })
-  },*/
   methods : {
-      
   }     
 }
 

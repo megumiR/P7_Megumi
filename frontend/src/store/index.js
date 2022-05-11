@@ -43,8 +43,7 @@ export default new Vuex.Store({
       state.status = null
     }
   },
-  actions: { 
- //   logIn: ({ commit }, payload) => {  
+  actions: {  
     sendSigninform: ({commit}, userInfos) => {
         instance.post('/signup', userInfos)
 // this.$axios.post(this.$requestBaseURL + 'signup', userInfos)
@@ -84,7 +83,7 @@ export default new Vuex.Store({
           commit('AUTH_SUCCESS_ROLL', response.data.roll) 
           
         //  window.location.href = this.$localhost; //not working...
-          router.push({ path: '/', replace: true}) // this worked but not ->? this.$router.push('/')
+          router.push({ path: '/', replace: true}) 
         }).catch((err) => {
           commit('AUTH_ERROR', err)
           localStorage.removeItem('userToken');

@@ -1,6 +1,5 @@
 /********* importer des fichier , modules *************/
 const connection = require("../db__connection"); //importer l'info de mysql
-//const fetch = require("node-fetch");
 const fs = require("fs");
 /********* FIN: importer des fichier , modules *************/
 
