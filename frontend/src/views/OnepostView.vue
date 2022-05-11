@@ -49,7 +49,7 @@ export default {
       numberOfDislikes : 0,
       userId: localStorage.getItem('userID'),  
       roll: '',
-      isLiked: localStorage.getItem('isLiked'),
+ //     isLiked: localStorage.getItem('isLiked'),
       likes: ''
     }
   }, 
@@ -79,33 +79,29 @@ export default {
       }
     },
 
-increment: function () {
-        this.isLiked = JSON.parse(localStorage.getItem('isLiked')); 
-        console.log('local'+ this.isLiked);
-        let userToken = localStorage.getItem('userToken');         
-          if (!this.isLiked ) { //  || this.isLiked not include userid,,,
-              console.log('no one liked yet');
-              localStorage.setItem('isLiked', this.userId );
-              this.isLiked = localStorage.getItem('isLiked');
-              console.log('isLiked: ' +this.isLiked);
-              this.numberOfLikes++;
-           
-            
-            /*let requestHeaders = {
-              headers: {'Authorization': 'Bearer ' + userToken}
-            }*/
-            this.likes = 1; // 1 = like, -1 = dislike , '' = no reaction
-            const formData = new FormData();
-            formData.append("likes", this.likes);
-            formData.append("user_id", localStorage.getItem('userID'));
-            console.log(formData);
-            let postId = this.$route.params.id;
-            if (userToken) {    //
-              this.$axios.post(this.$requestBaseURL + 'like/' + postId, formData ,{
+    increment: function () {
+      let userToken = localStorage.getItem('userToken');
+      let requestHeaders = {
+        headers: {'Authorization': 'Bearer ' + userToken}
+      }        
+
+
+      if (!this.likes) {
+        console.log('no one liked yet');
+        this.numberOfLikes++;            
+        this.likes = 1; // 1 = like, -1 = dislike , '' = no reaction
+        let data = {
+          "likes": this.likes,
+          "user_id": localStorage.getItem('userID')
+        };
+        let postId = this.$route.params.id;
+        if (userToken) {    //
+          this.$axios.post(this.$requestBaseURL + 'like/' + postId, data , requestHeaders
+              /*{
                 headers: {
                   Authorization: "bearer " + userToken
-                },
-              })
+                },  }*/
+              )
               .then((response) => { 
                // return this.list = response.data.result
                console.log(response);
@@ -117,38 +113,37 @@ increment: function () {
               console.log('no token user');
             }
 
-          } else {
-            localStorage.removeItem('isLiked');
-             // this.isLiked = '';
-            console.log('ELSE -- isLiked: ' +this.isLiked);
-              //delete
-            this.numberOfLikes--;
-            this.likes = ''; // 1 = like, -1 = dislike , '' = no reaction
-            const formData = new FormData();
-      //      formData.append("likes", this.likes);
-            formData.append("user_id", localStorage.getItem('userID'));
-            console.log(formData);
-            let postId = this.$route.params.id;
-            if (userToken) {  //
-              this.$axios.delete(this.$requestBaseURL + 'like/' + postId, formData , {
+        } else {  // this.likes exists...
+          this.numberOfLikes--;
+          this.likes = 0; // 1 = like, -1 = dislike , '' = no reaction
+          let data = {
+            "likes": this.likes,
+            "user_id": localStorage.getItem('userID')
+          };
+          console.log('ELSE data: '+ data);
+          let postId = this.$route.params.id;
+          if (userToken) {  //
+            this.$axios.put(this.$requestBaseURL + 'like/' + postId, data , requestHeaders
+            /*{
                 headers: {
                   Authorization: "bearer " + userToken
                 },
-              }) 
-              .then((response) => { 
+              }*/
+            ) 
+            .then((response) => { 
                // return this.list = response.data.result
-               console.log(response);
-              })
-              .catch((err) => {
-                throw err;
-              })
-            } else {
-              console.log('no token user');
-            }
-          }
+              console.log(response);
+            })
+            .catch((err) => {
+              throw err;
+            })
+        } else {
+          console.log('no token user');
         }
-      },
-      incrementDislike: function () {
+      }
+    }
+  },
+  incrementDislike: function () {
         this.numberOfDislikes++;
        // this.numberOfDislikes = 'counté';
       },

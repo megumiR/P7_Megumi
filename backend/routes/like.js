@@ -5,6 +5,6 @@ const router = express.Router();
 const likeCtrl = require('../controlers/like');
 
 router.post('/:id', auth, likeCtrl.liker);  
-router.delete('/:id', auth, likeCtrl.removeLiker); 
+router.put('/:id', auth, likeCtrl.removeLiker); 
 
 module.exports = router;
