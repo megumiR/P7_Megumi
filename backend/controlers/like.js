@@ -6,17 +6,13 @@ const connection = require("../db__connection"); //importer l'info de mysql
 /************ Liker/ Disliker un post ******************/
 exports.liker = async (req, res, next) => {
     console.log("Liker un post---------");
-    console.log(req.userId);
-    console.log(req.body);
-    console.log("req body likes?" + req.body.likes);
-      // si l'user a deja Liké ce post et enregistré sur DB
     let sqlFind = `SELECT * FROM post_likes WHERE post_id = '${req.params.id}' AND user_id = '${req.body.user_id}'`;
     await connection.query(sqlFind, (err, res) => {
       if (err) {
         return res.status(500).json({ message: "erreur : savoir si c'est déjà Liker" });
       }
       console.log(res);
-
+      // si l'user a deja Liké ce post et enregistré sur DB
       if (res.length > 0) {
         let sqlUpdateLike = `UPDATE post_likes SET likes = '${req.body.likes}' WHERE post_id = '${req.params.id}' AND user_id = '${req.body.user_id}'`;
         connection.query(sqlUpdateLike, (err, result) => {
@@ -24,7 +20,6 @@ exports.liker = async (req, res, next) => {
             return res.status(500).json({ message: "erreur : modifier le Liker" });
             }
             console.log("Liker/ Disliker modifié");
-          //  res.status(200).json({ message: "Le Like/Dislike est modifié." });
         });
       } else {
         let sqlLike = `INSERT INTO post_likes (post_id, user_id, likes) VALUES ('${req.params.id}', '${req.body.user_id}', '${req.body.likes}')`;
@@ -33,14 +28,15 @@ exports.liker = async (req, res, next) => {
               return res.status(500).json({ message: "erreur : Liker pour la 1ere fois" });
             }
             console.log("Liker/ Disliker post pour la 1ere fois");
-            //res.status(200).json({ message: "Le Like/Dislike est enregistré." });
+            
         });
       } 
-      res.status(200).json({ message: "Le Like/Dislike est modifié/enregistré." }); 
-      //  res.status(400).json({ message: "Vous avez déjà Liké/Disliké." });
+    //  res.status(200).json({ message: "Le Like/Dislike est enregistré/modifié." });
     });
   };
   /************ FIN: Liker/ Disliker un post ******************/
+
+
   /************ Enlever Liker/ Disliker  ******************/
 exports.removeLiker = async (req, res, next) => {
   console.log("remove Liker ---------");
