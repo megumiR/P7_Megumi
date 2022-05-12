@@ -25,18 +25,18 @@
         <div class="form__contentpost">
           <label for="title">Nouveau titre: </label>
           <br />
-          <input type="text" name="title" id="title" :value="post.title" required /> 
+          <input type="text" name="title" id="title" :value="post.title" v-on:blur="validText" required /> 
 
-          <p id="titleErrorMsg"></p>
+          <p id="titleErrorMsg" class="rouge">{{ titleErrorMsg }}</p>
         </div>
 
         <div class="form__contentpost">
           <label for="content">Nouvelle description: </label>
           <br />
-          <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" :value="post.content" required> 
+          <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" :value="post.content"  v-on:blur="validTextContent" required> 
           </textarea>
                 
-          <p id="contentErrorMsg"></p>
+          <p id="contentErrorMsg">{{ contentErrorMsg }}</p>
         </div>
     
         <div class="form__contentpost">
@@ -62,7 +62,10 @@ export default {
       title: '',
       content: '',
       imageFileName: '',
-      image: ''
+      image: '',
+
+      titleErrorMsg: '',
+      contentErrorMsg: ''
     }
   },
   validations: {
@@ -148,7 +151,44 @@ export default {
         console.log('no token user');
       }
     },
-
+    validText: function (e) {
+      const checkText = /^[a-zA-Zéèàîûôïü ]{1,}$/g;
+      let textInput = e.target.value;
+      if (textInput) {
+        let result = checkText.test(textInput); 
+        if (result == true) {
+          console.log('titre : valide');
+          this.titleErrorMsg = '';
+        } else if (result == false) {
+          this.titleErrorMsg = 'Ce champ accepte que des caractères.';
+          console.log('Le titre est invalide'); 
+        } else {
+          console.log('error : titre regex ne marche pas');
+        }     
+      } else {
+        this.titleErrorMsg = 'Ce champ est obligatoire.';
+        console.log('Le titre est vide');
+      }
+    },
+    validTextContent: function (e) {
+      const checkText = /^[a-zA-Z0-9éèàîûôïü ]{1,}$/g;
+      let textInput = e.target.value;
+      if (textInput) {
+        let result = checkText.test(textInput); 
+        if (result == true) {
+          console.log('content : valide');
+          this.contentErrorMsg = '';
+        } else if (result == false) {
+          this.contentErrorMsg = 'Ce champ accepte que des caractères et des chiffres.';
+          console.log('La discription est invalide'); 
+        } else {
+          console.log('error : content regex ne marche pas');
+        }     
+      } else {
+        this.contentErrorMsg = 'Ce champ est obligatoire.';
+        console.log('La discription est vide');
+      }
+    },
   }
 }
 
