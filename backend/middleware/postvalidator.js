@@ -3,7 +3,8 @@ const validator = require('validator'); //import validator from 'validator';
 
 module.exports = (req, res, next) => {  //['fr-FR'] nodemon craches  when there is special caracters ....
     console.log('post validator entred....');
-    if (validator.isAlpha(req.body.title)) {  //.validate -Methode à valider le mot de passe contre schema
+    //if (validator.isAlpha(req.body.title)) {  //.validate -Methode à valider le mot de passe contre schema
+    if (validator.isLength(req.body.title)) {
         console.log('postvalidator 1:title is ok');
         if (validator.isLength(req.body.content), 2, 150) {  // isLength not working
             next();

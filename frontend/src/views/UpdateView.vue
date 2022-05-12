@@ -36,7 +36,7 @@
           <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" :value="post.content"  v-on:blur="validTextContent" required> 
           </textarea>
                 
-          <p id="contentErrorMsg">{{ contentErrorMsg }}</p>
+          <p id="contentErrorMsg" class="rouge">{{ contentErrorMsg }}</p>
         </div>
     
         <div class="form__contentpost">
@@ -106,8 +106,8 @@ export default {
       let userToken = localStorage.getItem('userToken');
       const formData = new FormData();
       const form_title=document.querySelector('#title').value;
-      
       const form_content=document.querySelector('#content').value;
+      
       formData.append('file', this.image);
       formData.append("title", form_title);
       formData.append("content", form_content);

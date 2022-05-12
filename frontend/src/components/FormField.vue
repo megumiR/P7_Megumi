@@ -4,18 +4,18 @@
             <div class="form__contentpost">
                 <label for="title">{{ TitleLabel }}: </label>
                 <br />
-                <input type="text" name="title" id="title" value="Pas de title" @keyup="title = $event.target.value" required /> 
+                <input type="text" name="title" id="title" value="Pas de title"  required />  <!-- @blur="validText"  @keyup="title = $event.target.value"  --> 
   
-                <p id="titleErrorMsg"></p>
+                <p id="titleErrorMsg" class="rouge">{{ titleErrorMsg }}</p>
             </div>
 
             <div class="form__contentpost">
                 <label for="content">{{ ContentAreaLabel }}: </label>
                 <br />
-                <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" @keyup="content = $event.target.value" required> 
-                </textarea>
+                <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" required> 
+                </textarea>                <!--   @blur="validTextContent"   @keyup="content = $event.target.value"  -->
                 
-                <p id="contentErrorMsg"></p>
+                <p id="contentErrorMsg" class="rouge">{{ contentErrorMsg }}</p>
             </div>
 
             <div class="form__contentpost">
@@ -24,7 +24,6 @@
                 <input type="file" name="image" id="image" accept="image/png, image/jpeg" @change="showFileName" required>
                 <p class="filename" v-if="imageFileName">image ajouté ! {{ imageFileName }}</p>
                 
-                <p id="imageErrorMsg"></p>
             </div>
                
             <div class="form__contentpost">
@@ -36,7 +35,7 @@
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators'
+import { required } from 'vuelidate/lib/validators' //ne marche pas->  , minLength, maxLength,alpha,alphaNum
 
 export default {
   name: 'FormField',
@@ -48,12 +47,15 @@ export default {
           title: '',
           content: '',
           imageFileName: '',
-          image: ''
+          image: '',
+
+          titleErrorMsg: '',
+          contentErrorMsg: ''
       }
   },
   validations: {
-    title: {required,},
-    content: {required,}, 
+    title: {required}, //ne marche pas->,minLengthValue: minLength(1), maxLengthValue: maxLength(15),alpha
+    content: {required},  //,minLengthValue: minLength(1), maxLengthValue: maxLength(150),alphaNum
   },
   updated: function () {
     this.postComment();
@@ -64,36 +66,92 @@ export default {
       this.imageFileName = event.target.files[0].name;
       this.image = event.target.files[0];
     },
-    postComment: async function() {
-
+    postComment: function() {
+   //   event.preventDefault();
      /////// authentification //////////
       let userToken = localStorage.getItem('userToken');
 
       const formData = new FormData();
-      formData.append('file', this.image);
-      formData.append("title", this.title);
-      formData.append("content", this.content);
-      formData.append("user_id", localStorage.getItem('userID'));
-      console.log(formData);
-    
-      if (userToken) {      
-        this.$axios.post(this.$requestBaseURL + "posts/", formData, {
-            headers: {
-              Authorization: "bearer " + userToken
-            },
-          })
 
-        .then((response) => {
-          console.log('response'+ response);
-          window.location.href = this.$localhost;   
-        })
-        .catch((err) => {
-          throw err;
-        })
+/*      formData.append('file', this.image);
+      formData.append("title", this.title);
+      formData.append("content", this.content);    */  
+//////////////////////
+      const form_title = document.querySelector('#title').value;
+      const form_content = document.querySelector('#content').value;
+      
+
+        formData.append('file', this.image);
+        formData.append("title", form_title);
+        formData.append("content", form_content);
+        formData.append("user_id", localStorage.getItem('userID'));
+        console.log(formData);
+      
+        if (userToken) {      
+          this.$axios.post(this.$requestBaseURL + "posts/", formData, {
+              headers: {
+                Authorization: "bearer " + userToken
+              },
+            })
+
+          .then((response) => {
+            console.log('response'+ response);
+            window.location.href = this.$localhost;   
+          })
+          .catch((err) => {
+            throw err;
+          })
+        } else {
+          console.log('no token user');
+        }
+      
+  
+    },/*
+    validText: function (e) {
+      const checkText = /^[a-zA-Zéèàîûôïü ]{1,}$/g;
+
+     // const form_title = document.querySelector('#title').value;
+
+      let textInput =  e.target.value;// form_title
+      if (textInput) {
+        let result = checkText.test(textInput); 
+        if (result == true) {
+          console.log('titre : valide');
+          this.titleErrorMsg = '';
+        } else if (result == false) {
+          this.titleErrorMsg = 'Ce champ accepte que des caractères.';
+          console.log('Le titre est invalide'); 
+        } else {
+          console.log('error : titre regex ne marche pas');
+        }     
       } else {
-        console.log('no token user');
+        this.titleErrorMsg = 'Ce champ est obligatoire.';
+        console.log('Le titre est vide');
       }
-    }
+    },
+    validTextContent: function (e) {
+      //e.preventDefault();
+      const checkText = /^[a-zA-Z0-9éèàîûôïü ]{1,}$/g;
+      
+      //const form_content = document.querySelector('#content').value;
+
+      let textInput = e.target.value;//form_content;
+      if (textInput) {
+        let result = checkText.test(textInput); 
+        if (result == true) {
+          console.log('content : valide');
+          this.contentErrorMsg = '';
+        } else if (result == false) {
+          this.contentErrorMsg = 'Ce champ accepte que des caractères et des chiffres.';
+          console.log('La discription est invalide'); 
+        } else {
+          console.log('error : content regex ne marche pas');
+        }     
+      } else {
+        this.contentErrorMsg = 'Ce champ est obligatoire.';
+        console.log('La discription est vide');
+      }
+    },   */
   }
 }
 </script>
