@@ -35,7 +35,8 @@
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators' //ne marche pas->  , minLength, maxLength,alpha,alphaNum
+import { required } from 'vuelidate/lib/validators'  
+//import { required, minLength, maxLength,alpha,alphaNum } from 'vuelidate/lib/validators' //ne marche pas-> 
 
 export default {
   name: 'FormField',
@@ -54,7 +55,7 @@ export default {
       }
   },
   validations: {
-    title: {required}, //ne marche pas->,minLengthValue: minLength(1), maxLengthValue: maxLength(15),alpha
+    title: {required}, //ne marche pas-> ,minLengthValue: minLength(1), maxLengthValue: maxLength(15),alpha
     content: {required},  //,minLengthValue: minLength(1), maxLengthValue: maxLength(150),alphaNum
   },
   updated: function () {
