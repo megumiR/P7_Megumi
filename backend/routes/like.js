@@ -6,5 +6,7 @@ const likeCtrl = require('../controlers/like');
 
 router.post('/:id', auth, likeCtrl.liker);  
 router.put('/:id', auth, likeCtrl.removeLiker); 
+router.get('/:id', auth, likeCtrl.showNumberOfLike);
+router.get('/react/:id', auth, likeCtrl.isLiked);
 
 module.exports = router;

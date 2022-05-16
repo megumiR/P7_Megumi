@@ -51,3 +51,35 @@ exports.removeLiker = async (req, res, next) => {
 };
   /************ FIN: Liker/ Disliker un post ******************/
   
+
+  /******************* Afficher le nombre *********************/
+exports.showNumberOfLike = async (req, res, next) => {
+  console.log("number of likes---------");
+  let countLikes = `SELECT COUNT(*) FROM post_likes WHERE post_id = ${req.params.id} AND likes = 1`;
+  await connection.query(countLikes, (err, result) => {
+    if (err) {
+      return res.status(400).json({
+        message: "erreur : on ne peut pas chercher de nombre de like",
+      });
+    }
+    res.status(200).json({ result });
+  });
+};
+/******************* FIN: Afficher le nombre *********************/
+
+
+/******************* Afficher le nombre *********************/
+  exports.isLiked = async (req, res, next) => {
+    console.log("reaction like/dislike---------");
+    console.log(req.body);
+    let countLikes = `SELECT likes FROM post_likes WHERE post_id = ${req.params.id} AND user_id = '${req.body.user_id}'`;
+    await connection.query(countLikes, (err, result) => {
+      if (err) {
+        return res.status(400).json({
+          message: "erreur : on ne peut pas chercher de nombre de like",
+        });
+      }
+      res.status(200).json({ result });
+    });
+  };
+  /******************* FIN: Afficher le nombre *********************/

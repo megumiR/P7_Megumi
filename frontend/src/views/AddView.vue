@@ -70,7 +70,7 @@ export default {
   computed: {  //////////////ainchen
     ...mapState([ 'userName' ])
   },
- /* async updated() {
+ /* async updated() {  --->> c est la cause de probleme qui envoyer le titre/content tout seul!!!
     await this.postComment();
     this.validText();
     this.validTextContent();
@@ -81,19 +81,11 @@ export default {
       this.imageFileName = event.target.files[0].name;
       this.image = event.target.files[0];
     },
-    postComment: function() {   //   event.preventDefault(); ---not working
-     /////// authentification //////////
+    postComment: function() {  
       let userToken = localStorage.getItem('userToken');
       const formData = new FormData();
       const form_title = document.querySelector('#title').value;
-      const form_content = document.querySelector('#content').value;
-      
-/*      formData.append('file', this.image);
-      formData.append("title", this.title);
-      formData.append("content", this.content);    */  
-//////////////////////
-
-
+      const form_content = document.querySelector('#content').value; 
 
         formData.append('file', this.image);
         formData.append("title", form_title);
