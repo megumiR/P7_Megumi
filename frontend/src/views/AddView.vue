@@ -70,16 +70,18 @@ export default {
   computed: {  //////////////ainchen
     ...mapState([ 'userName' ])
   },
-  updated: function () {
-    this.postComment();
-  },
+ /* async updated() {
+    await this.postComment();
+    this.validText();
+    this.validTextContent();
+  },*/
   methods: {
     showFileName: function(event) {
       event.preventDefault();
       this.imageFileName = event.target.files[0].name;
       this.image = event.target.files[0];
     },
-    postComment: async function() {   //   event.preventDefault(); ---not working
+    postComment: function() {   //   event.preventDefault(); ---not working
      /////// authentification //////////
       let userToken = localStorage.getItem('userToken');
       const formData = new FormData();
@@ -90,7 +92,7 @@ export default {
       formData.append("title", this.title);
       formData.append("content", this.content);    */  
 //////////////////////
-await function() {
+
 
 
         formData.append('file', this.image);
@@ -116,52 +118,42 @@ await function() {
         } else {
           console.log('no token user');
         }
-}
+
 
     },
     validText: function (e) {
+      e.preventDefault();
       const checkText = /^[a-zA-Zéèàîûôïü ]{1,}$/g;
 
-     // const form_title = document.querySelector('#title').value;
-
-      let textInput =  e.target.value;// form_title
+      let textInput =  e.target.value;
       if (textInput) {
         let result = checkText.test(textInput); 
         if (result == true) {
-          console.log('titre : valide');
           this.titleErrorMsg = '';
         } else if (result == false) {
           this.titleErrorMsg = 'Ce champ accepte que des caractères.';
-          console.log('Le titre est invalide'); 
         } else {
           console.log('error : titre regex ne marche pas');
         }     
       } else {
         this.titleErrorMsg = 'Ce champ est obligatoire.';
-        console.log('Le titre est vide');
       }
     },
     validTextContent: function (e) {
-      //e.preventDefault();
       const checkText = /^[a-zA-Z0-9éèàîûôïü ]{1,}$/g;
-      
-      //const form_content = document.querySelector('#content').value;
-
-      let textInput = e.target.value;//form_content;
+    
+      let textInput = e.target.value;
       if (textInput) {
         let result = checkText.test(textInput); 
         if (result == true) {
-          console.log('content : valide');
           this.contentErrorMsg = '';
         } else if (result == false) {
           this.contentErrorMsg = 'Ce champ accepte que des caractères et des chiffres.';
-          console.log('La discription est invalide'); 
         } else {
           console.log('error : content regex ne marche pas');
         }     
       } else {
         this.contentErrorMsg = 'Ce champ est obligatoire.';
-        console.log('La discription est vide');
       }
     },   
   }
