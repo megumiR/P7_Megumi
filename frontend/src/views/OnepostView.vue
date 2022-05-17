@@ -54,6 +54,7 @@ export default {
   mounted() {
     this.getOnePost();
     this.countLikes();
+    this.isLiked();
   },
   methods: {
     getOnePost: function() {
@@ -103,7 +104,7 @@ export default {
         let data = {
           "user_id": localStorage.getItem('userID')
         };
-        this.$axios.get(this.$requestBaseURL + 'like/react/' + postId, data, requestHeaders) 
+        this.$axios.get(this.$requestBaseURL + 'like/reaction/' + postId , data, requestHeaders) 
         .then((response) => { 
           return this.likes = response.data;
         //  console.log(response.data);
@@ -132,7 +133,7 @@ export default {
             "likes": this.likes,
             "user_id": localStorage.getItem('userID')
           };
-          this.$axios.put(this.$requestBaseURL + 'like/' + postId, data , requestHeaders) 
+          this.$axios.put(this.$requestBaseURL + 'like/' + postId,  data , requestHeaders) 
           .then((response) => { 
             console.log(response);
           })

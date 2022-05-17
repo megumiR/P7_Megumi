@@ -72,8 +72,8 @@ exports.showNumberOfLike = async (req, res, next) => {
   exports.isLiked = async (req, res, next) => {
     console.log("reaction like/dislike---------");
     console.log(req.body);
-    let countLikes = `SELECT likes FROM post_likes WHERE post_id = ${req.params.id} AND user_id = '${req.body.user_id}'`;
-    await connection.query(countLikes, (err, result) => {
+    let check = `SELECT likes FROM post_likes WHERE post_id = ${req.params.id} AND user_id = '${req.body.user_id}'`;
+    await connection.query(check, (err, result) => {
       if (err) {
         return res.status(400).json({
           message: "erreur : on ne peut pas chercher de nombre de like",
