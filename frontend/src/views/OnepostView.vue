@@ -84,8 +84,9 @@ export default {
       if (userToken) {
         this.$axios.get(this.$requestBaseURL + 'like/' + postId , requestHeaders) 
         .then((response) => { 
-        //  return this.numberOfLikes = response.data.result[0].COUNT;
-          console.log(response.data.result[0]);
+         // return this.numberOfLikes = response.data.result[0];
+        console.log(response.data.result[0]);
+        console.log(JSON.stringify(response.data.result[0]));///how do i get the result 1
         })
         .catch((err) => {
           throw err;
@@ -104,6 +105,7 @@ export default {
         let data = {
           "user_id": localStorage.getItem('userID')
         };
+        console.log(data);
         this.$axios.get(this.$requestBaseURL + 'like/reaction/' + postId , data, requestHeaders) 
         .then((response) => { 
           return this.likes = response.data;

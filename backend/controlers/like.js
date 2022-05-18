@@ -55,7 +55,7 @@ exports.removeLiker = async (req, res, next) => {
   /******************* Afficher le nombre *********************/
 exports.showNumberOfLike = async (req, res, next) => {
   console.log("number of likes---------");
-  let countLikes = `SELECT COUNT(*) FROM post_likes WHERE post_id = ${req.params.id} AND likes = 1`;
+  let countLikes = `SELECT COUNT(likes) FROM post_likes WHERE post_id = ${req.params.id} AND likes = 1`;
   await connection.query(countLikes, (err, result) => {
     if (err) {
       return res.status(400).json({
