@@ -53,6 +53,7 @@
 <script>
 import { mapState } from 'vuex'  
 import { required } from 'vuelidate/lib/validators'
+import router from '@/router';
 
 export default {
   name: 'UpdateView',
@@ -122,7 +123,7 @@ export default {
           }) 
         .then((response) => {
           console.log(response);
-          window.location.href = this.$localhost; 
+          router.replace({ path: '/'})
         })
         .catch((err) => {
           throw err;
@@ -142,7 +143,7 @@ export default {
         this.$axios.delete(this.$requestBaseURL + 'posts/' + postId, requestHeaders) 
         .then((response) => {
           console.log(response);
-          window.location.href = this.$localhost;
+          router.replace({ path: '/'})
         })
         .catch((err) => {
           throw err;

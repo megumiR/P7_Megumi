@@ -44,6 +44,7 @@
 
 <script>
 //import FormField from '../components/FormField.vue'
+import router from '@/router';
 import { mapState } from 'vuex' 
 import { required } from 'vuelidate/lib/validators' 
 
@@ -67,7 +68,7 @@ export default {
     title: {required}, 
     content: {required},  
   },
-  computed: {  //////////////ainchen
+  computed: {  
     ...mapState([ 'userName' ])
   },
  /* async updated() {  --->> c est la cause de probleme qui envoyer le titre/content tout seul!!!
@@ -101,8 +102,8 @@ export default {
             })
 
           .then((response) => {
-            console.log('response'+ response);
-            window.location.href = this.$localhost;   
+            console.log('response'+ response); 
+            router.replace({ path: '/'})  
           })
           .catch((err) => {
             throw err;
