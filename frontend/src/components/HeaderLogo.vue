@@ -1,9 +1,10 @@
 <template>
     <div class="header" >
       <img class="header__logo" alt="Groupomania logo" src="./../assets/icon-above-font.png" /> 
-      <h1 class="header__title header__title--size">{{ title }}</h1>
+      <h1 class="header__title header__title--size">Groupomania chat{{title}}</h1>
     </div>
 </template>
+
 
 <script>
 export default {

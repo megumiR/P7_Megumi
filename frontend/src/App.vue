@@ -1,7 +1,43 @@
 <template>
   <div id="app">
+<!--  
+<header>
+  <div class="collapse bg-dark" id="navbarHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-7 py-4">
+          <h4 class="text-white">About</h4>
+          <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
+        </div>
+        <div class="col-sm-4 offset-md-1 py-4">
+          <h4 class="text-white">Contact</h4>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-white">Follow on Twitter</a></li>
+            <li><a href="#" class="text-white">Like on Facebook</a></li>
+            <li><a href="#" class="text-white">Email me</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a href="#" class="navbar-brand d-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <strong>Album</strong>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </div>
+</header>
+-->
 
-    <HeaderLogo title="Groupomania chat" />
+    <div class="header" >
+      <img class="header__logo" alt="Groupomania logo" src="./assets/icon-above-font.png" /> 
+      <h1 class="header__title header__title--size">Groupomania chat</h1>
+    </div>
 
     <div id="nav">
       <router-link to="/" > Accueil </router-link> |
@@ -17,22 +53,25 @@
 
 
 
-    <div id="footer">
-      <p>copyright</p>
-    </div>
+
+<footer class="text-muted py-5">
+  <div class="container">
+    <p class="float-end mb-1">
+      <a href="#">Back to top</a>
+    </p>
+    <p class="mb-1">&copy; Groupomania</p>
+  </div>
+</footer>
+
 
   </div>
 </template>
 
 <script>
-import HeaderLogo from './components/HeaderLogo'
 import { mapState } from 'vuex'  
 
 export default {
   name: 'App',
-  components: {    
-    HeaderLogo
-  },
   computed: {
     ...mapState([ 'userName' ])
   },
@@ -48,6 +87,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -56,12 +96,42 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-#footer {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  width: 100%;
-
-  background-color: #ececec;  
+.header{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    min-height: 3em;
+    &__logo{
+        display: inline-block;
+        min-height: 3em;
+        max-height: 11em;
+        padding: 0;
+        margin: 0 10px;
+    }
+    &__title{
+        color: #787878;
+        display: flex;
+        align-self: center;
+        &--size{
+            max-height: 3em;
+            font-style: bold;
+        }
+    }
+    
 }
+
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+    
+@media (min-width: 768px) {
+.bd-placeholder-img-lg {
+  font-size: 3.5rem;
+  }
+}
+      
 </style>
