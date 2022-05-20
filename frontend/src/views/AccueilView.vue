@@ -2,17 +2,21 @@
   <div class="home" id="home">
     <WelcomeMsg msg="Bienvenue :) " recommend=""/>
 
-    <p v-if="!list">Pas de post à affichier</p>
-    <PostCard v-else v-for="post in list" 
-      :key="post.id" 
-      
-      :image="post.image" 
-      :content="post.content" 
-      :title="post.title"
-      :authorId="post.user_id"
-      :postId="post.id"
-      @emitname="(e) => dataReturnFromParent = e "
-      />    
+
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-3 p-5">
+      <p v-if="!list">Pas de post à affichier</p>
+      <PostCard v-else v-for="post in list" 
+        :key="post.id" 
+        
+        :image="post.image" 
+        :content="post.content" 
+        :title="post.title"
+        :authorId="post.user_id"
+        :postId="post.id"
+        @emitname="(e) => dataReturnFromParent = e "
+        />    
+      </div>
       <p>{{ dataReturnFromParent }}</p>
 
   </div>

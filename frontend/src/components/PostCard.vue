@@ -1,6 +1,31 @@
 
 <template>
-    <div class="PostCard">
+<div class="col">
+    <div class="card shadow-sm mt-4 h-100">
+        <img class="card-img-to" :src="image" alt="image" v-if="image"/>
+        <div class="card-body">
+            <h3 class="card-title"> {{ title }}</h3>
+            <p class="card-texte"> 
+                {{ content }}  
+            </p>
+            
+        </div>
+        <div class="card-footer p-4">
+            <div class="row">
+            <div class="col" v-if="userId == authorId || this.$store.getters.rollAdmin == 'admin'">
+                <router-link :to="`/update/${postId}`" class="btn btn-primary" > modifier ce post <span id="postId">{{postId}}</span> </router-link> 
+                <router-view />
+            </div>
+            <router-link :to="`/onepost/${postId}`" class="col d-flex justify-content-around align-items-center">
+                <i class="far fa-thumbs-up fa-lg "></i>
+                <i class="fas fa-thumbs-down fa-lg" ></i>
+            </router-link>
+            </div>
+        </div>
+    </div>    
+</div>     
+    <!--
+    <div class="shadow-sm PostCard">
         <div class="PostCard__img"> 
 
             <img class="PostCard__img--form" :src="image" alt="image" v-if="image"/>
@@ -31,7 +56,7 @@
                 </div>
             </router-link>
         </div>
-    </div>
+    </div>!-->
 </template>
 
 <script>
