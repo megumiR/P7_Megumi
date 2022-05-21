@@ -43,16 +43,12 @@
 </template>
 
 <script>
-//import FormField from '../components/FormField.vue'
 import router from '@/router';
 import { mapState } from 'vuex' 
 import { required } from 'vuelidate/lib/validators' 
 
 export default {
   name: 'AddView',
-//  components: {
-//    FormField
-//  },
   data() {
       return {
           title: '',

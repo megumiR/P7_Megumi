@@ -16,7 +16,7 @@
                 <router-link :to="`/update/${postId}`" class="btn btn-primary" > modifier ce post <span id="postId">{{postId}}</span> </router-link> 
                 <router-view />
             </div>
-            <router-link :to="`/onepost/${postId}`" class="col d-flex justify-content-around align-items-center">
+            <router-link :to="`/onepost/${postId}`" class="col d-flex justify-content-around align-items-center text-decoration-none">
                 <i class="far fa-thumbs-up fa-lg "></i>
                 <i class="fas fa-thumbs-down fa-lg" ></i>
             </router-link>
