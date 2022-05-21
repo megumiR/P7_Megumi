@@ -2,13 +2,14 @@
 <template>
 <div class="col">
     <div class="card shadow-sm mt-4 h-100">
-        <img class="card-img-to" :src="image" alt="image" v-if="image"/>
+        <img class="card-img-top" :src="image" alt="image" v-if="image"/>
         <div class="card-body">
-            <h3 class="card-title"> {{ title }}</h3>
-            <p class="card-texte"> 
+            <h3 class="card-title"> 
+                {{ title }}
+            </h3>
+            <p class="card-text"> 
                 {{ content }}  
-            </p>
-            
+            </p>   
         </div>
         <div class="card-footer p-4">
             <div class="row">

@@ -1,17 +1,51 @@
 <template>
-    <div>
-        <WelcomeMsg msg="Bienvenue :) " recommend=""/>
-        <div class="PostCard" v-for="post in list" :key="post.id" >
-          
-          <div class="PostCard__img">
-              <img class="PostCard__img--form" :src="post.image" alt="image" v-if="post.image"/>
-          </div>  
-          
-          <div class="PostCard__textblock">
-              Titre: {{ post.title }}<br/>
-              Description: <br/>
-              {{ post.content }}
+  <div>
+    <WelcomeMsg msg="Bienvenue :) " recommend=""/>
+    
+        
+      <div class="col" v-for="post in list" :key="post.id" >
+        <div class="card shadow-sm mt-4 h-100">
+          <img class="card-img-top" :src="post.image" alt="image" v-if="post.image"/>
+          <div class="card-body">
+              <h3 class="card-title">
+                {{ post.title }}
+              </h3>
+              <p class="card-text"> 
+                  {{ post.content }}
+              </p>   
+          </div>   
+          <div class="card-footer p-4">
+            <div class="row">
+              <div v-if="likes" class=" d-flex flex-column">
+                <div class="d-flex justify-content-around align-items-center">
+                  <i class="far fa-thumbs-up fa-lg " @click="increment()"></i>
+                  <div>{{ numberOfLikes }}</div>
+                  <i class="fas fa-thumbs-down fa-lg" @click="incrementDislike()"></i>
+                  <div>{{ numberOfDislikes }}</div>
+                </div>
+                
+                <div class="d-flex justify-content-around align-items-center mt-2">
+                  <p v-if="likes == -1">J'ai disliké</p>
+                  <p v-if="likes == 1">J'ai liké</p>
+                </div>
+                
+              </div>
 
+              <div v-else class="col d-flex justify-content-around align-items-center">
+                <i class="far fa-thumbs-up fa-lg " @click="increment()"></i>
+                <i class="fas fa-thumbs-down fa-lg" @click="incrementDislike()"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="my-2">
+        <router-link :to="`/`" class="btn btn-secondary" >Retour à l'Accueil</router-link> 
+        <router-view />
+      </div>
+    </div>
+<!--
               <div class="PostCard__iconblock">
                   <div class="PostCard--icon PostCard--iconmargin">
                           <i class="far fa-heart fa-lg PostCard--iconposition PostCard--iconNocolor"></i>
@@ -33,6 +67,7 @@
 
         </div>
     </div>
+    -->
 </template>
 
 <script>
@@ -47,6 +82,7 @@ export default {
     return {
       list: [],
       numberOfLikes : '',
+      numberOfDislikes : '',
       userId: localStorage.getItem('userID'),  
       likes: ''
     }
