@@ -4,31 +4,32 @@
 <!--    <FormField TitleLabel='Titre' ContentAreaLabel='Description' imageLabel='Ajouter une image' ButtonLabel='Envoyer !'/>
 -->
  
-
-        <form encType="multipart/form-data">
+      <div class="card">
+        <form encType="multipart/form-data" class="card-body">
             <div class="mb-3">
-                <label for="title" class="form-label">Titre</label>
+                <label for="title" class="form-label fs-3">Titre</label>
                 <input type="text" class="form-control" name="title" id="title" value="Pas de title" @blur="validText"  required />  <!--  @keyup="title = $event.target.value"  --> 
-                <p id="titleErrorMsg" class="form-text">{{ titleErrorMsg }}</p>
+                <p id="titleErrorMsg" class="form-text text-danger fs-5">{{ titleErrorMsg }}</p>
             </div>
 
             <div class="mb-3">
-                <label for="content" class="form-label">Description</label>
+                <label for="content" class="form-label fs-3">Description</label>
                 <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" @blur="validTextContent" required> 
                 </textarea>                <!--      @keyup="content = $event.target.value"  -->
-                <p id="contentErrorMsg" class="form-text">{{ contentErrorMsg }}</p>
+                <p id="contentErrorMsg" class="form-text text-danger fs-5">{{ contentErrorMsg }}</p>
             </div>
 
             <div class="mb-3">
                 <label for="image" class="btn btn-secondary">Ajouter une image</label>
                 <input type="file" class="form-control " name="image" id="image" accept="image/png, image/jpeg" @change="showFileName" required>
-                <p class="filename" v-if="imageFileName">image ajouté >>> {{ imageFileName }}</p>
+                <p class="form-text fs-6" v-if="imageFileName">image ajouté >>> {{ imageFileName }}</p>
             </div>
                
-            <button type="submit" class="btn btn-primary" @click.prevent="postComment">
+            <button type="submit" class="btn btn-primary fs-4" @click.prevent="postComment">
               Envoyer !
             </button>
         </form>
+      </div>
 <!--   <div class="formField ">
           <form encType="multipart/form-data">
             <div class="form__contentpost">
