@@ -158,6 +158,7 @@ export default {
 </script>
 
 <style lang="scss">
+/*
 .formField{
   &__msg{
     font-style: bold;
@@ -178,5 +179,5 @@ button{
   background-color: #fbd8cf;
   font-size: larger;
   
-}
+}*/
 </style>

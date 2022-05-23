@@ -1,15 +1,40 @@
 <template>
   <div class="add">
-    <h2 v-if="userName">{{ userName }}, ajouter votre article sur la plateforme !</h2>
-    <h2 v-else>Ajouter votre article sur la plateforme !</h2>
+    <WelcomeMsg msg="Bienvenue :) " recommend="Ajoutez votre article sur la plateforme"/>
 <!--    <FormField TitleLabel='Titre' ContentAreaLabel='Description' imageLabel='Ajouter une image' ButtonLabel='Envoyer !'/>
 -->
-    <div class="formField ">
+ 
+
         <form encType="multipart/form-data">
+            <div class="mb-3">
+                <label for="title" class="form-label">Titre</label>
+                <input type="text" class="form-control" name="title" id="title" value="Pas de title" @blur="validText"  required />  <!--  @keyup="title = $event.target.value"  --> 
+                <p id="titleErrorMsg" class="form-text">{{ titleErrorMsg }}</p>
+            </div>
+
+            <div class="mb-3">
+                <label for="content" class="form-label">Description</label>
+                <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" @blur="validTextContent" required> 
+                </textarea>                <!--      @keyup="content = $event.target.value"  -->
+                <p id="contentErrorMsg" class="form-text">{{ contentErrorMsg }}</p>
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="btn btn-secondary">Ajouter une image</label>
+                <input type="file" class="form-control " name="image" id="image" accept="image/png, image/jpeg" @change="showFileName" required>
+                <p class="filename" v-if="imageFileName">image ajouté >>> {{ imageFileName }}</p>
+            </div>
+               
+            <button type="submit" class="btn btn-primary" @click.prevent="postComment">
+              Envoyer !
+            </button>
+        </form>
+<!--   <div class="formField ">
+          <form encType="multipart/form-data">
             <div class="form__contentpost">
                 <label for="title">Titre: </label>
                 <br />
-                <input type="text" name="title" id="title" value="Pas de title" @blur="validText"  required />  <!--  @keyup="title = $event.target.value"  --> 
+                <input type="text" name="title" id="title" value="Pas de title" @blur="validText"  required />  
   
                 <p id="titleErrorMsg" class="rouge">{{ titleErrorMsg }}</p>
             </div>
@@ -18,7 +43,7 @@
                 <label for="content">Description: </label>
                 <br />
                 <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" @blur="validTextContent" required> 
-                </textarea>                <!--      @keyup="content = $event.target.value"  -->
+                </textarea>                
                 
                 <p id="contentErrorMsg" class="rouge">{{ contentErrorMsg }}</p>
             </div>
@@ -37,8 +62,8 @@
                 </button>
             </div>
         </form>
-
-    </div>
+</div>-->
+    
   </div>
 </template>
 
@@ -46,9 +71,13 @@
 import router from '@/router';
 import { mapState } from 'vuex' 
 import { required } from 'vuelidate/lib/validators' 
+import WelcomeMsg from '../components/WelcomeMsg.vue'
 
 export default {
   name: 'AddView',
+  components: {
+    WelcomeMsg
+  },
   data() {
       return {
           title: '',
@@ -151,7 +180,7 @@ export default {
 
 
 <style lang="scss">
-.formField{
+/*.formField{
     width: 90%;
     height: 20em;
     
@@ -173,7 +202,7 @@ textarea{
     border-color: #9e9e9e;
     border-radius: 4px;
     cursor: pointer;
-}
+}*/
 
 #image{
     opacity: 0;
