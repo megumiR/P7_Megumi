@@ -2,44 +2,37 @@
   <div class="signin">
     <WelcomeMsg msg="Bienvenue au Groupomania chat :)" recommend="Si vous voulez créer un post, inscrivez-vous !"/>
     
-    <div class="formField">
-      <p class="formField__msg" v-if="mode == 'signup'">Vous avez déjà un compte ?<span class="formField__color" @click="switchToLogin"> Connexion par ici</span></p>
-      <p class="formField__msg" v-else>Vous n'avez pas encore de compte ?<span class="formField__color" @click="switchToSignup"> Créer un compte</span></p>
+    <div class="card">
+      <div class="card-body">
+        <h2 class="formField__msg" v-if="mode == 'signup'">Vous avez déjà un compte ?<span class="text-danger text-decoration-underline" @click="switchToLogin"> Connexion par ici</span></h2>
+        <h2 class="formField__msg" v-else>Vous n'avez pas encore de compte ?<span class="text-danger text-decoration-underline" @click="switchToSignup"> Créer un compte</span></h2>
 
-      <form id="signinForm" action="">
-        <div class="form__commentpost" v-if="mode == 'signup'">
-          <label for="username">Utilisateur : </label>
-            <br />
-          <input type="text" name="username" id="username" v-on:blur="validUsername" required /> 
-          <p id="userErrorMsg" class="rouge">{{ userErrorMsg }}</p>
-        </div>
-
-
-        <div class="form__commentpost">
-          <label for="email">Email : </label>
-            <br />
-          <input type="email" name="email" id="email" v-on:blur="validEmail" required /> 
-          <p id="emailErrorMsg" class="rouge">{{ emailErrorMsg }}</p>  
-        </div>
-
-        <div class="form__commentpost"> 
-          <label for="password">Mot de passe : </label>
-            <br />
-          <input type="password" name="password" id="password" v-on:blur="validPassword" required /> 
-          <p id="passwordErrorMsg" class="rouge">{{ passwordErrorMsg }}</p>
-        </div>
-
-        <div class="">
-          <div class="form__commentpost" v-if="mode == 'signup'">
-              <button class="button" @click.prevent="sendSigninform">inscription</button>
+        <form action="">
+          <div class="mb-3" v-if="mode == 'signup'">
+            <label for="username" class="form-label fs-3">Utilisateur</label>
+            <input type="text" class="form-control" name="username" id="username" v-on:blur="validUsername" required /> 
+            <p id="userErrorMsg" class="form-text text-danger fs-5">{{ userErrorMsg }}</p>
           </div>
-          <div class="form__commentpost" v-else>
-            <button class="button" @click.prevent="sendLoginform">Connexion</button>
-          </div>
-        </div>
 
-      </form>
+
+          <div class="mb-3">
+            <label for="email" class="form-label fs-3">Email</label>
+            <input type="email" class="form-control" name="email" id="email" v-on:blur="validEmail" required /> 
+            <p id="emailErrorMsg" class="form-text text-danger fs-5">{{ emailErrorMsg }}</p>  
+          </div>
+
+          <div class="mb-3"> 
+            <label for="password" class="form-label fs-3">Mot de passe</label>
+            <input type="password" class="form-control" name="password" id="password" v-on:blur="validPassword" required /> 
+            <p id="passwordErrorMsg" class="form-text text-danger fs-5">{{ passwordErrorMsg }}</p>
+          </div>
+
+          <button type="submit" class="btn btn-primary fs-4" v-if="mode == 'signup'" @click.prevent="sendSigninform">inscription</button>
+          <button type="submit" class="btn btn-primary fs-4" v-else @click.prevent="sendLoginform">Connexion</button>    
+        </form>
+      </div>
     </div>
+    
   </div>
 </template>
 
