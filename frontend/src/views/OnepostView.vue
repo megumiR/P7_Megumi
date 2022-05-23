@@ -1,6 +1,6 @@
 <template>
   <div>
-    <WelcomeMsg msg="Bienvenue :) " recommend=""/>
+    <WelcomeMsg msg="c'est le détail de post selectionné." recommend=""/>
     
         
       <div class="col" v-for="post in list" :key="post.id" >

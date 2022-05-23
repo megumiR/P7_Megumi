@@ -1,6 +1,6 @@
 <template>
   <div class="add">
-    <WelcomeMsg msg="Bienvenue :) " recommend="Ajoutez votre article sur la plateforme"/>
+    <WelcomeMsg msg="Ajoutez votre article sur la plateforme" recommend="Veuillez vous connecter si vous ne vous êtes pas encore enregistré ou connecté. "/>
 <!--    <FormField TitleLabel='Titre' ContentAreaLabel='Description' imageLabel='Ajouter une image' ButtonLabel='Envoyer !'/>
 -->
  
@@ -14,7 +14,7 @@
 
             <div class="mb-3">
                 <label for="content" class="form-label fs-3">Description</label>
-                <textarea name="content" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" @blur="validTextContent" required> 
+                <textarea name="content" class="form-control" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" @blur="validTextContent" required> 
                 </textarea>                <!--      @keyup="content = $event.target.value"  -->
                 <p id="contentErrorMsg" class="form-text text-danger fs-5">{{ contentErrorMsg }}</p>
             </div>

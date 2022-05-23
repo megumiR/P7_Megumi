@@ -1,6 +1,58 @@
 <template>
   <div class="update">
-    <h2>{{ userName }}, voici c'est votre article sélectionnée!</h2>
+    <WelcomeMsg msg="voici c'est votre article sélectionnée!" recommend=""/>
+
+
+    <div class="col" v-for="post in list" :key="post.id" >
+    
+      <div class="card shadow-sm mt-4 h-100">
+        <img class="card-img-top" :src="post.image" alt="image" v-if="post.image"/>
+          
+        <div class="card-body">
+          <h3 class="card-title">
+            {{ post.title }}
+          </h3>
+          <p>
+            {{ post.content }}
+          </p>
+        </div>
+      </div>
+    
+
+    <div class="mb-3 my-2">
+      <button type="submit" class="btn btn-primary fs-4" @click.prevent="deletePost" >
+        Supprimer ce post
+      </button> 
+    </div>
+     
+    <div class="card">
+      <form encType="multipart/form-data" class="card-body">
+        <div class="mb-3">
+          <label for="title" class="form-label fs-3">Nouveau titre</label>          
+          <input type="text" class="form-control" name="title" id="title" :value="post.title" v-on:blur="validText" required /> 
+          <p id="titleErrorMsg" class="form-text text-danger fs-5">{{ titleErrorMsg }}</p>
+        </div>
+
+        <div class="mb-3">
+          <label for="content" class="form-label fs-3">Nouvelle description</label>
+          <textarea name="content" class="form-control" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" :value="post.content"  v-on:blur="validTextContent" required> 
+          </textarea>
+          <p id="contentErrorMsg" class="form-text text-danger fs-5">{{ contentErrorMsg }}</p>
+        </div>
+    
+        <button type="submit" class="btn btn-primary fs-4" @click.prevent="updatePost">
+          Envoyer la modification
+        </button>
+      </form>
+    </div>
+
+    <div class="my-4">
+      <router-link :to="`/`" class="btn btn-secondary" >Retour à l'Accueil</router-link> 
+      <router-view />
+    </div>
+  </div>
+  <!--
+   
     <div v-for="post in list" :key="post.id" >
     <div class="PostCard" >
       <div class="PostCard__img">
@@ -46,7 +98,8 @@
         </div>
       </form>
     </div>
-  </div>
+  </div> 
+  -->
   </div>
 </template>
 
@@ -54,9 +107,13 @@
 import { mapState } from 'vuex'  
 import { required } from 'vuelidate/lib/validators'
 import router from '@/router';
+import WelcomeMsg from '../components/WelcomeMsg.vue'
 
 export default {
   name: 'UpdateView',
+  omponents: {
+    WelcomeMsg
+  },
   data() {
     return {         
       list: [], 
