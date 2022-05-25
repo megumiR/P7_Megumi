@@ -3,13 +3,12 @@ const connection = require("../db__connection"); //importer l'info de mysql
 const fs = require("fs");
 /********* FIN: importer des fichier , modules *************/
 
-/***************** Creer un post  ***************/ 
+/***************** Creer un post  ***************/
 exports.createPost =
   /////////// s'il y a un fichier {oui traiter l'image}:{non traiter que l'objet}
   async (req, res, next) => {
-    console.log("post one article---------"); 
-    if (!req.file) {  
-      
+    console.log("post one article---------");
+    if (!req.file) {
       let sqlWithoutImage = `INSERT INTO post (title, content, user_id ) VALUES 
       ('${req.body.title}', '${req.body.content}', '${req.body.user_id}')`; ///need to put user_id into headers
       await connection.query(sqlWithoutImage, (err, result) => {
@@ -25,19 +24,18 @@ exports.createPost =
       let imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
 
       let sqlWithImage = `INSERT INTO post (title, content, image, user_id ) VALUES 
-        ('${req.body.title}', '${req.body.content}', '${req.file.filename}', '${req.body.user_id}')`; 
+        ('${req.body.title}', '${req.body.content}', '${req.file.filename}', '${req.body.user_id}')`;
 
-
-          connection.query(sqlWithImage, (err, result) => {
-            if (err) {
-              return res.status(400).json({
-                message: "erreur : Insertion post (avec image) erreur",
-              });
-            }
-            console.log("L'article post(avec image) est inseré : " + imageUrl);
-            res.status(201).json({ message: "Votre post(avec image) est bien crée!" });
+      connection.query(sqlWithImage, (err, result) => {
+        if (err) {
+          return res.status(400).json({
+            message: "erreur : Insertion post (avec image) erreur",
           });
-       // });
+        }
+        console.log("L'article post(avec image) est inseré : " + imageUrl);
+        res.status(201).json({ message: "Votre post(avec image) est bien crée!" });
+      });
+      // });
     }
   };
 /***************** FIN: Creer un post  ***************/
@@ -55,10 +53,10 @@ exports.showallposts = async (req, res, next) => {
     console.log("posts: ", result);
     var allPostWithImg = [];
     if (result.length > 0) {
-      result.forEach( post => {
-        if ( post.image != null) { 
+      result.forEach((post) => {
+        if (post.image != null) {
           post.image = `${req.protocol}://${req.get("host")}/images/${post.image}`;
-          
+
           allPostWithImg.push(post);
         } else {
           allPostWithImg.push(post);
@@ -83,7 +81,7 @@ exports.showOnepost = async (req, res, next) => {
       });
     }
     console.log(result[0].image);
-    if ( result[0].image != null) {
+    if (result[0].image != null) {
       result[0].image = `${req.protocol}://${req.get("host")}/images/${result[0].image}`;
     }
     console.log(result[0].image);
@@ -91,7 +89,6 @@ exports.showOnepost = async (req, res, next) => {
   });
 };
 /******************* FIN: Afficher le post *********************/
-
 
 /************* Modifier un post **************/
 exports.updatePost = async (req, res, next) => {
@@ -119,17 +116,12 @@ exports.updatePost = async (req, res, next) => {
 
 /************* Supprimer un post ******************/
 exports.deletePost = async (req, res, next) => {
-
-
-
   let sqlDeleteLike = `DELETE FROM post_likes WHERE post_id = ${req.params.id}`;
   connection.query(sqlDeleteLike, (err, result) => {
     if (err) {
       return res.status(500).json({ message: "erreur : on ne peut pas supprimer les likes" });
     }
-    
   });
-
 
   console.log("delete post ------>");
   let sqlSelect = `SELECT * FROM post WHERE id = ${req.params.id}`;
@@ -149,8 +141,8 @@ exports.deletePost = async (req, res, next) => {
             return res.status(500).json({ message: "erreur : on ne peut pas supprimer" });
           }
           res.status(200).json({ message: "Le post est bien supprimé" });
-        })
-      })
+        });
+      });
     } else {
       let sqlDelete = `DELETE FROM post WHERE id = ${req.params.id}`;
       connection.query(sqlDelete, (err, result) => {
@@ -160,7 +152,7 @@ exports.deletePost = async (req, res, next) => {
         res.status(200).json({ message: "Le post est bien supprimé" });
         console.log(result);
       });
-    }   
+    }
   });
 };
 /************* FIN: Supprimer un post ******************/

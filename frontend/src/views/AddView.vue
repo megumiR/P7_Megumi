@@ -1,36 +1,64 @@
 <template>
   <div class="add">
-    <WelcomeMsg msg="Ajoutez votre article sur la plateforme" recommend="Veuillez vous connecter si vous ne vous êtes pas encore enregistré ou connecté. "/>
-<!--    <FormField TitleLabel='Titre' ContentAreaLabel='Description' imageLabel='Ajouter une image' ButtonLabel='Envoyer !'/>
+    <WelcomeMsg
+      msg="Ajoutez votre article sur la plateforme"
+      recommend="Veuillez vous connecter si vous ne vous êtes pas encore enregistré ou connecté. "
+    />
+    <!--    <FormField TitleLabel='Titre' ContentAreaLabel='Description' imageLabel='Ajouter une image' ButtonLabel='Envoyer !'/>
 -->
- 
-      <div class="card">
-        <form encType="multipart/form-data" class="card-body">
-            <div class="mb-3">
-                <label for="title" class="form-label fs-3">Titre</label>
-                <input type="text" class="form-control" name="title" id="title" value="Pas de title" @blur="validText"  required />  <!--  @keyup="title = $event.target.value"  --> 
-                <p id="titleErrorMsg" class="form-text text-danger fs-5">{{ titleErrorMsg }}</p>
-            </div>
 
-            <div class="mb-3">
-                <label for="content" class="form-label fs-3">Description</label>
-                <textarea name="content" class="form-control" id="content" rows="5" cols="33" placeholder="Ecrivez ici votre message !" @blur="validTextContent" required> 
-                </textarea>                <!--      @keyup="content = $event.target.value"  -->
-                <p id="contentErrorMsg" class="form-text text-danger fs-5">{{ contentErrorMsg }}</p>
-            </div>
+    <div class="card">
+      <form encType="multipart/form-data" class="card-body">
+        <div class="mb-3">
+          <label for="title" class="form-label fs-3">Titre</label>
+          <input
+            type="text"
+            class="form-control"
+            name="title"
+            id="title"
+            value="Pas de title"
+            @blur="validText"
+            required
+          />
+          <!--  @keyup="title = $event.target.value"  -->
+          <p id="titleErrorMsg" class="form-text text-danger fs-5">{{ titleErrorMsg }}</p>
+        </div>
 
-            <div class="mb-3">
-                <label for="image" class="btn btn-secondary">Ajouter une image</label>
-                <input type="file" class="form-control " name="image" id="image" accept="image/png, image/jpeg" @change="showFileName" required>
-                <p class="form-text fs-6" v-if="imageFileName">image ajouté >>> {{ imageFileName }}</p>
-            </div>
-               
-            <button type="submit" class="btn btn-primary fs-4" @click.prevent="postComment">
-              Envoyer !
-            </button>
-        </form>
-      </div>
-<!--   <div class="formField ">
+        <div class="mb-3">
+          <label for="content" class="form-label fs-3">Description</label>
+          <textarea
+            name="content"
+            class="form-control"
+            id="content"
+            rows="5"
+            cols="33"
+            placeholder="Ecrivez ici votre message !"
+            @blur="validTextContent"
+            required
+          >
+          </textarea>
+          <!--      @keyup="content = $event.target.value"  -->
+          <p id="contentErrorMsg" class="form-text text-danger fs-5">{{ contentErrorMsg }}</p>
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="btn btn-secondary">Ajouter une image</label>
+          <input
+            type="file"
+            class="form-control"
+            name="image"
+            id="image"
+            accept="image/png, image/jpeg"
+            @change="showFileName"
+            required
+          />
+          <p class="form-text fs-6" v-if="imageFileName">image ajouté >>> {{ imageFileName }}</p>
+        </div>
+
+        <button type="submit" class="btn btn-primary fs-4" @click.prevent="postComment">Envoyer !</button>
+      </form>
+    </div>
+    <!--   <div class="formField ">
           <form encType="multipart/form-data">
             <div class="form__contentpost">
                 <label for="title">Titre: </label>
@@ -64,121 +92,118 @@
             </div>
         </form>
 </div>-->
-    
   </div>
 </template>
 
 <script>
-import router from '@/router';
-import { mapState } from 'vuex' 
-import { required } from 'vuelidate/lib/validators' 
-import WelcomeMsg from '../components/WelcomeMsg.vue'
+import router from "@/router";
+import { mapState } from "vuex";
+import { required } from "vuelidate/lib/validators";
+import WelcomeMsg from "../components/WelcomeMsg.vue";
 
 export default {
-  name: 'AddView',
+  name: "AddView",
   components: {
-    WelcomeMsg
+    WelcomeMsg,
   },
   data() {
-      return {
-          title: '',
-          content: '',
-          imageFileName: '',
-          image: '',
+    return {
+      title: "",
+      content: "",
+      imageFileName: "",
+      image: "",
 
-          titleErrorMsg: '',
-          contentErrorMsg: ''
-      }
+      titleErrorMsg: "",
+      contentErrorMsg: "",
+    };
   },
   validations: {
-    title: {required}, 
-    content: {required},  
+    title: { required },
+    content: { required },
   },
-  computed: {  
-    ...mapState([ 'userName' ])
+  computed: {
+    ...mapState(["userName"]),
   },
- /* async updated() {  --->> c est la cause de probleme qui envoyer le titre/content tout seul!!!
+  /* async updated() {  --->> c est la cause de probleme qui envoyer le titre/content tout seul!!!
     await this.postComment();
     this.validText();
     this.validTextContent();
   },*/
   methods: {
-    showFileName: function(event) {
+    showFileName: function (event) {
       event.preventDefault();
       this.imageFileName = event.target.files[0].name;
       this.image = event.target.files[0];
     },
-    postComment: function() {  
-      let userToken = localStorage.getItem('userToken');
+    postComment: function () {
+      let userToken = localStorage.getItem("userToken");
       const formData = new FormData();
-      const form_title = document.querySelector('#title').value;
-      const form_content = document.querySelector('#content').value; 
+      const form_title = document.querySelector("#title").value;
+      const form_content = document.querySelector("#content").value;
 
-        formData.append('file', this.image);
-        formData.append("title", form_title);
-        formData.append("content", form_content);
-        formData.append("user_id", localStorage.getItem('userID'));
-        console.log(formData);
-      
-        if (userToken) {      
-          this.$axios.post(this.$requestBaseURL + "posts/", formData, {
-              headers: {
-                Authorization: "bearer " + userToken
-              },
-            })
+      formData.append("file", this.image);
+      formData.append("title", form_title);
+      formData.append("content", form_content);
+      formData.append("user_id", localStorage.getItem("userID"));
+      console.log(formData);
+
+      if (userToken) {
+        this.$axios
+          .post(this.$requestBaseURL + "posts/", formData, {
+            headers: {
+              Authorization: "bearer " + userToken,
+            },
+          })
 
           .then((response) => {
-            console.log('response'+ response); 
-            router.replace({ path: '/'})  
+            console.log("response" + response);
+            router.replace({ path: "/" });
           })
           .catch((err) => {
             throw err;
-          })
-        } else {
-          console.log('no token user');
-        }
-
-
+          });
+      } else {
+        console.log("no token user");
+      }
     },
     validText: function (e) {
       e.preventDefault();
       const checkText = /^[a-zA-Zéèàîûôïü ]{1,}$/g;
 
-      let textInput =  e.target.value;
+      let textInput = e.target.value;
       if (textInput) {
-        let result = checkText.test(textInput); 
+        let result = checkText.test(textInput);
         if (result == true) {
-          this.titleErrorMsg = '';
+          this.titleErrorMsg = "";
         } else if (result == false) {
-          this.titleErrorMsg = 'Ce champ accepte que des caractères.';
+          this.titleErrorMsg = "Ce champ accepte que des caractères.";
         } else {
-          console.log('error : titre regex ne marche pas');
-        }     
+          console.log("error : titre regex ne marche pas");
+        }
       } else {
-        this.titleErrorMsg = 'Ce champ est obligatoire.';
+        this.titleErrorMsg = "Ce champ est obligatoire.";
       }
     },
     validTextContent: function (e) {
       const checkText = /^[a-zA-Z0-9éèàîûôïü ]{1,}$/g;
-    
+
       let textInput = e.target.value;
       if (textInput) {
-        let result = checkText.test(textInput); 
+        let result = checkText.test(textInput);
         if (result == true) {
-          this.contentErrorMsg = '';
+          this.contentErrorMsg = "";
         } else if (result == false) {
-          this.contentErrorMsg = 'Ce champ accepte que des caractères et des chiffres.';
+          this.contentErrorMsg = "Ce champ accepte que des caractères et des chiffres.";
         } else {
-          console.log('error : content regex ne marche pas');
-        }     
+          console.log("error : content regex ne marche pas");
+        }
       } else {
-        this.contentErrorMsg = 'Ce champ est obligatoire.';
+        this.contentErrorMsg = "Ce champ est obligatoire.";
       }
-    },   
-  }
-}
+    },
+  },
+};
 </script>
-
 
 <style lang="scss">
 /*.formField{
@@ -205,10 +230,10 @@ textarea{
     cursor: pointer;
 }*/
 
-#image{
-    opacity: 0;
-    width: 0.1px;
-    height: 0.1px;
-    position: absolute;
+#image {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
 }
 </style>

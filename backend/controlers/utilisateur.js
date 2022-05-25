@@ -28,7 +28,7 @@ exports.signup = async (req, res, next) => {
         userName: result[0].name,
         token: jwt.sign(
           //new token cryptnize
-          { userId: result[0].id }, 
+          { userId: result[0].id },
           `${process.env.JWT_KEY}`,
           { expiresIn: "24h" }
         ),
@@ -54,9 +54,7 @@ exports.login = async (req, res, next) => {
         .compare(req.body.password, result[0].password) //compare frontend data n database hashed data
         .then((valid) => {
           if (!valid) {
-            return res
-              .status(401)
-              .json({ error: "Le mot de passe est incorrect." });
+            return res.status(401).json({ error: "Le mot de passe est incorrect." });
           }
           res.status(200).json({
             userId: result[0].id,
@@ -72,9 +70,7 @@ exports.login = async (req, res, next) => {
         })
         .catch((error) => res.status(500).json({ error }));
     } else {
-      return res
-        .status(400)
-        .json({ error: "on ne trouve pas d'utilisateur correspondant." });
+      return res.status(400).json({ error: "on ne trouve pas d'utilisateur correspondant." });
     }
   });
 };
