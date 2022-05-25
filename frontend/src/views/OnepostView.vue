@@ -1,6 +1,6 @@
 <template>
   <div>
-    <WelcomeMsg msg="c'est le détail de post selectionné." recommend="" />
+    <WelcomeMsg msg="c'est le détail de post selectionné." recommend="Si vous souhaitez liker ou disliker ce post, veuillez appuyer sur le pouces!" />
 
     <div class="col" v-for="post in list" :key="post.id">
       <div class="card shadow-sm mt-4 h-100">

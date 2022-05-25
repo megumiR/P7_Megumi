@@ -1,6 +1,6 @@
 <template>
   <div class="home" id="home">
-    <WelcomeMsg msg="Bienvenue :) " recommend="" />
+    <WelcomeMsg msg="Bienvenue :) " recommend="Voici les post sur Groupomania chat." />
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-3 p-5">
       <p v-if="!list">Pas de post à affichier</p>

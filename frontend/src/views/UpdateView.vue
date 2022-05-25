@@ -1,6 +1,6 @@
 <template>
   <div class="update">
-    <WelcomeMsg msg="voici c'est votre article sélectionnée!" recommend="" />
+    <WelcomeMsg msg="voici c'est votre article sélectionnée!" recommend="Si vous souhaitez supprimer ce post, vous peuvez supprimer par le bouton." />
 
     <div class="col" v-for="post in list" :key="post.id">
       <div class="card shadow-sm mt-4 h-100">

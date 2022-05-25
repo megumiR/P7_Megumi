@@ -29,7 +29,7 @@
       </div>
       <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
-          <a href="#" class="navbar-brand d-flex align-items-center">
+          <a href="/" class="navbar-brand d-flex align-items-center">
             <svg data-v-5f19e91b="" xmlns="http://www.w3.org/2000/svg" width="181" height="30" viewBox="0 0 485 78">
               <g
                 data-v-5f19e91b=""
