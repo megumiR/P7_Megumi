@@ -1,7 +1,7 @@
 <template>
   <div class="col">
     <div class="card shadow-sm mt-4 h-100">
-      <img class="card-img-top" :src="image" alt="image" v-if="image" />
+      <img class="card-img-top" :src="image" :alt="`image pour le post title ${title}`" v-if="image" />
       <div class="card-body">
         <h3 class="card-title">
           {{ title }}
