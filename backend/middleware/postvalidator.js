@@ -1,16 +1,13 @@
 //importer le package de npm
-const { body, validationResult } = require("express-validator"); //import validator from 'validator';
-//
-module.exports = (req, res, next) => {
-  body(req.body.title).isLength({ min: 1 }) && body(req.body.content).isLength({ min: 1 } && body(req.body.content).isLength({ max: 150 }), (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-    //    return res.status(400).json({ error: "Le title ou/et la discription n'est pas valide" });
-        }
-        next();   
+const { body, validationResult } = require("express-validator"); 
+
+module.exports = body('title').isLength({ min: 1 }),body('content').isLength({ min: 1 }).isLength({ max: 150 }),(req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
     }
-  };
+    next();       
+};
 
 /***
  //importer le package de npm

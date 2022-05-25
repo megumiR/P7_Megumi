@@ -120,9 +120,9 @@ export default {
         this.$axios
           .get(this.$requestBaseURL + "like/" + postId, requestHeaders)
           .then((response) => {
-            // return this.numberOfLikes = response.data.result[0];
-            console.log(response.data.result[0]);
-            console.log(JSON.stringify(response.data.result[0])); ///how do i get the result 1
+            console.log(JSON.stringify(response.data.result[0].likes)); ///how do i get the result 1
+             return this.numberOfLikes = JSON.stringify(response.data.result[0].likes);
+          //  console.log(response.data.result[0]);
           })
           .catch((err) => {
             throw err;
@@ -143,8 +143,8 @@ export default {
           user_id: localStorage.getItem("userID"),
         };
         console.log(data);
-        this.$axios
-          .get(this.$requestBaseURL + "like/reaction/" + postId, data, requestHeaders)
+        this.$axios     //
+          .get(this.$requestBaseURL + "like/reaction/" + postId, requestHeaders, data)
           .then((response) => {
             return (this.likes = response.data);
             //  console.log(response.data);
