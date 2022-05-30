@@ -122,7 +122,6 @@ export default {
           .then((response) => {
             console.log(JSON.stringify(response.data.result[0].likes)); ///how do i get the result 1
              return this.numberOfLikes = JSON.stringify(response.data.result[0].likes);
-          //  console.log(response.data.result[0]);
           })
           .catch((err) => {
             throw err;
@@ -139,7 +138,7 @@ export default {
       };
       let postId = this.$route.params.id;
       if (userToken) {
-        let data = {
+        let data = {         //nothing i sent maybe
           user_id: localStorage.getItem("userID"),
         };
         console.log(data);

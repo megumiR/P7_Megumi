@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       list: [],
-      dataReturnFromParent: "msg from parent", //emit is working
+      dataReturnFromParent: "Vous n'êtes pas connecté.", //emit is working
     };
   },
   computed: {

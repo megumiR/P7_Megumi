@@ -224,7 +224,7 @@ export default {
       }
     },
     validText: function (e) {
-      const checkText = /^[a-zA-Zéèàîûôïü ]{1,}$/g;
+      const checkText = /^[a-zA-Z0-9éèàîûôïü !';:(){}"-_@+*]{1,20}$/g;
       let textInput = e.target.value;
       if (textInput) {
         let result = checkText.test(textInput);
@@ -232,7 +232,7 @@ export default {
           console.log("titre : valide");
           this.titleErrorMsg = "";
         } else if (result == false) {
-          this.titleErrorMsg = "Ce champ accepte que des caractères.";
+          this.titleErrorMsg = "Ce champ accepte des caractères, des chiffres et quelques caractères spéciales. Ce champ est limité jusqu'à 20 caractères.";
           console.log("Le titre est invalide");
         } else {
           console.log("error : titre regex ne marche pas");
@@ -243,7 +243,7 @@ export default {
       }
     },
     validTextContent: function (e) {
-      const checkText = /^[a-zA-Z0-9éèàîûôïü ]{1,}$/g;
+      const checkText = /^[a-zA-Z0-9éèàîûôïü !';:(){}"-_@+*]{1,150}$/g;
       let textInput = e.target.value;
       if (textInput) {
         let result = checkText.test(textInput);
@@ -251,7 +251,7 @@ export default {
           console.log("content : valide");
           this.contentErrorMsg = "";
         } else if (result == false) {
-          this.contentErrorMsg = "Ce champ accepte que des caractères et des chiffres.";
+          this.contentErrorMsg = "Ce champ accepte des caractères, des chiffres et quelques caractères spéciales. Ce champ est limité jusqu'à 150 caractères.";
           console.log("La discription est invalide");
         } else {
           console.log("error : content regex ne marche pas");
