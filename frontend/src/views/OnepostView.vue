@@ -118,7 +118,7 @@ export default {
       let postId = this.$route.params.id;
       if (userToken) {
         this.$axios
-          .get(this.$requestBaseURL + "like/" + postId, requestHeaders)
+          .get(this.$requestBaseURL + "like/countLike/" + postId, requestHeaders)
           .then((response) => {
             console.log(JSON.stringify(response.data.result[0].likes)); ///how do i get the result 1
              return this.numberOfLikes = JSON.stringify(response.data.result[0].likes);
@@ -131,7 +131,6 @@ export default {
       }
     },
     isLiked: function () {
-      /////////////not working??/////
       let userToken = localStorage.getItem("userToken");
       let requestHeaders = {
         headers: { Authorization: "Bearer " + userToken },
@@ -142,11 +141,12 @@ export default {
           user_id: localStorage.getItem("userID"),
         };
         console.log(data);
-        this.$axios     //
+        this.$axios     
           .get(this.$requestBaseURL + "like/reaction/" + postId, requestHeaders, data)
           .then((response) => {
             return (this.likes = response.data);
-            //  console.log(response.data);
+            //console.log(response.data);
+
           })
           .catch((err) => {
             throw err;
@@ -161,9 +161,13 @@ export default {
         headers: { Authorization: "Bearer " + userToken },
       };
       let postId = this.$route.params.id;
-
+  console.log(this.likes.result[0].likes);
+  console.log(this.likes);
+      this.likes = this.likes.result[0].likes;
+      
+      console.log(this.likes);
       switch (this.likes) {
-        case (this.likes = 0):
+        case (this.likes == 0):
           this.numberOfLikes++;
           this.likes = 1;
           console.log("case 0 + like");
@@ -185,7 +189,7 @@ export default {
           }
 
           break;
-        case (this.likes = 1):
+        case (this.likes == 1):
           this.numberOfLikes--;
           this.likes = 0;
           console.log("case like removed");
@@ -206,7 +210,7 @@ export default {
             console.log("no token user");
           }
           break;
-        case (this.likes = -1):
+        case (this.likes == -1):
           this.numberOfLikes++;
           this.numberOfDislikes--;
           this.likes = 1;
@@ -259,7 +263,7 @@ export default {
       let postId = this.$route.params.id;
 
       switch (this.likes) {
-        case (this.likes = 0):
+        case (this.likes == 0):
           this.numberOfDislikes++;
           this.likes = -1;
           console.log("case 0");
@@ -281,7 +285,7 @@ export default {
           }
 
           break;
-        case (this.likes = -1):
+        case (this.likes == -1):
           this.numberOfDislikes--;
           this.likes = 0;
           console.log("case dislike");
@@ -302,7 +306,7 @@ export default {
             console.log("no token user");
           }
           break;
-        case (this.likes = 1):
+        case (this.likes == 1):
           this.numberOfLikes--;
           this.numberOfDislikes++;
           this.likes = -1;
