@@ -66,7 +66,7 @@ exports.showNumberOfLike = async (req, res, next) => {
 /******************* Afficher le nombre DISLIKE*********************/
 exports.showNumberOfDislike = async (req, res, next) => {
   console.log("number of dislikes---------");
-  let countLikes = `SELECT COUNT(dislikes) as dislikes FROM post_likes WHERE post_id = ${req.params.id} AND likes = -1`;
+  let countLikes = `SELECT COUNT(likes) as likes FROM post_likes WHERE post_id = ${req.params.id} AND likes = -1`;
   await connection.query(countLikes, (err, result) => {
     if (err) {
       return res.status(400).json({

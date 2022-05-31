@@ -88,6 +88,7 @@ export default {
   mounted() {
     this.getOnePost();
     this.countLikes();
+    this.countDislikes();
     this.isLiked();
   },
   methods: {
@@ -122,6 +123,26 @@ export default {
           .then((response) => {
             console.log(JSON.stringify(response.data.result[0].likes)); ///how do i get the result 1
              return this.numberOfLikes = JSON.stringify(response.data.result[0].likes);
+          })
+          .catch((err) => {
+            throw err;
+          });
+      } else {
+        console.log("no token user");
+      }
+    },
+    countDislikes: function () {
+      let userToken = localStorage.getItem("userToken");
+      let requestHeaders = {
+        headers: { Authorization: "Bearer " + userToken },
+      };
+      let postId = this.$route.params.id;
+      if (userToken) {
+        this.$axios
+          .get(this.$requestBaseURL + "like/countDislike/" + postId, requestHeaders)
+          .then((response) => {
+            console.log(JSON.stringify(response.data.result[0].likes)); ///how do i get the result 1
+             return this.numberOfDislikes = JSON.stringify(response.data.result[0].likes);
           })
           .catch((err) => {
             throw err;
