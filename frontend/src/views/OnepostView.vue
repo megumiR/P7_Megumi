@@ -121,7 +121,7 @@ export default {
         this.$axios
           .get(this.$requestBaseURL + "like/countLike/" + postId, requestHeaders)
           .then((response) => {
-            console.log(JSON.stringify(response.data.result[0].likes)); ///how do i get the result 1
+            console.log(JSON.stringify(response.data.result[0].likes)); 
              return this.numberOfLikes = JSON.stringify(response.data.result[0].likes);
           })
           .catch((err) => {
@@ -141,7 +141,7 @@ export default {
         this.$axios
           .get(this.$requestBaseURL + "like/countDislike/" + postId, requestHeaders)
           .then((response) => {
-            console.log(JSON.stringify(response.data.result[0].likes)); ///how do i get the result 1
+            console.log(JSON.stringify(response.data.result[0].likes)); 
              return this.numberOfDislikes = JSON.stringify(response.data.result[0].likes);
           })
           .catch((err) => {
@@ -158,16 +158,14 @@ export default {
       };
       let postId = this.$route.params.id;
       if (userToken) {
-        let data = {         //nothing i sent maybe
+        let data = {         
           user_id: localStorage.getItem("userID"),
         };
         console.log(data);
         this.$axios     
           .get(this.$requestBaseURL + "like/reaction/" + postId, requestHeaders, data)
           .then((response) => {
-            return (this.likes = response.data);
-            //console.log(response.data);
-
+            return this.likes = response.data.result[0].likes;
           })
           .catch((err) => {
             throw err;
