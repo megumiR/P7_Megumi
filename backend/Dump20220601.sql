@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `groupomania` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `groupomania` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `groupomania`;
 -- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
@@ -26,14 +26,14 @@ DROP TABLE IF EXISTS `post`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `post` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `postname` varchar(100) NOT NULL,
-  `comment` varchar(500) NOT NULL,
-  `image` blob,
+  `title` varchar(100) NOT NULL,
+  `content` varchar(500) NOT NULL,
   `user_id` int NOT NULL,
+  `image` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `post_ibfk_1` (`user_id`),
+  CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=342 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (1,'jean','Hello',NULL,1),(2,'jean','Bonjour à tous! On fait la fete de bienvenue ce soir pour Juju?',NULL,1);
+INSERT INTO `post` VALUES (1,'jean','Hello',1,NULL),(2,'jean','Bonjour à tous! On fait la fete de bienvenue ce soir pour Juju?',1,NULL);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -70,6 +70,7 @@ CREATE TABLE `post_likes` (
 
 LOCK TABLES `post_likes` WRITE;
 /*!40000 ALTER TABLE `post_likes` DISABLE KEYS */;
+INSERT INTO `post_likes` VALUES (1,20,-1),(2,20,1),(1,24,-1),(1,26,1);
 /*!40000 ALTER TABLE `post_likes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +89,7 @@ CREATE TABLE `user` (
   `roll` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,9 +98,17 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'jean','jean@gmail.com','$2b$10$wQNSqe8sqxk2626zBYfWKOFwh0.y/ywxSK09rJEcv7Em3fXQLTCA.','admin'),(2,'dupont','dupont@gmail.com','$2b$10$6papm.bBiR4FtYusiW5nUOsTZkTNr.WDoPuTZhL7phaUoADgXzSDG','user'),(4,'jean-pierre','jp@gmail.com','$2b$10$t6xHxBdfzmZ3Fvdk5Jb/ZeoXoXlG7JgSAWM7vIjwz197OGKSyk4sC','user');
+INSERT INTO `user` VALUES (1,'jean','jean@gmail.com','$2b$10$wQNSqe8sqxk2626zBYfWKOFwh0.y/ywxSK09rJEcv7Em3fXQLTCA.','admin'),(20,'juju','juju@gmail.com','$2b$10$sGKNxHR1quosreILt03up.r.VLophf9wka2fAIas0GMST.2YKqQj6','user'),(24,'lolo','lolo@gmail.com','$2b$10$yTqQUMDP/czuc/NHVlN7/eim/kwTl08XgImQ4eQ6wdxrTy4tnijzu','user'),(26,'admin','admin@gmail.com','$2b$10$MMf0A4/KRWG6jJvVMuMLsOVWL6kLAm4uqpfTA.99JdPlRZ1tCwxiS','admin'),(27,'julie','juli@gmail.com','$2b$10$DVPKbclGZe4XqpwQrQsC6eQOpxU3RIqmFW5Bls6DZtMzJP7/0YqAe','user');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'groupomania'
+--
+
+--
+-- Dumping routines for database 'groupomania'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -110,4 +119,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-07 10:43:17
+-- Dump completed on 2022-06-01 16:17:02
