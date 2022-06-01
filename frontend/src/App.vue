@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <div class="collapse bg-dark" id="navbarHeader">
+      <div class="collapse bg-navbgcolor" id="navbarHeader">
         <div class="container">
           <div class="row">
             <div class="col-sm-8 col-md-7 py-4">
@@ -27,14 +27,14 @@
           </div>
         </div>
       </div>
-      <div class="navbar navbar-dark bg-dark shadow-sm">
+      <div class="navbar navbar-dark bg-navbarcolor shadow-sm">
         <div class="container">
           <a href="/" class="navbar-brand d-flex align-items-center">
             <svg data-v-5f19e91b="" xmlns="http://www.w3.org/2000/svg" width="181" height="30" viewBox="0 0 485 78">
               <g
                 data-v-5f19e91b=""
                 id="b84507ba-a37d-0d6c-3fcb-8fc531264173"
-                fill="white"
+                fill="black"
                 transform="matrix(4.569687698175228,0,0,4.569687698175228,96.32992012448554,-2.2310693714669583)"
               >
                 <path
@@ -47,7 +47,7 @@
                 id="eb8ee116-946f-66a4-a2bb-64183428be89"
                 transform="matrix(0.9288891262478298,0,0,0.9288891262478298,183.17781124538936,-199.52452538383787)"
                 stroke="none"
-                fill="white"
+                fill="black"
               >
                 <switch>
                   <g>
@@ -78,7 +78,7 @@
     <footer class="text-muted py-5">
       <div class="container">
         <p class="float-end mb-1">
-          <a href="#">Back to top</a>
+          <a href="#" class="btn btn-secondary">Back to top</a>
         </p>
         <p class="mb-1">&copy; Groupomania</p>
       </div>
@@ -106,6 +106,10 @@ export default {
 </script>
 
 <style lang="scss">
+$color-primary: #FD2D01;
+$color-secondary: #FFD7D7;
+$color-tertiary: #4E5166;
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -113,12 +117,63 @@ export default {
   // text-align: center;
   color: #2c3e50;
 }
+.btn-primary {
+  background: $color-primary; //ボタンの背景色
+  border-color: $color-primary;
+  color: #000;
+}
+
+.btn-primary:hover, .btn-primary:focus, 
+.btn-primary:active, .btn-primary:active:focus, .btn-primary:active:hover, .btn-primary:active.focus,
+.btn-primary.active, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary.active.focus,
+.open > .dropdown-toggle.btn-primary, 
+.open > .dropdown-toggle.btn-primary:hover,
+.open > .dropdown-toggle.btn-primary:focus, 
+.open > .dropdown-toggle.btn-primary.focus,
+.btn-primary.disabled:hover, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus, .btn-primary[disabled]:focus, fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus, .btn-primary[disabled].focus, fieldset[disabled] .btn-primary.focus {
+  background: $color-primary; //ボタンの上にポインタを持ってきたり、クリックしたりした時の背景色
+  border-color: $color-primary;
+  color: #000;
+}
+.btn-secondary {
+  background: $color-tertiary; //ボタンの背景色
+  border-color: $color-tertiary;
+  color: #fff;
+}
+.btn-secondary:hover, .btn-secondary:focus, 
+.btn-secondary:active, .btn-secondary:active:focus, .btn-secondary:active:hover, .btn-secondary:active.focus,
+.btn-secondary.active, .btn-secondary.active:focus, .btn-secondary.active:hover, .btn-secondary.active.focus,
+.open > .dropdown-toggle.btn-secondary, 
+.open > .dropdown-toggle.btn-secondary:hover,
+.open > .dropdown-toggle.btn-secondary:focus, 
+.open > .dropdown-toggle.btn-secondary.focus,
+.btn-secondary.disabled:hover, .btn-secondary[disabled]:hover, fieldset[disabled] .btn-secondary:hover,
+.btn-secondary.disabled:focus, .btn-secondary[disabled]:focus, fieldset[disabled] .btn-secondary:focus,
+.btn-secondary.disabled.focus, .btn-secondary[disabled].focus, fieldset[disabled] .btn-secondary.focus {
+  background: $color-tertiary; //ボタンの上にポインタを持ってきたり、クリックしたりした時の背景色
+  border-color: $color-tertiary;
+  color: #fff;
+}
+.bg-navbgcolor {
+  background: $color-tertiary;
+}
+.bg-navbarcolor {
+  background: $color-primary;
+}
+.bg-cardfootercolor {
+  background: $color-secondary;
+}
 .bd-placeholder-img {
   font-size: 1.125rem;
   text-anchor: middle;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
+}
+.iconcolor {
+  color: $color-tertiary;
 }
 
 @media (min-width: 768px) {

@@ -10,10 +10,10 @@
           {{ content }}
         </p>
       </div>
-      <div class="card-footer p-4">
+      <div class="card-footer p-4 bg-cardfootercolor">
         <div class="row">
           <div class="col" v-if="userId == authorId || this.$store.getters.rollAdmin == 'admin'">
-            <router-link :to="`/update/${postId}`" class="btn btn-primary">
+            <router-link :to="`/update/${postId}`" class="btn btn-secondary">
               modifier ce post <span id="postId">{{ postId }}</span>
             </router-link>
             <router-view />
@@ -22,8 +22,8 @@
             :to="`/onepost/${postId}`"
             class="col d-flex justify-content-around align-items-center text-decoration-none"
           >
-            <i class="far fa-thumbs-up fa-lg"></i>
-            <i class="fas fa-thumbs-down fa-lg"></i>
+            <i class="far fa-thumbs-up fa-lg iconcolor"></i>
+            <i class="fas fa-thumbs-down fa-lg iconcolor"></i>
           </router-link>
         </div>
       </div>
@@ -85,6 +85,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+/*
 .PostCard {
   width: 90%;
   min-height: 5em;
@@ -144,7 +145,7 @@ export default {
     justify-content: center;
     align-content: center;
 
-    /*position exactry the same place*/
+   //position exactry the same place
     position: relative;
     height: 45px;
 
@@ -162,8 +163,7 @@ export default {
     }
   }
   &--iconNocolor {
-    /* transform-origin: center;*/
-    /* transform: scale(1);*/
+    // transform-origin: center;  transform: scale(1);
     transition: opacity 350ms 100ms;
     &:hover {
       transform: scale(1.2);
@@ -182,5 +182,5 @@ export default {
 .hide {
   color: red;
   //  opacity: 0;
-}
+}*/
 </style>

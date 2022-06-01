@@ -13,13 +13,13 @@
             {{ post.content }}
           </p>
         </div>
-        <div class="card-footer p-4">
+        <div class="card-footer p-4 bg-cardfootercolor">
           <div class="row">
             <div v-if="likes" class="d-flex flex-column">
               <div class="d-flex justify-content-around align-items-center">
-                <i class="far fa-thumbs-up fa-lg" @click="increment()"></i>
+                <i class="far fa-thumbs-up fa-lg iconcolor" @click="increment()"></i>
                 <div>{{ numberOfLikes }}</div>
-                <i class="fas fa-thumbs-down fa-lg" @click="incrementDislike()"></i>
+                <i class="fas fa-thumbs-down fa-lg iconcolor" @click="incrementDislike()"></i>
                 <div>{{ numberOfDislikes }}</div>
               </div>
 

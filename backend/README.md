@@ -40,6 +40,7 @@ console when the server starts, e.g. `Listening on port 8081`.
 
 cf.
 ### MySQL
+Please check the file called "Dump20220426.sql"
 "user" 
 ```
     CREATE TABLE user (
