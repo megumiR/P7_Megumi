@@ -43,7 +43,7 @@ exports.createPost =
 /******************* Afficher tous les posts *********************/
 exports.showallposts = async (req, res, next) => {
   console.log("home with posts---------");
-  let allPost = `SELECT * FROM post`;
+  let allPost = `SELECT * FROM post ORDER BY id desc`;
   await connection.query(allPost, (err, result) => {
     if (err) {
       return res.status(400).json({
