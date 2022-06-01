@@ -161,7 +161,7 @@ export default {
         let data = {         
           user_id: localStorage.getItem("userID"),
         };
-        console.log(data);
+        //console.log(data);
         this.$axios     
           .get(this.$requestBaseURL + "like/reaction/" + postId, requestHeaders, data)
           .then((response) => {
@@ -180,13 +180,13 @@ export default {
         headers: { Authorization: "Bearer " + userToken },
       };
       let postId = this.$route.params.id;
-  console.log(this.likes.result[0].likes);
-  console.log(this.likes);
-      this.likes = this.likes.result[0].likes;
+  //console.log(this.likes.result[0].likes);
+ //console.log(this.likes);
+   //   this.likes = this.likes.result[0].likes;
       
       console.log(this.likes);
       switch (this.likes) {
-        case (this.likes == 0):
+        case (this.likes = 0):
           this.numberOfLikes++;
           this.likes = 1;
           console.log("case 0 + like");
@@ -208,7 +208,7 @@ export default {
           }
 
           break;
-        case (this.likes == 1):
+        case (this.likes = 1):
           this.numberOfLikes--;
           this.likes = 0;
           console.log("case like removed");
@@ -229,7 +229,7 @@ export default {
             console.log("no token user");
           }
           break;
-        case (this.likes == -1):
+        case (this.likes = -1):
           this.numberOfLikes++;
           this.numberOfDislikes--;
           this.likes = 1;
@@ -282,7 +282,7 @@ export default {
       let postId = this.$route.params.id;
 
       switch (this.likes) {
-        case (this.likes == 0):
+        case (this.likes = 0):
           this.numberOfDislikes++;
           this.likes = -1;
           console.log("case 0");
@@ -304,7 +304,7 @@ export default {
           }
 
           break;
-        case (this.likes == -1):
+        case (this.likes = -1):
           this.numberOfDislikes--;
           this.likes = 0;
           console.log("case dislike");
@@ -325,7 +325,7 @@ export default {
             console.log("no token user");
           }
           break;
-        case (this.likes == 1):
+        case (this.likes = 1):
           this.numberOfLikes--;
           this.numberOfDislikes++;
           this.likes = -1;
