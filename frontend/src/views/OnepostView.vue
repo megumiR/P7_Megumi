@@ -17,15 +17,12 @@
           <div class="row">
             <div class="d-flex flex-column">
               <div class="d-flex justify-content-around align-items-center">
-                <i class="far fa-thumbs-up fa-lg iconcolor" @click="increment()"></i>
+                <i v-if="likes == 1" class="far fa-thumbs-up fa-lg text-danger" @click="increment()"></i>
+                <i v-else class="far fa-thumbs-up fa-lg iconcolor" @click="increment()"></i>
                 <div>{{ numberOfLikes }}</div>
-                <i class="fas fa-thumbs-down fa-lg iconcolor" @click="incrementDislike()"></i>
+                <i v-if="likes == -1" class="fas fa-thumbs-down fa-lg iconcolor text-danger" @click="incrementDislike()"></i>
+                <i v-else class="fas fa-thumbs-down fa-lg iconcolor" @click="incrementDislike()"></i>
                 <div>{{ numberOfDislikes }}</div>
-              </div>
-
-              <div class="d-flex justify-content-around align-items-center mt-2">
-                <p v-if="likes == -1">J'ai disliké</p>
-                <p v-if="likes == 1">J'ai liké</p>
               </div>
             </div>
           </div>
