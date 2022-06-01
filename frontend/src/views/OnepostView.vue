@@ -15,7 +15,7 @@
         </div>
         <div class="card-footer p-4 bg-cardfootercolor">
           <div class="row">
-            <div v-if="likes" class="d-flex flex-column">
+            <div class="d-flex flex-column">
               <div class="d-flex justify-content-around align-items-center">
                 <i class="far fa-thumbs-up fa-lg iconcolor" @click="increment()"></i>
                 <div>{{ numberOfLikes }}</div>
@@ -27,11 +27,6 @@
                 <p v-if="likes == -1">J'ai disliké</p>
                 <p v-if="likes == 1">J'ai liké</p>
               </div>
-            </div>
-
-            <div v-else class="col d-flex justify-content-around align-items-center">
-              <i class="far fa-thumbs-up fa-lg" @click="increment()"></i>
-              <i class="fas fa-thumbs-down fa-lg" @click="incrementDislike()"></i>
             </div>
           </div>
         </div>
