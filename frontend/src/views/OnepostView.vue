@@ -187,6 +187,7 @@ export default {
       console.log(this.likes);
       switch (this.likes) {
         case (this.likes = 0):
+          //if text-primary exists... or not 
           this.numberOfLikes++;
           this.likes = 1;
           console.log("case 0 + like");

@@ -35,7 +35,9 @@ The server should run on `localhost` with default port `8080`. If the
 server runs on another port for any reason, this is printed to the
 console when the server starts, e.g. `Listening on port 8081`.
 
-
+### ID of Administrateur 
+email: admin@gmail.com
+password: 12@Awerty
 
 cf.
 ### MySQL
