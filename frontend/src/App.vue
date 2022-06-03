@@ -156,6 +156,26 @@ $color-tertiary: #4E5166;
   border-color: $color-tertiary;
   color: #fff;
 }
+.btn-tertiary {
+  background: $color-secondary; //ボタンの背景色
+  border-color: $color-secondary;
+  color: #000;
+}
+
+.btn-tertiary:hover, .btn-tertiary:focus, 
+.btn-tertiary:active, .btn-tertiary:active:focus, .btn-tertiary:active:hover, .btn-tertiary:active.focus,
+.btn-tertiary.active, .btn-tertiary.active:focus, .btn-tertiary.active:hover, .btn-tertiary.active.focus,
+.open > .dropdown-toggle.btn-tertiary, 
+.open > .dropdown-toggle.btn-tertiary:hover,
+.open > .dropdown-toggle.btn-tertiary:focus, 
+.open > .dropdown-toggle.btn-tertiary.focus,
+.btn-tertiary.disabled:hover, .btn-tertiary[disabled]:hover, fieldset[disabled] .btn-tertiary:hover,
+.btn-tertiary.disabled:focus, .btn-tertiary[disabled]:focus, fieldset[disabled] .btn-tertiary:focus,
+.btn-tertiary.disabled.focus, .btn-tertiary[disabled].focus, fieldset[disabled] .btn-tertiary.focus {
+  background: $color-secondary; //ボタンの上にポインタを持ってきたり、クリックしたりした時の背景色
+  border-color: $color-secondary;
+  color: #000;
+}
 .bg-navbgcolor {
   background: $color-tertiary;
 }

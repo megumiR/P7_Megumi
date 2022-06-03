@@ -172,9 +172,6 @@ export default {
         headers: { Authorization: "Bearer " + userToken },
       };
       let postId = this.$route.params.id;
-  //console.log(this.likes.result[0].likes);
- //console.log(this.likes);
-   //   this.likes = this.likes.result[0].likes;
       
       console.log(this.likes);
       switch (this.likes) {

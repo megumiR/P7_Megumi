@@ -10,20 +10,22 @@
           {{ content }}
         </p>
       </div>
-      <div class="card-footer p-4 bg-cardfootercolor">
+      <div class="card-footer p-4 ">
         <div class="row">
+
+
           <div class="col" v-if="userId == authorId || this.$store.getters.rollAdmin == 'admin'">
-            <router-link :to="`/update/${postId}`" class="btn btn-secondary">
-              modifier ce post <span id="postId">{{ postId }}</span>
+            <router-link :to="`/update/${postId}`" class="btn btn-tertiary">
+              modifier <!--<span id="postId">{{ postId }}</span>-->
             </router-link>
             <router-view />
           </div>
           <router-link
             :to="`/onepost/${postId}`"
-            class="col d-flex justify-content-around align-items-center text-decoration-none"
+            class="col d-flex justify-content-around align-items-center text-decoration-none btn btn-tertiary"
           >
-            <i class="far fa-thumbs-up fa-lg iconcolor"></i>
-            <i class="fas fa-thumbs-down fa-lg iconcolor"></i>
+            <i class="far fa-thumbs-up fa-lg text-black"></i>
+            <i class="far fa-thumbs-down fa-lg text-black"></i>
           </router-link>
         </div>
       </div>
