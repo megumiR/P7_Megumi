@@ -15,6 +15,8 @@
               <h4 class="text-white">Menu de la page</h4>
               <ul class="list-unstyled">
                 <li><router-link to="/" class="text-white"> Accueil </router-link></li>
+                <li><router-link to="/admin" class="text-white" v-if="this.$store.getters.rollAdmin == 'admin'"> Page admin </router-link></li>
+                
                 <li><router-link to="/add" class="text-white"> Ajouter un post </router-link></li>
                 <li>
                   <router-link to="/signup" class="text-white">

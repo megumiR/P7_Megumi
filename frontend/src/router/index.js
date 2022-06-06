@@ -5,6 +5,7 @@ import AddView from "../views/AddView.vue";
 import SignupView from "../views/SignupView.vue";
 import UpdateView from "../views/UpdateView.vue";
 import OnepostView from "../views/OnepostView.vue";
+import AdminView from "../views/AdminView.vue";
 
 Vue.use(VueRouter);
 
@@ -37,8 +38,13 @@ const routes = [
     name: "update",
     component: UpdateView,
   },
+  {
+    path: "/admin",
+    name: "admin",
+    component: AdminView,
+  },
 ];
-//component...
+//component...  
 // route level code-splitting
 // this generates a separate chunk (about.[hash].js) for this route
 // which is lazy-loaded when the route is visited.
@@ -48,11 +54,5 @@ const router = new VueRouter({
   mode: "history",
   routes,
 });
-/*
-router.beforeEach(async (to, from) => {  //!isAuthenticated &&
-  if ( to.name !== 'accueil' && from.name == 'signup') {
-    return { name: 'accueil' }
-  }
-});
-*/
+
 export default router;

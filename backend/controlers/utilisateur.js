@@ -74,3 +74,21 @@ exports.login = async (req, res, next) => {
     }
   });
 };
+/************** get user account list*****************/
+exports.getlist = async (req, res, next) => {
+  console.log("Get the user accounts' list---------");
+  let getAccounts = `SELECT * FROM user ORDER BY id desc`;
+  await connection.query(getAccounts, (err, result) => {
+    if (err) {
+      return res.status(400).json({
+        message: "erreur : on ne peut pas chercher de tableau utilisateur",
+      });
+    }
+    console.log("list: ", result);
+    if (result.length > 0) {
+      res.status(200).json({ result });
+    } else {
+      res.status(400).json({ message: "Il n'y a pas de compte à affichier !" });
+    }
+  });
+}

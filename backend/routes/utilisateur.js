@@ -7,5 +7,6 @@ const utilisateurCtrl = require('../controlers/utilisateur');
 
 router.post('/signup', passvalidator, mailvalidator, utilisateurCtrl.signup);
 router.post('/login', mailvalidator, utilisateurCtrl.login);
+router.get('/userlist', utilisateurCtrl.getlist);
 
 module.exports = router;
