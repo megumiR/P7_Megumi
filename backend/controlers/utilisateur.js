@@ -77,7 +77,7 @@ exports.login = async (req, res, next) => {
 /************** get user account list*****************/
 exports.getlist = async (req, res, next) => {
   console.log("Get the user accounts' list---------");
-  let getAccounts = `SELECT * FROM user ORDER BY id desc`;
+  let getAccounts = `SELECT * FROM user ORDER BY id asc`;  //asc desc
   await connection.query(getAccounts, (err, result) => {
     if (err) {
       return res.status(400).json({
@@ -91,4 +91,30 @@ exports.getlist = async (req, res, next) => {
       res.status(400).json({ message: "Il n'y a pas de compte à affichier !" });
     }
   });
-}
+};
+/************* get one account *************/
+exports.getoneaccount = async (req, res, next) => {
+  console.log("one account---------");
+  let oneAccount = `SELECT * FROM user WHERE id = ${req.params.id}`;
+  await connection.query(oneAccount, (err, result) => {
+    if (err) {
+      return res.status(400).json({
+        message: "erreur : on ne peut pas chercher de tableau account",
+      });
+    }
+    res.status(200).json({ result });
+  });
+}; 
+
+
+/************** delete an account *****************/
+exports.deleteAccount  = async (req, res, next) => {
+  let sqlDeleteAccount = `DELETE FROM user WHERE id = ${req.params.id}`;
+  connection.query(sqlDeleteAccount, (err, result) => {
+    if (err) {
+      return res.status(400).json({ message: "erreur : on ne peut pas supprimer ce compte" });
+    }
+  });
+  
+  res.status(200).json({ message: "Le compte est bien supprimé" });
+};

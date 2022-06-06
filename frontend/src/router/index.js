@@ -6,6 +6,7 @@ import SignupView from "../views/SignupView.vue";
 import UpdateView from "../views/UpdateView.vue";
 import OnepostView from "../views/OnepostView.vue";
 import AdminView from "../views/AdminView.vue";
+import AdminDeletecomfe from "../views/AdminDeletecomfe.vue";
 
 Vue.use(VueRouter);
 
@@ -42,6 +43,11 @@ const routes = [
     path: "/admin",
     name: "admin",
     component: AdminView,
+  },
+  {
+    path: "/admin/:id",
+    name: "AdminDeletecomfe",
+    component: AdminDeletecomfe,
   },
 ];
 //component...  
