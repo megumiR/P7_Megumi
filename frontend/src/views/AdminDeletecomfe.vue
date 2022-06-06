@@ -29,7 +29,7 @@
 
 <script>
 import WelcomeMsg from "../components/WelcomeMsg.vue";
-import router from "@/router";
+//import router from "@/router";
 
 export default {
   name: "AdminDeletecomfe",
@@ -77,7 +77,7 @@ export default {
           .delete(this.$requestBaseURL + "/userlist/" + accountId, requestHeaders)
           .then((response) => {
             console.log(response);
-            router.replace({ path: "/admin" });
+           // router.replace({ path: "/admin" });
           })
           .catch((err) => {
             throw err;
