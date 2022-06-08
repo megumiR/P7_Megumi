@@ -29,7 +29,7 @@
 
 <script>
 import WelcomeMsg from "../components/WelcomeMsg.vue";
-//import router from "@/router";
+import router from "@/router";
 
 export default {
   name: "AdminDeletecomfe",
@@ -55,7 +55,7 @@ export default {
       let accountId = this.$route.params.id;
       if (userToken) {
         this.$axios
-          .get(this.$requestBaseURL + "/userlist/" + accountId, requestHeaders)
+          .get(this.$requestBaseURL + "userlist/" + accountId, requestHeaders)
           .then((response) => {
             return (this.list = response.data.result);
           })
@@ -74,13 +74,14 @@ export default {
       let accountId = this.$route.params.id;
       if (userToken) {
         this.$axios
-          .delete(this.$requestBaseURL + "/userlist/" + accountId, requestHeaders)
+          .delete(this.$requestBaseURL + "userlist/" + accountId, requestHeaders)
           .then((response) => {
             console.log(response);
-           // router.replace({ path: "/admin" });
+            router.replace({ path: "/admin" });
           })
           .catch((err) => {
-            throw err;
+            console.log(err);
+            //throw err;
           });
       } else {
         console.log("no token user");

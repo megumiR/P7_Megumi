@@ -108,12 +108,14 @@ exports.getoneaccount = async (req, res, next) => {
 
 
 /************** delete an account *****************/
-exports.deleteAccount  = async (req, res, next) => {
+exports.deleteaccount  = async (req, res, next) => {
   console.log("delete account--------");
   let sqlDeleteAccount = `DELETE FROM user WHERE id = ${req.params.id}`;
-  connection.query(sqlDeleteAccount, (err, result) => {
+  await connection.query(sqlDeleteAccount, (err, result) => {
     if (err) {
-      return res.status(400).json({ message: "erreur : on ne peut pas supprimer ce compte" });
+      return res.status(400).json({ 
+        message: "erreur : on ne peut pas supprimer ce compte" 
+      });
     }
   res.status(200).json({ message: "Le compte est bien supprimé" });    
   });

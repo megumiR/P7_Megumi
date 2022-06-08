@@ -10,6 +10,6 @@ router.post('/signup', passvalidator, mailvalidator, utilisateurCtrl.signup);
 router.post('/login', mailvalidator, utilisateurCtrl.login);
 router.get('/userlist', auth, utilisateurCtrl.getlist);
 router.get('/userlist/:id', auth, utilisateurCtrl.getoneaccount);
-router.delete('/userlist/:id', auth, utilisateurCtrl.deleteAccount);
+router.delete('/userlist/:id', auth, utilisateurCtrl.deleteaccount);
 
 module.exports = router;
