@@ -10,6 +10,7 @@ Attributes for each table
 "user"        : ( id(INT, PRYMARY, AUTO-INCREMENT), name(STRING), email(STRING), password(STRING), roll(STRING) ).
 "post"        : ( id(INT, PRYMARY, AUTO-INCREMENT), postname(STRING), comment(STRING), image(STRING), user_id(INT) ).
 "post_likes"  : ( post_id(INT, PRYMARY), user_id(INT, PRYMARY), like(BOOLEAN) ).
+
 Details are at ### MySQL.
 
 ### Back end Prerequisites and Installation ###
@@ -41,7 +42,7 @@ password: 12@Awerty
 
 cf.
 ### MySQL
-Please check the file called "Dump20220426.sql"
+Please check the file called "Dump20220608.sql"
 
 ### Compiles and minifies for production
 ```

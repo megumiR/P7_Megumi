@@ -80,8 +80,7 @@ export default {
             router.replace({ path: "/admin" });
           })
           .catch((err) => {
-            console.log(err);
-            //throw err;
+            throw err;
           });
       } else {
         console.log("no token user");

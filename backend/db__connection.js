@@ -4,10 +4,10 @@ const mysql = require("mysql");
 
 /****** l'info de connection mysql *********/
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root", //user name is root for database(admin)
-  password: "password",
-  database: "groupomania",
+  host: `${process.env.HOST_NAME}`,  //`${process.env.JWT_KEY}`   "localhost"
+  user: `${process.env.USER_NAME}`, //user name is root for database(admin)
+  password: `${process.env.PASS_WORD}`,
+  database: `${process.env.DATA_BASE}`,
 });
 /****** FIN: l'info de connection mysql *********/
 
