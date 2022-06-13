@@ -70,7 +70,7 @@ export default {
     return {
       userId: localStorage.getItem("userID"),
       list: [],
-      dataReturnFromParent: "Vous n'êtes pas connecté.", //emit is working
+      dataReturnFromParent: "Touts les posts sont affichés.", //emit is working 
     };
   },
   computed: {
@@ -105,6 +105,7 @@ export default {
       }
     },
     deletePost: function (id) {
+      console.log(id);
       let userToken = localStorage.getItem("userToken");
       let requestHeaders = {
         headers: { Authorization: "Bearer " + userToken },
@@ -115,7 +116,7 @@ export default {
           .delete(this.$requestBaseURL + "posts/" + id, requestHeaders)
           .then((response) => {
             console.log(response);
-            router.replace({ path: "/" });
+            router.go();
           })
           .catch((err) => {
             throw err;
