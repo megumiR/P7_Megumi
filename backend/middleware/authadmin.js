@@ -3,12 +3,10 @@ const connection = require("../db__connection");
 
 module.exports = (req, res, next) => {
   try {
-    //many error occurs so put in try-catch
     console.log("authadmin.js checking....");
-    console.log(req.body);
-    //let token=null;
+    console.log(req.userId);
+
     if (!req.body.headers) {
-      ///signup login MAYBE all passes here now
       console.log("Authadmin no body");
       token = req.headers.authorization.split(" ")[1];
     }else {
@@ -20,28 +18,26 @@ module.exports = (req, res, next) => {
     const userId = decodedToken.userId;
     req.userId = userId; //the id which sends request = token's id
 
-    let checkadminid = `SELECT id FROM user WHERE roll = 'admin'`;
+    let checkadminid = `SELECT id as id FROM user WHERE roll = 'admin'`;
     connection.query(checkadminid, (err, result) => {
         if (err) {
             return res.status(500).json({
                 message: "erreur: on ne peut pas trouvé d'id d'admin."
             })
         }
-        res.status(200).json({ result });
-        
+        console.log(req.userId);
+        console.log('userId' + userId);
+        console.log(JSON.stringify(result[0].id));
+        const adminId = JSON.stringify(result[0].id);
+
+        if ( req.userId == adminId || req.userId == userId) {
+            next(); 
+        } else {
+            throw "401: unauthorized request."; //'Invalid userId'
+        }    
     });
-    console.log(result);
-    const adminId = result;
-    if (req.body.userId && req.body.userId == adminId) {
-        next();
-    } else if(req.body.userId && req.body.userId !== userId) {
-      throw "401: unauthorized request."; //'Invalid userId'
-    } else {
-      next(); 
-    }
   } catch (e)  {
-    console.log('auth.js : catch');
-    console.log(req.headers);
+    console.log('authadmin.js : catch');
     res.status(400).json({
       error: new Error("Requête invalide"),
     });

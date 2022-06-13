@@ -111,9 +111,12 @@ export default {
         headers: { Authorization: "Bearer " + userToken },
       };
       //let postId = this.$route.params.id;  /////////////////////////////??????
+      let data = {
+        userId: localStorage.getItem("userID")
+      };
       if (userToken) {
         this.$axios
-          .delete(this.$requestBaseURL + "posts/" + id, requestHeaders)
+          .delete(this.$requestBaseURL + "posts/" + id, requestHeaders, data)
           .then((response) => {
             console.log(response);
             router.go();
