@@ -57,7 +57,7 @@ export default new Vuex.Store({
             commit('AUTH_SUCCESS_ROLL', response.data.roll)  
 
             
-            console.log(this.state.userId);
+            //console.log(this.state.userId);
            // window.location.href = this.$localhost;
             router.push({ path: '/', replace: true})
           })

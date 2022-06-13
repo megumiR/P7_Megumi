@@ -15,11 +15,11 @@
           </p>
         </div>
       </div>
-
+<!--
       <div class="mb-3 my-2">
         <button type="submit" class="btn btn-primary fs-4" @click.prevent="deletePost">Supprimer ce post</button>
       </div>
-
+-->
       <div class="card">
         <form encType="multipart/form-data" class="card-body">
           <div class="mb-3">

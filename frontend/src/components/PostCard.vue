@@ -19,6 +19,9 @@
               modifier <!--<span id="postId">{{ postId }}</span>-->
             </router-link>
             <router-view />
+           <!-- <div class="mb-3 my-2">
+              <button type="submit" class="btn btn-danger" @click.prevent="deletePost">Supprimer</button>
+            </div>  -->
           </div>
           <router-link
             :to="`/onepost/${postId}`"
@@ -67,6 +70,8 @@
 </template>
 
 <script>
+
+
 export default {
   name: "PostCard",
   emits: ["emitname"], //emit is not working

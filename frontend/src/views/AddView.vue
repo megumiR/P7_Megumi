@@ -4,8 +4,6 @@
       msg="Ajoutez votre article sur la plateforme"
       recommend="Veuillez vous connecter si vous ne vous êtes pas encore enregistré ou connecté. "
     />
-    <!--    <FormField TitleLabel='Titre' ContentAreaLabel='Description' imageLabel='Ajouter une image' ButtonLabel='Envoyer !'/>
--->
 
     <div class="card">
       <form encType="multipart/form-data" class="card-body">
