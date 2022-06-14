@@ -119,9 +119,7 @@ export default {
           .delete(this.$requestBaseURL + "posts/" + id, requestHeaders, data)
           .then((response) => {
             console.log(response);
-          //  location.reload(id);
             const idToDelete = id;
-            console.log(idToDelete);
             document.querySelector(`#id_post_${idToDelete}`).classList.add('d-none');
           })
           .catch((err) => {
