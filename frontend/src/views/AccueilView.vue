@@ -16,7 +16,7 @@
         @emitname="(e) => (dataReturnFromParent = e)"
       />  -->
       <div v-else v-for="post in list" :key="post.id" class="col">
-        <div class="card shadow-sm mt-4 h-100"  id="id_post">
+        <div class="card shadow-sm mt-4 h-100"  :id="`id_post_${post.id}`">
           <img class="card-img-top" :src="post.image" :alt="`image pour le post title ${post.title}`" v-if="post.image" />
           <div class="card-body">
             <h3 class="card-title">
@@ -120,8 +120,9 @@ export default {
           .then((response) => {
             console.log(response);
           //  location.reload(id);
-            document.querySelector("#id_post").classList.add('d-none');
-            //router.go();
+            const idToDelete = id;
+            console.log(idToDelete);
+            document.querySelector(`#id_post_${idToDelete}`).classList.add('d-none');
           })
           .catch((err) => {
             throw err;
