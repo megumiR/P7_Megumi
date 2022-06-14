@@ -16,7 +16,7 @@
         @emitname="(e) => (dataReturnFromParent = e)"
       />  -->
       <div v-else v-for="post in list" :key="post.id" class="col">
-        <div class="card shadow-sm mt-4 h-100">
+        <div class="card shadow-sm mt-4 h-100"  id="id_post">
           <img class="card-img-top" :src="post.image" :alt="`image pour le post title ${post.title}`" v-if="post.image" />
           <div class="card-body">
             <h3 class="card-title">
@@ -58,7 +58,7 @@ import WelcomeMsg from "../components/WelcomeMsg.vue";
 //import PostCard from "../components/PostCard.vue";
 //import { mapState } from "vuex";
 import { mapGetters } from "vuex";
-import router from "@/router";
+//import router from "@/router";
 
 export default {
   name: "AccueilView",
@@ -119,7 +119,9 @@ export default {
           .delete(this.$requestBaseURL + "posts/" + id, requestHeaders, data)
           .then((response) => {
             console.log(response);
-            router.go();
+          //  location.reload(id);
+            document.querySelector("#id_post").classList.add('d-none');
+            //router.go();
           })
           .catch((err) => {
             throw err;
